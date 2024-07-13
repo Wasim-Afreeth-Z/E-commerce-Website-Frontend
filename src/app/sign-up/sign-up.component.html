@@ -1,0 +1,97 @@
+<section class=" min-h-[100%] flex flex-col items-center justify-center bg-gradient-to-r from-red-600 to-orange-600">
+
+    <div class="signup-box w-[390px] rounded-lg p-8">
+        <h1 class=" text-white text-3xl font-medium text-center mb-3">Welcome!</h1>
+
+        <form class="flex flex-col mt-10 mb-8 gap-y-4" [formGroup]="signUpForm" (ngSubmit)=" signUpAndsubmit()">
+
+            <!-- firstname -->
+            <div class="flex gap-x-2">
+                <div class="flex-col items-center">
+                    <input
+                        class="text-white outline-none px-5 py-2.5 rounded-md w-full placeholder:text-sm placeholder:text-gray-500"
+                        type="text" placeholder="Firstname" id="firstname" name="firstname" formControlName="firstname">
+
+                    @if ((isSubmitted && signUpForm.get('firstname')?.invalid)|| signUpForm.get('firstname')?.touched) {
+                    @if(signUpForm.get('firstname')?.hasError('required')){
+                    <p class="text-red-900 text-sm ml-1 mt-3">Enter the Firstname !</p>
+                    }
+                    }
+                </div>
+
+                <!-- lastname -->
+                <div class="flex-col items-center">
+                    <input
+                        class="text-white outline-none px-5 py-2.5 rounded-md w-full placeholder:text-sm placeholder:text-gray-500"
+                        type="text" placeholder="Lastname" id="lastname" name="lastname" formControlName="lastname">
+
+                    @if ((isSubmitted && signUpForm.get('lastname')?.invalid)|| signUpForm.get('lastname')?.touched) {
+                    @if(signUpForm.get('lastname')?.hasError('required')){
+                    <p class="text-red-900 text-sm ml-1 mt-3">Enter the Lastname !</p>
+                    }
+                    }
+                </div>
+            </div>
+
+            <!-- username -->
+            <div class="flex items-center">
+                <div class="usericon text-white px-3.5 py-2.5 border-r-[1px] rounded-l-md"><i
+                        class="fa-solid fa-user"></i></div>
+                <input
+                    class="text-white outline-none px-5 py-2.5 rounded-r-md w-full placeholder:text-sm placeholder:text-gray-500"
+                    type="text" placeholder="Username" id="username" name="username" formControlName="username">
+            </div>
+            @if ((isSubmitted && signUpForm.get('username')?.invalid)|| signUpForm.get('username')?.touched) {
+            @if(signUpForm.get('username')?.hasError('required')){
+            <p class="text-red-900 text-sm ml-1">Enter the Username !</p>
+            }
+            }
+            <!-- email -->
+            <div class="flex items-center">
+                <div class="usericon text-white px-3.5 py-2.5 border-r-[1px] rounded-l-md"><i
+                        class="fa-solid fa-envelope"></i></div>
+                <input
+                    class="text-white outline-none px-5 py-2.5 rounded-r-md w-full placeholder:text-sm placeholder:text-gray-500"
+                    type="email" placeholder="Email" id="email" name="email" formControlName="email">
+            </div>
+            @if ((isSubmitted && signUpForm.get('email')?.invalid)|| signUpForm.get('email')?.touched) {
+            @if(signUpForm.get('email')?.hasError('required')){
+            <p class="text-red-900 text-sm ml-1">Enter the Email !</p>
+            }
+            @if(signUpForm.get('email')?.hasError('email')){
+            <p class="text-blue-500 text-sm ml-1">Enter correct Format Email !</p>
+            }
+            }
+
+            <!-- Password -->
+            <div class="relative flex items-center">
+                <div class="passwordicon text-white px-3.5 py-2.5 border-r-[1px] rounded-l-md"><i
+                        class="fa-solid fa-lock"></i></div>
+                <input
+                    class="text-white outline-none px-5 py-2.5 rounded-r-md w-full placeholder:text-sm placeholder:text-gray-500"
+                    [type]="changetype?'password':'text'" placeholder="Password" id="password" name="password"
+                    formControlName="password">
+                <span class="absolute top-[8px] right-[10px] text-2xl text-white" (click)="viewPassword()"><i
+                        class={{eyehide}}></i></span>
+            </div>
+            @if ((isSubmitted && signUpForm.get('password')?.invalid)|| signUpForm.get('password')?.touched) {
+            @if(signUpForm.get('password')?.hasError('required')){
+            <p class="text-red-900 text-sm ml-1">Enter the Password !</p>
+            }
+            @if(signUpForm.get('password')?.hasError('minlength')){
+            <p class="text-red-900 text-sm ml-1">Minimum 8 Characters</p>
+            }
+            }
+
+            <button
+                class=" bg-red-900 text-white font-medium border-red-900 border-2 outline-none rounded-md text-base py-3 mt-4 hover:bg-transparent ">
+                Sign Up</button>
+        </form>
+
+        <div class="text-center mt-5">
+            <p class="text-white">Already have account? <span routerLink="/login"
+                    class="text-red-900 font-medium hover:underline hover:cursor-pointer">Login</span></p>
+        </div>
+
+    </div>
+</section>

@@ -1,0 +1,108 @@
+<app-header></app-header>
+<section class="cart-box mt-[110px] min-h-[100%] px-20 py-8 bg-[#f6f6f6]">
+    <h1 class="text-3xl font-medium">Shopping Cart</h1>
+    <p class="mb-6"><span class="font-medium">{{cartCount}} items </span>in your Cart.</p>
+    @if (carts.length>0) {
+    <div class="cart-box-2 flex gap-4">
+        <div
+            class="bg-white overflow-y-scroll max-h-[100%] px-8 pb-8 w-full rounded-2xl shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px]">
+            <table class="w-full min-w-[700px]">
+                <thead class="w-full sticky top-0 bg-white">
+                    <th class=" text-start pr-4">Product</th>
+                    <th class="px-4">Price</th>
+                    <th class="px-4">QTY.</th>
+                    <th class="px-4">SubTotal</th>
+                </thead>
+                <tbody>
+                    @for (cart of carts; track $index) {
+                    <tr class=" border-b-2 border-[#e5e7eb]">
+                        <td class="pr-4">
+                            <div class="flex gap-2"><img class="w-[80px] border rounded-lg"
+                                    src="/images/no-image-2.webp" alt="">
+                                <div>
+                                    <p (click)="viewProduct(cart)"
+                                        class="font-medium text-xl mt-1 hover:underline cursor-pointer">
+                                        {{cart.productname|titlecase}}</p>
+                                    <p class="text-xs text-gray-400">{{cart.description.slice(0,100)}}...</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center px-4 text-nowrap">₹ {{cart.price}}</td>
+                        <td class="px-4">
+                            <!-- <div class="flex justify-center items-center">
+                                <button [disabled]="cart.quantity <=1" (click)="minus($index,cart.id)"
+                                    class="disabled:bg-[#de05318f] bg-[#DE0530] text-white hover:bg-white hover:text-black border-2 text-[10px]  px-1.5 h-6 rounded-[4px]"><i
+                                        class="fa-solid fa-minus"></i></button>
+                                <p class="px-2 text-sm">{{cart.quantity}}</p>
+                                <button [disabled]="cart.quantity >=10" (click)="plus($index,cart.id)"
+                                    class="disabled:bg-[#de05318f] bg-[#DE0530] text-white hover:bg-white hover:text-black border-2 text-[10px] px-1.5 h-6 rounded-[4px]"><i
+                                        class="fa-solid fa-plus"></i></button>
+                            </div> -->
+                            <div class="flex justify-center items-center ">
+                                <div
+                                    class="flex justify-between items-center w-[90px]  rounded-full shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+                                    <button [disabled]="cart.quantity <=1" (click)="minus($index,cart.id)"
+                                        class="disabled:bg-gray-300 disabled:text-black rounded-l-full  text-[15px] px-2 h-7 hover:bg-[#DE0530] hover:text-white"><i
+                                            class="fa-solid fa-minus"></i></button>
+                                    <p class="px-2 text-center ">{{cart.quantity}}</p>
+                                    <button [disabled]="cart.quantity >=10" (click)="plus($index,cart.id)"
+                                        class=" disabled:bg-gray-300 disabled:text-black rounded-r-full  text-[15px]  px-2 h-7 hover:bg-[#DE0530] hover:text-white"><i
+                                            class="fa-solid fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="w-[150px] px-4 text-center text-xl font-medium text-[#de05318f]">₹
+                            {{eachProductPrice(cart)}}
+                        </td>
+                        <td><button (click)="deleteCart($index,cart.id)"
+                                class=" text-end text-[20px] text-slate-500 rounded-full hover:text-red-600 hover:bg-red-200 px-2.5 py-1"><i
+                                    class="fa-solid fa-trash"></i></button></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="cart-total w-[350px] h-[235px] bg-white rounded-2xl p-5 flex flex-col gap-y-1">
+            <h1 class="font-medium text-xl pb-3">Cart Total</h1>
+            <div class="flex justify-between text-sm">
+                <p>Cart Subtotal</p>
+                <p class="font-medium">₹ {{subTotal()}}</p>
+            </div>
+            <div class="flex justify-between text-sm">
+                <p>Tax(10%)</p>
+                <p class="font-medium">₹ {{tax()|number:'5.0-0'}}</p>
+            </div>
+            <div class="flex justify-between text-sm">
+                <p>Delivery Charges</p>
+                <p class="font-medium text-green-600">FREE</p>
+            </div>
+            <div class="flex justify-between text-sm">
+                <p class="font-medium">Cart Total</p>
+                <p class="font-medium text-base">₹ {{total()|number:'5.0-0'}}</p>
+            </div>
+            <button routerLink="/checkout"
+                class="bg-[#DE0530] text-white mt-3 py-1 transition-all ease-in duration-300 font-medium rounded-full border-2 border-[#DE0530] hover:bg-white hover:text-black ">CheckOut</button>
+        </div>
+    </div>
+
+    }@else {
+    <p class="text-2xl font-medium italic">Cart Empty.....</p>
+    }
+
+</section>
+<app-footer></app-footer>
+
+<!-- <div class="flex justify-end py-[20px]">
+    <div class="w-[430px] flex justify-between py-[13px] px-8 text-xl font-medium bg-white rounded-2xl">
+        <p class=" text-xl">Total:</p>
+        <p class=" text-[#DE0530]">₹ {{total()}}</p>
+    </div>
+</div>
+
+<div class="flex justify-between">
+    <button routerLink="/home"
+        class="bg-green-500 transition-all ease-in duration-300 font-medium text-white px-3 py-2 rounded-lg  border-2 border-green-500 hover:bg-white hover:text-green-500">Continue
+        Shopping </button>
+    <button
+        class="bg-[#DE0530] transition-all ease-in duration-300 font-medium text-white px-5 py-2 rounded-lg border-2 border-[#DE0530] hover:bg-white hover:text-[#DE0530]">ChechOut</button>
+</div> -->

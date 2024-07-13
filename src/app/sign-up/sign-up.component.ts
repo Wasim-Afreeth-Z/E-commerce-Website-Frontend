@@ -5,23 +5,28 @@ import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-sign-up',
   standalone: true,
   imports: [ReactiveFormsModule, MatSnackBarModule, RouterLink],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  templateUrl: './sign-up.component.html',
+  styleUrl: './sign-up.component.scss'
 })
-export class LoginComponent {
-  loginForm!: FormGroup
+export class SignUpComponent {
+
+  signUpForm!: FormGroup
   formBuilder = inject(FormBuilder)
   userService = inject(UserService)
+
   snackBar = inject(MatSnackBar)
   route = inject(Router)
 
   ngOnInit(): void {
-    this.loginForm = this.formBuilder.group({
+    this.signUpForm = this.formBuilder.group({
+      firstname: [null, Validators.required],
+      lastname: [null, Validators.required],
+      username: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
-      password: [null, Validators.required],
+      password: [null, [Validators.required, Validators.minLength(8)]],
     })
   }
 
@@ -44,45 +49,37 @@ export class LoginComponent {
     this.eyehide = !this.eye ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye'
   }
 
-  login() {
-    const request = {
-      "email": this.loginForm.value.email,
-      "password": this.loginForm.value.password
-    }
-    this.userService.login(request).subscribe({
-      next: (res: any) => {
-        // console.log(res);
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('userId', res.userId)
-        this.snackBar.open('Login successfully', 'success', {
+  // send the data to service file
+  SignUp(): void {
+    this.userService.SignUp(this.signUpForm.value).subscribe({
+      next: (data: any) => {
+        this.snackBar.open('SignUp Successfully', 'Success', {
           horizontalPosition: 'center',
           verticalPosition: 'top',
-          duration: 3000,
-        });
-        this.route.navigateByUrl('home');
+          duration: 3000
+        })
+        this.route.navigateByUrl('login')
       },
       error: (error: any) => {
-        console.error('Login error:', error);
-        if (this.loginForm.value.email == this.loginForm.value.email || this.loginForm.value.password == this.loginForm.value.password ) {
-          this.snackBar.open('Invalid email or password', 'Error', {
+        if (this.signUpForm.value.email === this.signUpForm.value.email || this.signUpForm.value.username === this.signUpForm.value.username) {
+          this.snackBar.open('Email Or Username already exists', 'Error', {
             horizontalPosition: 'center',
             verticalPosition: 'top',
             duration: 3000,
           });
         } else {
-          this.snackBar.open('Login error', 'Error', {
+          this.snackBar.open('Signup error', 'Error', {
             horizontalPosition: 'center',
             verticalPosition: 'top',
             duration: 3000,
           });
         }
-      },
-    });
+      }
+    })
   }
 
-  loginAndsubmit() {
-    this.login()
+  signUpAndsubmit() {
+    this.SignUp()
     this.isSubmit()
   }
-
 }

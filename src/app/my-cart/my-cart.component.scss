@@ -1,0 +1,43 @@
+th{
+    padding-top: 32px;
+    padding-bottom: 20px;
+    
+}
+
+td{
+    padding-block: 20px;
+    // padding-inline: 16px;
+}
+
+@media (max-width: 980px) {
+    .cart-box {
+        padding-inline: 50px;
+    }
+}
+
+@media (max-width: 840px) {
+    .cart-box {
+        padding-inline: 40px;
+    }
+}
+
+@media (max-width: 900px) {
+    .cart-box-2 {
+        flex-direction: column;
+    }
+    .cart-total {
+        width: 100%;
+    }
+}
+
+@media (max-width: 620px) {
+    .cart-box {
+        padding-inline: 25px;
+    }
+}
+
+@media (max-width: 370px) {
+    .cart-box {
+        padding-inline: 18px;
+    }
+}

@@ -1,0 +1,88 @@
+<section class="flex flex-col justify-center items-center py-7">
+    <h1 class="text-center font-bold text-2xl mb-5">Create Product</h1>
+    <form class="flex flex-col px-8 gap-3 max-[360px]:px-3.5 " [formGroup]="productCreate"
+        (ngSubmit)="CreateOrUpdate()">
+
+        <!-- Productname -->
+        <div class="mb-2">
+            <label class="text-base text-gray-500 font-medium">Product Name :</label>
+            <input class="border-2 p-2 w-full rounded-md placeholder:font-medium mb-1" type="text"
+                placeholder="Productname" id="productname" name="productname" formControlName="productname">
+            @if ((isSubmitted && productCreate.get('productname')?.invalid)|| productCreate.get('productname')?.touched)
+            {
+            @if(productCreate.get('productname')?.hasError('required')){
+            <p class="text-red-600">Enter the Product Name</p>
+            }
+            }
+        </div>
+
+        <!-- image -->
+        <div class="flex flex-col">
+            <label class="text-base text-gray-500 font-medium" for="image">Image :</label>
+            <input class=" w-full  mb-1" type="file" id="image" name="image">
+        </div>
+
+
+        <!-- description -->
+        <div>
+            <label class="text-base text-gray-500 font-medium">Description :</label>
+            <textarea class="border-2 p-2 w-full rounded-md placeholder:font-medium" placeholder="Description"
+                id="description" name="description" formControlName="description" id="w3review" name="w3review" rows="4"
+                cols="50"> </textarea>
+            @if ((isSubmitted && productCreate.get('description')?.invalid)||
+            productCreate.get('description')?.touched) {
+            @if(productCreate.get('description')?.hasError('required')){
+            <p class="text-red-600">Enter the Description</p>
+            }
+            }
+        </div>
+
+        <!-- Price -->
+        <div class="mb-2">
+            <label class="text-base text-gray-500 font-medium">Price :</label>
+            <input class="border-2 p-2 w-full rounded-md mb-2" type="text" id="price" name="price"
+                formControlName="price">
+            @if ((isSubmitted && productCreate.get('price')?.invalid)|| productCreate.get('price')?.touched) {
+            @if(productCreate.get('price')?.hasError('required')){
+            <p class="text-red-600">Enter the Price</p>
+            }
+            }
+        </div>
+
+        <!-- category -->
+        <mat-form-field>
+            <mat-label for="cat_id">Category</mat-label>
+            <mat-select id="cat_id" formControlName="cat_id">
+                @for (category of categorylist; track $index) {
+                    <mat-option [value]="category.id">{{category.category}}</mat-option>
+                    }
+            </mat-select>
+        </mat-form-field>
+        @if ((isSubmitted && productCreate.get('cat_id')?.invalid)|| productCreate.get('cat_id')?.touched) {
+        @if(productCreate.get('cat_id')?.hasError('required')){
+        <p class="text-red-600 mt-0.5">Select Category</p>
+        }
+        }
+        <div class="py-1"></div>
+        <!-- Stock -->
+        <mat-form-field>
+            <mat-label for="stock">Stock</mat-label>
+            <mat-select id="stock" formControlName="stock">
+                <mat-option value="In Stock">In Stock</mat-option>
+                <mat-option value="Out of Stock">Out of Stock</mat-option>
+            </mat-select>
+        </mat-form-field>
+        @if ((isSubmitted && productCreate.get('stock')?.invalid)|| productCreate.get('stock')?.touched) {
+        @if(productCreate.get('stock')?.hasError('required')){
+        <p class="text-red-600 mt-0.5">Select the Stock/Out of Stock</p>
+        }
+        }
+        <br>
+        <div class="flex justify-center items-center ">
+            <button matDialogClose="true" type="button"
+                class="cancel bg-slate-600 text-white px-12 py-2 text-xl rounded-full mr-7">Cancel</button>
+            <button class="create bg-red-600 text-white px-14 py-2 text-xl rounded-full">{{isEdit ? 'Update' :
+                'Create'}}</button>
+        </div>
+    </form>
+</section>

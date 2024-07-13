@@ -1,0 +1,105 @@
+<section class="flex flex-col justify-center items-center ">
+    <div
+        class="flex w-full bg-[#DE0530] justify-between px-8 py-4 items-center sticky top-0 right-0 left-0 max-[360px]:px-3.5">
+        <button (click)="close()"
+            class="back text-white outline-none text-4xl px-1 rounded-lg hover:text-[#DE0530] hover:bg-white hover:border-white"><i
+                class="fa-regular fa-square-chevron-left"></i></button>
+        <h1 class="topic text-white font-bold text-2xl">My Account</h1>
+        <div class="group relative">
+            <button (click)="logOut()"
+                class="logout  text-white outline-none text-4xl px-1 rounded-lg hover:text-[#DE0530] hover:bg-white"><i
+                    class="fa-solid fa-arrow-left-from-bracket"></i></button>
+            <p class="absolute hidden group-hover:block top-11  right-[-10px] text-[#DE0530] bg-white font-medium rounded-md text-sm px-2 py-0.5">
+                LogOut</p>
+        </div>
+    </div>
+    <div class="picture bg-red-300 w-full py-10 flex justify-center">
+        <p class="picture-icon text-[100px] text-white bg-[#DE0530] border-4 border-white rounded-full px-8 "><i
+                class="fa-solid fa-user"></i></p>
+    </div>
+    <form class="flex flex-col px-8 py-10 gap-3 max-[360px]:px-3.5 " [formGroup]="myAccountForm"
+        (ngSubmit)="myAccountAndsubmit()">
+
+        <div class="flex gap-4">
+            <!--Firstname -->
+            <div class="mb-2">
+                <label class="text-base text-[#DE0530] font-medium">First Name :</label>
+                <input class="border-b-2 py-2 w-full outline-none mb-1" type="text" id="firstname" name="firstname"
+                    formControlName="firstname">
+                @if ((isSubmitted && myAccountForm.get('firstname')?.invalid)|| myAccountForm.get('firstname')?.touched)
+                {
+                @if(myAccountForm.get('firstname')?.hasError('required')){
+                <p class="text-red-300">Enter the First Name!</p>
+                }
+                }
+            </div>
+
+            <!--Lastname -->
+            <div class="mb-2">
+                <label class="text-base text-[#DE0530] font-medium">Last Name :</label>
+                <input class="border-b-2 py-2 w-full outline-none mb-1" type="text" id="lastname" name="lastname"
+                    formControlName="lastname">
+                @if ((isSubmitted && myAccountForm.get('lastname')?.invalid)|| myAccountForm.get('lastname')?.touched)
+                {
+                @if(myAccountForm.get('lastname')?.hasError('required')){
+                <p class="text-red-300">Enter the Last Name!</p>
+                }
+                }
+            </div>
+        </div>
+
+        <!-- Username -->
+        <div class="mb-2">
+            <label class="text-base text-[#DE0530] font-medium">Username :</label>
+            <input class="border-b-2 py-2 w-full outline-none mb-1" type="text" id="username" name="username"
+                formControlName="username">
+            @if ((isSubmitted && myAccountForm.get('username')?.invalid)|| myAccountForm.get('username')?.touched)
+            {
+            @if(myAccountForm.get('username')?.hasError('required')){
+            <p class="text-red-300">Enter the Username!</p>
+            }
+            }
+        </div>
+
+        <!-- Email -->
+        <div class="mb-2">
+            <label class="text-base text-[#DE0530] font-medium">Email :</label>
+            <input class="border-b-2 py-2 w-full outline-none mb-1" type="email" id="email" name="email"
+                formControlName="email">
+            @if ((isSubmitted && myAccountForm.get('email')?.invalid)|| myAccountForm.get('email')?.touched){
+            @if(myAccountForm.get('email')?.hasError('required')){
+            <p class="text-red-300">Enter the Email!</p>
+            }
+            @if(myAccountForm.get('email')?.hasError('email')){
+            <p class="text-red-300 text-sm ml-1">Enter correct Format Email!</p>
+            }
+            }
+        </div>
+
+        <!-- Passsword -->
+        <div class="mb-8">
+            <label class="text-base text-[#DE0530] font-medium">Password :</label>
+            <input class="border-b-2 py-2 w-full outline-none mb-1" type="text" id="password" name="password"
+                formControlName="password">
+            @if ((isSubmitted && myAccountForm.get('password')?.invalid)|| myAccountForm.get('password')?.touched){
+            @if(myAccountForm.get('password')?.hasError('required')){
+            <p class="text-red-300">Enter the Password!</p>
+            }
+            @if(myAccountForm.get('password')?.hasError('minlength')){
+            <p class="text-red-300 text-sm ml-1">Minimum 8 Characters!</p>
+            }
+            }
+        </div>
+
+
+
+        <div class="flex justify-center items-center gap-4">
+            <button type="submit"
+                class="update bg-green-600 text-white border-2 border-green-600 px-10 py-2 text-xl rounded-full  hover:bg-transparent hover:text-green-600">Update
+                profile</button>
+            <button type="button" (click)="openAccountDeleteDailog()"
+                class="delete bg-red-600 text-white border-2 border-red-600  px-10 py-2 text-xl rounded-full hover:bg-transparent hover:text-red-600">Delete
+                profile</button>
+        </div>
+    </form>
+</section>

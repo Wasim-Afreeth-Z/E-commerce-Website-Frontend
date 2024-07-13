@@ -3,15 +3,14 @@ input,.usericon,.passwordicon{
 }
 
 @media (max-width: 400px) {
-    .login-box{
+    .signup-box{
         padding: 20px;
         width: 350px;
     }
 }
 
 @media (max-width: 350px) {
-    .login-box{
+    .signup-box{
        width: 320px;
     }
 }
-

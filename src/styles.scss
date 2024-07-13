@@ -1,1 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: "Inter", sans-serif;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(224, 224, 224);
+    border-radius: 10px;
+}
+
+//angular meterial
+.mat-mdc-form-field-subscript-wrapper {
+    display: none !important;  
+}
+
+.mat-mdc-text-field-wrapper{
+    height: 48px !important;
+    // width: 160px !important;
+}
+.mat-mdc-select-placeholder {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

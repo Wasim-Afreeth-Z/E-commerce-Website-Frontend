@@ -1,0 +1,34 @@
+@media (max-width: 540px) {
+    .update,.delete{
+      padding-inline: 20px;
+    }
+  }
+
+@media (max-width: 450px) {
+    .update,.delete{
+      font-size: 15px;
+      padding-inline: 12px;
+      padding-block: 5px;
+    }
+  }
+
+@media (max-width: 430px) {
+    .back{
+      font-size: 28px;
+    }
+    .topic{
+     font-size: 20px;
+    }
+    .logout{
+      font-size: 28px;
+    }
+    .picture{
+      padding-block: 20px;
+    }
+    .picture-icon{
+      font-size: 60px;
+      padding-block: 15px;
+    }
+  }
+
+

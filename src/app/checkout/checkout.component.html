@@ -1,0 +1,216 @@
+<app-header></app-header>
+<section class="checkout flex w-full gap-x-5 pt-[130px] px-20 py-5 h-full bg-[#f6f6f6]  ">
+    <div class="address-order flex gap-x-5">
+        <div class="form w-full overflow-y-scroll">
+            <div class="sticky top-0 left-0 right-0 bg-[#f6f6f6] pb-4">
+                <h1 class="text-3xl font-medium">CheckOut</h1>
+                <p><span class="font-medium">{{cartCount}} items </span>in your bag.</p>
+            </div>
+
+            <form class="bg-white p-8 rounded-2xl " [formGroup]="addressForm">
+                <h1 class="text-[25px] font-medium mb-3">Address Details</h1>
+                <!-- CustomerName -->
+                <div class="mb-3">
+                    <input class="bg-[#f6f6f6] p-2 pl-5 w-full rounded-full outline-none mb-1" type="text"
+                        placeholder="Name" id="CustomerName" name="CustomerName" formControlName="CustomerName">
+                    @if ((isSubmitted && addressForm.get('CustomerName')?.invalid)|| addressForm.get('CustomerName')?.touched)
+                    {
+                    @if(addressForm.get('CustomerName')?.hasError('required')){
+                    <p class="error text-red-600 pl-3">Enter the Name !</p>
+                    }
+                    }
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <input class="bg-[#f6f6f6] p-2 pl-5 w-full rounded-full outline-none mb-1" type="email"
+                        placeholder="Email" id="email" name="email" formControlName="email">
+
+                    @if ((isSubmitted && addressForm.get('email')?.invalid)|| addressForm.get('email')?.touched) {
+                    @if(addressForm.get('email')?.hasError('required')){
+                    <p class="error text-red-600 pl-3">Enter the Email !</p>
+                    }
+                    @if(addressForm.get('email')?.hasError('email')){
+                    <p class="error text-red-600 pl-3">Enter correct Format Email !</p>
+                    }
+                    }
+                </div>
+
+                <!-- Address -->
+                <div class="mb-3">
+                    <input class="bg-[#f6f6f6] p-2 pl-5 w-full rounded-full outline-none mb-2" type="text"
+                        placeholder="Address" id="address" name="address" formControlName="address">
+                    @if ((isSubmitted && addressForm.get('address')?.invalid)|| addressForm.get('address')?.touched)
+                    {
+                    @if(addressForm.get('address')?.hasError('required')){
+                    <p class="error text-red-600 pl-3">Enter the Address !</p>
+                    }
+                    }
+                </div>
+
+
+                <div class="flex gap-x-2 w-full">
+                    <!-- City -->
+                    <div class="mb-3 w-full">
+                        <input class="bg-[#f6f6f6] p-2 pl-5 w-full rounded-full outline-none mb-2" type="text"
+                            placeholder="City" id="city" name="city" formControlName="city">
+                        @if ((isSubmitted && addressForm.get('city')?.invalid)|| addressForm.get('city')?.touched)
+                        {
+                        @if(addressForm.get('city')?.hasError('required')){
+                        <p class="error text-red-600 pl-3">Enter the City !</p>
+                        }
+                        }
+                    </div>
+
+                    <!-- State -->
+                    <div class="mb-3 w-full">
+                        <input class="bg-[#f6f6f6] p-2 pl-5 w-full rounded-full outline-none mb-2" type="text"
+                            placeholder="State" id="state" name="state" formControlName="state">
+                        @if ((isSubmitted && addressForm.get('state')?.invalid)|| addressForm.get('state')?.touched)
+                        {
+                        @if(addressForm.get('state')?.hasError('required')){
+                        <p class="error text-red-600 pl-3">Enter the State !</p>
+                        }
+                        }
+                    </div>
+                </div>
+
+                <div class="flex gap-x-2 w-full">
+                    <!-- Pincode -->
+                    <div class=" w-full">
+                        <input class="bg-[#f6f6f6] p-2 pl-5 w-full rounded-full outline-none mb-2" type="text"
+                            placeholder="Pincode" id="pincode" name="pincode" formControlName="pincode">
+                        @if ((isSubmitted && addressForm.get('pincode')?.invalid)|| addressForm.get('pincode')?.touched)
+                        {
+                        @if(addressForm.get('pincode')?.hasError('required')){
+                        <p class="error text-red-600 pl-3">Enter the Pincode !</p>
+                        }
+                        }
+                    </div>
+
+                    <!-- Telephone -->
+                    <div class=" w-full">
+                        <input class="bg-[#f6f6f6] p-2 pl-5 w-full rounded-full outline-none mb-2" type="text"
+                            placeholder="Telephone" id="telephone" name="telephone" formControlName="telephone">
+                        @if ((isSubmitted && addressForm.get('telephone')?.invalid)||
+                        addressForm.get('telephone')?.touched)
+                        {
+                        @if(addressForm.get('telephone')?.hasError('required')){
+                        <p class="error text-red-600 pl-3">Enter the Telephone !</p>
+                        }
+                        @if(addressForm.get('telephone')?.hasError('minlength')){
+                        <p class="text-red-600 text-sm ml-1">Minimum 10 Number</p>
+                        }
+                        @if(addressForm.get('telephone')?.hasError('maxlength')){
+                        <p class="text-red-600 text-sm ml-1">Maximum 10 Number</p>
+                        }
+                        }
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="product min-w-[350px] overflow-y-scroll mt-[76px]">
+            <!-- Product-list -->
+            <div class="flex flex-col gap-y-3 overflow-y-scroll">
+                <!-- mb-[200px] -->
+                @for (cart of carts; track $index) {
+                <div class=" bg-white flex gap-x-3 rounded-2xl px-1 py-1 h-[100px]">
+                    <img class="w-[80px] h-[90px] border rounded-2xl" src="/images/no-image-2.webp" alt="">
+                    <div class="flex flex-col justify-between py-1">
+                        <div>
+                            <h1 class="font-medium text-base">{{cart.productname}}</h1>
+                            <p class="font-medium text-lg  text-[#DE0530]">₹ {{eachProductPrice(cart)}}</p>
+                        </div>
+                        <p class="text-sm text-gray-400">Qty <span class="text-black font-semibold">.
+                                {{cart.quantity}}</span>
+                        </p>
+                    </div>
+
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="payment-bill min-w-[345px] overflow-y-scroll mt-[76px]">
+        <!-- payment -->
+        <div class=" flex flex-col gap-y-1 bg-white p-5 rounded-2xl mb-3">
+            <h1 class="font-medium text-xl pb-1">Payment</h1>
+            <div class="flex gap-3 items-center">
+                <input type="radio" checked class="w-5 h-5 outline-none accent-green-600" id="payment" name="payment">
+                <label class="">Cash On Delivery</label>
+            </div>
+        </div>
+        <!-- bill total -->
+        <div class=" flex flex-col gap-y-1 bg-white p-5 rounded-2xl ">
+            <!-- <h1 class="font-medium text-xl pb-1">Cart Total</h1>  fixed bottom-0  -->
+            <div class="flex justify-between text-sm">
+                <p class="text-gray-400">Subtotal</p>
+                <p class="font-medium">₹ {{subTotal()}}</p>
+            </div>
+            <div class="flex justify-between text-sm">
+                <p class="text-gray-400">Tax(10%)</p>
+                <p class="font-medium">₹ {{tax()|number:'5.0-0'}}</p>
+            </div>
+            <div class="flex justify-between text-sm">
+                <p class="text-gray-400">Delivery Charges</p>
+                <p class="font-medium text-green-600">FREE</p>
+            </div>
+            <div class="flex justify-between text-sm">
+                <p class="font-medium">Total</p>
+                <p class="font-medium text-xl">₹ {{total()|number:'5.0-0'}}</p>
+            </div>
+            <button (click)=" placeYourOrderAndSubmit()"
+                class="bg-[#DE0530] text-white mt-3 py-2 transition-all ease-in duration-300 font-medium rounded-full border-2 border-[#DE0530] hover:bg-white hover:text-black ">Place
+                Your Order</button>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- !mobile -->
+<!-- <div class="mobile-product h-full w-full hidden">
+    <div class="flex flex-col gap-y-3  ">
+        @for (cart of carts; track $index) {
+        <div class=" bg-white flex gap-x-3 rounded-2xl px-1 py-1 h-[100px]">
+            <img class="w-[80px] h-[90px] border rounded-2xl" src="/images/no-image-2.webp" alt="">
+            <div class="flex flex-col justify-between py-1">
+                <div>
+                    <h1 class="font-medium text-base">{{cart.productname}}</h1>
+                    <p class="font-medium text-lg  text-[#DE0530]">₹ {{eachProductPrice(cart)}}</p>
+                </div>
+                <p class="text-sm text-gray-400">Qty <span class="text-black font-semibold">. 1</span>
+                </p>
+            </div>
+        </div>
+        }
+
+    </div>
+
+    bill total
+    <div class="flex flex-col gap-y-1 w-full bg-[#f6f6f6] pb-5 pt-5 ">
+        <h1 class="font-medium text-xl pb-1">Cart Total</h1>
+        <div class="flex justify-between text-sm">
+            <p class="text-gray-400">Subtotal</p>
+            <p class="font-medium">₹ {{subTotal()|number:'5.0-0'}}</p>
+        </div>
+        <div class="flex justify-between text-sm">
+            <p class="text-gray-400">Tax(10%)</p>
+            <p class="font-medium">₹ {{tax()|number:'5.0-0'}}</p>
+        </div>
+        <div class="flex justify-between text-sm">
+            <p class="text-gray-400">Delivery Charges</p>
+            <p class="font-medium text-green-600">FREE</p>
+        </div>
+        <div class="flex justify-between text-sm">
+            <p class="font-medium">Total</p>
+            <p class="font-medium text-xl">₹ {{total()|number:'5.0-0'}}</p>
+        </div>
+        <button (click)=" placeYourOrderAndSubmit()"
+            class="bg-[#DE0530] text-white mt-3 py-2 transition-all ease-in duration-300 font-medium rounded-full border-2 border-[#DE0530] hover:bg-white hover:text-black ">Place
+            Your Order</button>
+    </div>
+</div> -->
