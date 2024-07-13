@@ -15,7 +15,7 @@ export class OrderService {
     const header = new HttpHeaders({
       'content-type': 'Application/json'
     })
-    return this.http.post(`${this.baseUrl}/order/mycart`, request, { headers: header })
+    return this.http.post(`${this.baseUrl}/order/mycartss`, request, { headers: header })
   }
 
    // get the data from database
