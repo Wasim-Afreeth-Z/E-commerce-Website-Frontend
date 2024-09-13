@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../app/environment/environment';
 import { AES } from 'crypto-js';
 import * as CryptoJS from 'crypto-js';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,4 +24,53 @@ export class AuthService {
         .toString(CryptoJS.enc.Utf8)
     )
   }
+
+  isLogedin: boolean = false
+
+  login() {
+    this.isLogedin = true
+  }
+
+  logOut(): void {
+    this.isLogedin = false
+  }
+
+  isAuthentication(): boolean {
+    return this.isLogedin
+  }
+
+  http: HttpClient = inject(HttpClient)
+  private baseUrl = environment.BASEURL;
+
+  // get the data from database
+  DisplayAdmins(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/admin/display`)
+  }
+
+  // create the admin
+  CreateAdmin(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/admin/create`,request)
+  }
+
+  // Update Admin Detail
+   UpdateAdminDetail(id: string, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/admin/update/${id}`, data);
+  }
+
+  // delete the Admin
+  deleteAdmin(id: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/Admin/delete/${id}`)
+  }
+
+   //product Image Upload
+   ProductImageUpload(formdata: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/products/upload-image`, formdata);
+  }
+
+   //product Multiple Image Upload
+   ProductMultipleImageUpload(formdata: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/products/upload-multiple-image`, formdata);
+  }
+
+
 }

@@ -1,12 +1,14 @@
-<app-header></app-header>
+<app-header [count]="cartCount"></app-header>
 <section class="cart-box mt-[110px] min-h-[100%] px-20 py-8 bg-[#f6f6f6]">
     <h1 class="text-3xl font-medium">Shopping Cart</h1>
     <p class="mb-6"><span class="font-medium">{{cartCount}} items </span>in your Cart.</p>
     @if (carts.length>0) {
+
     <div class="cart-box-2 flex gap-4">
+        <!-- !cart -->
         <div
             class="bg-white overflow-y-scroll max-h-[100%] px-8 pb-8 w-full rounded-2xl shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px]">
-            <table class="w-full min-w-[700px]">
+            <table class="w-full min-w-[800px]">
                 <thead class="w-full sticky top-0 bg-white">
                     <th class=" text-start pr-4">Product</th>
                     <th class="px-4">Price</th>
@@ -17,12 +19,13 @@
                     @for (cart of carts; track $index) {
                     <tr class=" border-b-2 border-[#e5e7eb]">
                         <td class="pr-4">
-                            <div class="flex gap-2"><img class="w-[80px] border rounded-lg"
-                                    src="/images/no-image-2.webp" alt="">
+                            <!-- /images/no-image-2.webp -->
+                            <div class="flex gap-2"><img class="w-[80px] h-[80px]  border rounded-lg object-cover"
+                                    src="{{baseUrl}}{{cart.image}}" alt="">
                                 <div>
-                                    <p (click)="viewProduct(cart)"
+                                    <p (click)="viewProductFromCart(cart.product_id)"
                                         class="font-medium text-xl mt-1 hover:underline cursor-pointer">
-                                        {{cart.productname|titlecase}}</p>
+                                        {{cart.productname.slice(0,20)|titlecase}}...</p>
                                     <p class="text-xs text-gray-400">{{cart.description.slice(0,100)}}...</p>
                                 </div>
                             </div>
@@ -54,23 +57,35 @@
                         <td class="w-[150px] px-4 text-center text-xl font-medium text-[#de05318f]">₹
                             {{eachProductPrice(cart)}}
                         </td>
-                        <td><button (click)="deleteCart($index,cart.id)"
-                                class=" text-end text-[20px] text-slate-500 rounded-full hover:text-red-600 hover:bg-red-200 px-2.5 py-1"><i
-                                    class="fa-solid fa-trash"></i></button></td>
+                        <td>
+                            <div class="flex flex-col text-nowrap gap-y-3">
+                                <button (click)=" addToSaveForLater(cart,$index)"
+                                    class="text-[13px] text-green-600 bg-green-200 rounded-full border-[1px] border-green-600 px-2 font-medium hover:bg-white">Save
+                                    for Later</button>
+                                <button (click)="deleteCart($index,cart.id)"
+                                    class="text-[12.5px] text-red-600 bg-red-200 rounded-full border-[1px] border-red-600 font-medium hover:bg-white">Delete
+                                    <i class="fa-solid fa-trash ml-1"></i></button>
+                            </div>
+                        </td>
                     </tr>
                     }
                 </tbody>
             </table>
+            <div class="flex justify-center w-full"><button (click)="ClearCart()"
+                    class=" text-[14px] font-medium bg-[#DE0530] text-white border-2 border-[#DE0530] px-1.5 py-0.5 rounded-lg mt-3 hover:bg-white hover:text-[#DE0530]">Clear
+                    cart</button></div>
         </div>
+
+        <!-- !cart-total -->
         <div class="cart-total w-[350px] h-[235px] bg-white rounded-2xl p-5 flex flex-col gap-y-1">
             <h1 class="font-medium text-xl pb-3">Cart Total</h1>
             <div class="flex justify-between text-sm">
                 <p>Cart Subtotal</p>
-                <p class="font-medium">₹ {{subTotal()}}</p>
+                <p class="font-medium">₹ {{subTotal()|number:'0.0-0'}}</p>
             </div>
             <div class="flex justify-between text-sm">
                 <p>Tax(10%)</p>
-                <p class="font-medium">₹ {{tax()|number:'5.0-0'}}</p>
+                <p class="font-medium">₹ {{tax()|number:'0.0-0'}}</p>
             </div>
             <div class="flex justify-between text-sm">
                 <p>Delivery Charges</p>
@@ -78,19 +93,137 @@
             </div>
             <div class="flex justify-between text-sm">
                 <p class="font-medium">Cart Total</p>
-                <p class="font-medium text-base">₹ {{total()|number:'5.0-0'}}</p>
+                <p class="font-medium text-base">₹ {{total()|number:'0.0-0'}}</p>
             </div>
             <button routerLink="/checkout"
                 class="bg-[#DE0530] text-white mt-3 py-1 transition-all ease-in duration-300 font-medium rounded-full border-2 border-[#DE0530] hover:bg-white hover:text-black ">CheckOut</button>
         </div>
     </div>
-
     }@else {
     <p class="text-2xl font-medium italic">Cart Empty.....</p>
     }
 
+    <!-- !Out of stock -->
+    @if (cartsOutofStock.length>0) {
+    <h1 class="cartsOutofStock text-3xl font-medium pt-20 pb-6 text-[#DE0530]">Out of Stock Products</h1>
+    <!-- <p class="mb-6"><span class="font-medium">{{cartCount}} items </span>in your Cart.</p> -->
+    <div
+        class="bg-white overflow-y-scroll max-h-[100%] px-8 pb-8 w-full rounded-2xl shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px]">
+        <table class="w-full min-w-[850px]">
+            <thead class="w-full sticky top-0 bg-white">
+                <th class=" text-start pr-4">Product</th>
+                <th class="px-4">Price</th>
+                <th class="px-4">Stock</th>
+                <th class="px-4">QTY.</th>
+                <th class="px-4">SubTotal</th>
+            </thead>
+            <tbody>
+                @for (cartOutofStock of cartsOutofStock; track $index) {
+                <tr class=" border-b-2 border-[#e5e7eb]">
+                    <td class="pr-4">
+                        <div class="flex gap-2"><img class="w-[80px] h-[80px] border rounded-lg"
+                                src="{{baseUrl}}{{cartOutofStock.image}}" alt="">
+                            <div>
+                                <p (click)="viewProductFromCart(cartOutofStock.product_id)"
+                                    class="font-medium text-xl mt-1 hover:underline cursor-pointer">
+                                    {{cartOutofStock.productname.slice(0,20)|titlecase}}...</p>
+                                <p class="text-xs text-gray-400">{{cartOutofStock.description.slice(0,100)}}...</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center px-4 text-nowrap">₹ {{cartOutofStock.price}}</td>
+                    <td class="px-4 text-center text-[#DE0530] font-semibold text-nowrap">{{cartOutofStock.stock}} </td>
+                    <td class="px-4 text-center font-semibold">{{cartOutofStock.quantity}} </td>
+                    <td class="w-[150px] px-4 text-center text-xl font-medium text-[#de05318f]">₹
+                        {{eachProductPrice(cartOutofStock)}}
+                    </td>
+                    <td>
+                        <div class="flex flex-col text-nowrap gap-y-3">
+                            <button (click)=" addToSaveForLater(cartOutofStock,$index)"
+                                class="text-[13px] text-green-600 bg-green-200 rounded-full border-[1px] border-green-600 px-2 font-medium hover:bg-white">Save
+                                for Later</button>
+                            <button (click)="deleteCart($index,cartOutofStock.id)"
+                                class="text-[12.5px] text-red-600 bg-red-200 rounded-full border-[1px] border-red-600 font-medium hover:bg-white">Delete
+                                <i class="fa-solid fa-trash ml-1"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+
+    <!-- !Save For Later -->
+    @if (SaveForLater.length>0) {
+    <div class="saveforlater pt-20">
+        <h1 class="text-3xl font-medium">Save For Later</h1>
+        <p class="mb-6"><span class="font-medium">{{SaveForLaterCount}} items </span>in your Save For Later.</p>
+        <!-- product list -->
+        <div class="flex flex-wrap gap-x-8 gap-y-8">
+            @for (item of SaveForLater; track $index) {
+            <div class="bg-white p-3 rounded-lg relative w-[250px] border-2">
+                <div>
+                    <img class="w-full h-[180px] rounded-md border object-cover" src="{{baseUrl}}{{item.image}}" alt="">
+                    <button (click)="deleteSaveForLater($index,item.id)"
+                        class="absolute top-3 right-3 text-2xl text-gray-400 hover:text-[#DE0530]  px-2 pt-1.5 pb-0.5 rounded-md">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </button>
+                    <div (click)="viewProductFromSaveForLater(item.product_id)" class="cursor-pointer">
+                        <h1 class="font-medium pt-3.5 pb-2">{{item.productname.slice(0,20)|titlecase}}</h1>
+                        <p class="text-xs text-gray-400">{{item.description.slice(0,60)}}...</p>
+                        <div class="flex items-center pt-2 gap-x-5">
+                            <p class=" font-medium ">₹{{item.price}}</p>
+                            @if (item.stock==='In Stock') {
+                            <p class="text-[12px] text-green-600 font-semibold">{{item.stock|uppercase}}</p>
+                            }
+                            @if (item.stock==='Out of Stock') {
+                            <p class="text-[12px] text-[#DE0530] font-semibold">{{item.stock|uppercase}}</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center mt-5">
+                    @if (item.isAdded===0) {
+                    <button (click)="MovetoCart(item,$index)" [disabled]="item.stock==='Out of Stock' "
+                        class="disabled:bg-[#de053186] disabled:text-[#ffffffe0] disabled:border-[#de053111] text-[#DE0530] border-2 border-[#DE0530] font-medium rounded-md text-sm px-5 py-0.5 hover:bg-[#DE0530] hover:text-white">Move
+                        to cart</button>
+                    }@else {
+                    <button type="button" (click)="MovetoCart(item,$index)" [disabled]="item.stock==='Out of Stock' "
+                        class=" disabled:bg-[#de053186] disabled:text-[#ffffffe0] disabled:border-[#de053111] text-white border-2 border-green-600 bg-green-600 font-medium rounded-md text-sm px-5 py-0.5">
+                        Added
+                    </button>
+                    }
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    }
 </section>
+
 <app-footer></app-footer>
+
+@if(!isLoading){
+<div class="main-loader">
+    <div class="loader">
+        <div class="lds-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+}
 
 <!-- <div class="flex justify-end py-[20px]">
     <div class="w-[430px] flex justify-between py-[13px] px-8 text-xl font-medium bg-white rounded-2xl">

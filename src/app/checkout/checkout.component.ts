@@ -5,11 +5,13 @@ import { Router } from '@angular/router';
 import { OrderService } from '../../services/order.service';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FooterComponent } from '../footer/footer.component';
+import { environment } from '../environment/environment';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [ReactiveFormsModule, CheckoutComponent, HeaderComponent, CommonModule],
+  imports: [ReactiveFormsModule, CheckoutComponent, HeaderComponent, CommonModule, FooterComponent],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss'
 })
@@ -26,7 +28,9 @@ export class CheckoutComponent {
   myorderStorage: any[] = []
   cartCount: any | null = null
   isSubmitted: boolean = false
+  isLoading: boolean = false
 
+  baseUrl = environment.BASEURL;
   userid: any = localStorage.getItem('userId')
   date = Date.now()
 
@@ -52,6 +56,7 @@ export class CheckoutComponent {
         // console.log(this.carts);
         this.cartCount = this.carts.length
         localStorage.setItem('myorder', JSON.stringify(this.carts))
+        this.isLoading = true
       },
     })
   }
@@ -70,27 +75,6 @@ export class CheckoutComponent {
       this.addressForm.value.pincode !== null,
       this.addressForm.value.telephone !== null
     ) {
-      //!address add
-      const request = {
-        "CustomerName": this.addressForm.value.CustomerName,
-        "email": this.addressForm.value.email,
-        "address": this.addressForm.value.address,
-        "city": this.addressForm.value.city,
-        "state": this.addressForm.value.state,
-        "pincode": this.addressForm.value.pincode,
-        "telephone": this.addressForm.value.telephone,
-        "user_id": this.userid
-      }
-      this.orderService.addAddress(request).subscribe({
-        next: (data: any) => {
-          this.snackBar.open('Order was Placed', 'Success', {
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
-            duration: 3000,
-          });
-        }
-      })
-
       //! my Orders
       let currentDate = new Date().toJSON().slice(0, 10)
       let date = new Date();
@@ -98,17 +82,37 @@ export class CheckoutComponent {
 
       this.myorderStorage = JSON.parse(localStorage.getItem('myorder')!) || []
       this.myorderStorage.forEach((element, index, array) => {
-        const request2 = {
+        const request = {
           "product_id": element.product_id,
+          "productname": element.productname,
+          "image": element.image,
+          "description": element.description,
+          "price": element.price,
+          "stock": element.stock,
+          "productcreater": element.productcreater,
           "user_id": this.userid,
           "quantity": element.quantity,
           "ordereddate": currentDate,
           "deliverydate": deliverydate,
-          "orderstatus": "Pending",
+          "orderstatus": "In Process",
+          "CustomerName": this.addressForm.value.CustomerName,
+          "email": this.addressForm.value.email,
+          "address": this.addressForm.value.address,
+          "city": this.addressForm.value.city,
+          "state": this.addressForm.value.state,
+          "pincode": this.addressForm.value.pincode,
+          "telephone": this.addressForm.value.telephone,
         }
         // console.log(request2);
-        this.orderService.myOrder(request2).subscribe({
+        this.orderService.myOrder(request).subscribe({
           next: (data: any) => {
+            // Clear Cart
+            this.orderService.ClearCart(this.userid).subscribe({
+              next: (res) => {
+              }
+            })
+            localStorage.removeItem('myorder')
+            this.route.navigateByUrl('orderplaced')
             this.snackBar.open('Order was Placed', 'Success', {
               horizontalPosition: 'center',
               verticalPosition: 'top',
@@ -117,25 +121,28 @@ export class CheckoutComponent {
           }
         })
       })
-
-      //! Clear Cart
-      this.orderService.ClearCart().subscribe({
-        next: (res) => {
-        }
-      })
-    }else{
+    } else {
       this.snackBar.open('Fill the Address Fields', 'Failed', {
         horizontalPosition: 'center',
         verticalPosition: 'top',
         duration: 3000,
       });
     }
-
   }
 
   placeYourOrderAndSubmit() {
     this.placeYourOrder()
     this.isSubmit()
+  }
+
+  cancelYourOrder() {
+    this.snackBar.open('Order Was Cancel', 'Cancelled', {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      duration: 3000,
+    });
+    localStorage.removeItem('myorder')
+    this.route.navigateByUrl('mycart')
   }
 
   // !calculation

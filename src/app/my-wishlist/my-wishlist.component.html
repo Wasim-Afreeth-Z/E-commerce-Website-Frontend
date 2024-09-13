@@ -1,0 +1,80 @@
+<app-header #header></app-header>
+
+<div class="wishlist-main min-h-[100%] flex flex-col justify-between mt-[110px]">
+    <section class="product-list px-20 py-8">
+        <h1 class="text-3xl font-medium">My Wishlist</h1>
+        <p class="mb-6"><span class="font-medium">{{wishlistCount}} items </span>in your Wishlist.</p>
+        @if (wishlists.length>0) {
+        <!-- product list -->
+        <div class="flex flex-wrap gap-x-8 gap-y-8">
+            @for (wishlist of wishlists| paginate: { itemsPerPage: 8, currentPage: p }; track $index) {
+            <div class="bg-white p-3 rounded-lg relative w-[250px] border-2">
+                <div>
+                    <img class="w-full h-[180px] rounded-md border object-cover" src="{{baseUrl}}{{wishlist.image}}"
+                        alt="">
+                    <button (click)="deleteWishlist($index, wishlist.id)"
+                        class="absolute top-3 right-3 text-2xl text-gray-400 hover:text-[#DE0530]  px-2 pt-1.5 pb-0.5 rounded-md">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </button>
+                    <div (click)=" viewProduct(wishlist.product_id)" class="cursor-pointer">
+                        <h1 class="font-medium pt-3.5 pb-2">{{wishlist.productname.slice(0,20)|titlecase}}</h1>
+                        <p class="text-xs text-gray-400">{{wishlist.description.slice(0,60)}}...</p>
+                        <div class="flex items-center pt-2 gap-x-5">
+                            <p class=" font-medium ">₹{{wishlist.price}}</p>
+                            @if (wishlist.stock==='In Stock') {
+                            <p class="text-[12px] text-green-600 font-semibold">{{wishlist.stock|uppercase}}</p>
+                            }
+                            @if (wishlist.stock==='Out of Stock') {
+                            <p class="text-[12px] text-[#DE0530] font-semibold">{{wishlist.stock|uppercase}}</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center mt-5">
+                    @if (wishlist.isAdded===0) {
+                    <button (click)="addtoCart(wishlist)" [disabled]="wishlist.stock==='Out of Stock'"
+                        class="disabled:bg-[#de053186] disabled:text-[#ffffffe0] disabled:border-[#de053111] text-[#DE0530] border-2 border-[#DE0530] font-medium rounded-md text-sm px-5 py-0.5 hover:bg-[#DE0530] hover:text-white">Add
+                        to cart</button>
+                    }@else {
+                    <button type="button" (click)="addtoCart(wishlist)"
+                    [disabled]="wishlist.stock==='Out of Stock'"
+                        class="disabled:bg-[#de053186] disabled:text-[#ffffffe0] disabled:border-[#de053111] text-white border-2 border-green-600 bg-green-600 font-medium rounded-md text-sm px-5 py-0.5">
+                        Added
+                    </button>
+                    }
+                </div>
+            </div>
+            }
+        </div>
+        }@else {
+        <p class="text-2xl font-medium italic">Wishlist is Empty.....</p>
+        }
+        @if (wishlists.length>8) {
+        <div class="mt-8 px-5 flex justify-center items-center">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+        }
+    </section>
+    <app-footer></app-footer>
+</div>
+
+@if(!isLoading){
+<div class="main-loader">
+    <div class="loader">
+        <div class="lds-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+}

@@ -1,15 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, Inject, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ProductService } from '../../services/product.service';
+import { OrderService } from '../../services/order.service';
+import { SaveForLaterService } from '../../services/save-for-later.service';
+import { WishlistService } from '../../services/wishlist.service';
+import { AuthService } from '../../services/auth.service';
+import { environment } from '../environment/environment';
 
 @Component({
   selector: 'app-create-product',
   standalone: true,
-  imports: [ReactiveFormsModule, MatSelectModule, MatDialogModule, MatSnackBarModule],
+  imports: [ReactiveFormsModule, MatSelectModule, MatDialogModule, MatSnackBarModule, CommonModule],
   templateUrl: './create-product.component.html',
   styleUrl: './create-product.component.scss'
 })
@@ -20,15 +25,20 @@ export class CreateProductComponent {
   formBuilder = inject(FormBuilder)
   snackBar = inject(MatSnackBar)
   productService = inject(ProductService)
+  authService = inject(AuthService)
+  orderService = inject(OrderService)
+  saveforlaterService = inject(SaveForLaterService)
+  wishlistService = inject(WishlistService)
   cdr: ChangeDetectorRef = inject(ChangeDetectorRef)
 
   categorylist: any[] = []
 
   userid: any = localStorage.getItem('userId')
+  baseUrl = environment.BASEURL;
 
   // if put this code only dialog box will add, delete, update data for database
   // !import MatDialogReg , Inject ,MAT_DIALOG_DATA
-  constructor(public dialogRef: MatDialogRef<CreateProductComponent>, @Inject(MAT_DIALOG_DATA) private data: any = null) { }
+  constructor(public dialogRef: MatDialogRef<CreateProductComponent>, @Inject(MAT_DIALOG_DATA) public data: any = null) { }
 
   ngOnInit() {
     this.productCreate = this.formBuilder.group({
@@ -40,52 +50,99 @@ export class CreateProductComponent {
       stock: [null, Validators.required]
     })
     this.categoryList()
-    // console.log(this.data);
-    
+  }
+  formData!: FormData
+  image?: File;
+
+  FileSelected(event: any) {
+    const file = event.target.files[0];
+    this.image = file
   }
 
   // send the data to service file
   CreateProduct(): void {
-    const request = {
-      "productname": this.productCreate.value.productname,
-      "image": this.productCreate.value.image,
-      "description": this.productCreate.value.description,
-      "price": this.productCreate.value.price,
-      "cat_id": this.productCreate.value.cat_id,
-      "stock": this.productCreate.value.stock,
-      "user_id": this.userid,
-    }
-      this.productService.CreateProduct(request).subscribe({
-        next: (data: any) => {
-          this.snackBar.open('Product Created ', 'Success', {
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
-            duration: 3000
-          })
-          this.dialogRef.close(true)
-        },
-        error: (error: any) => {
-          if (this.productCreate.value.email === this.productCreate.value.email || this.productCreate.value.username === this.productCreate.value.username) {
-            this.snackBar.open('Product Name already exists', 'Error', {
-              horizontalPosition: 'center',
-              verticalPosition: 'top',
-              duration: 3000,
-            });
-          } else {
-            this.snackBar.open('Failed', 'Error', {
-              horizontalPosition: 'center',
-              verticalPosition: 'top',
-              duration: 3000,
-            });
-          }
+    this.formData = new FormData()
+    this.formData.append('product-image', this.image!);
+    // console.log(this.image);
+
+    this.authService.ProductImageUpload(this.formData).subscribe({
+      next: (data: any) => {
+        let currentDate = new Date().toJSON().slice(0, 10)
+        let currenttime = new Date().toLocaleTimeString()
+        const request = {
+          "productname": this.productCreate.value.productname,
+          "image": data.image,
+          "description": this.productCreate.value.description,
+          "price": this.productCreate.value.price,
+          "cat_id": this.productCreate.value.cat_id,
+          "stock": this.productCreate.value.stock,
+          "user_id": this.userid,
+          "quantity": 1,
+          "created_date": currentDate,
+          "created_time": currenttime
         }
-      })
+        // { data: this.authService.encryptData(request) }
+        this.productService.CreateProduct(request).subscribe({
+          next: (data: any) => {
+            this.snackBar.open('Product Created ', 'Success', {
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+              duration: 3000
+            })
+            this.dialogRef.close(true)
+          },
+          error: (error: any) => {
+            if (this.productCreate.value.email === this.productCreate.value.email || this.productCreate.value.username === this.productCreate.value.username) {
+              this.snackBar.open('Product Name already exists', 'Error', {
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+                duration: 3000,
+              });
+            } else {
+              this.snackBar.open('Failed', 'Error', {
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+                duration: 3000,
+              });
+            }
+          }
+        })
+      }
+    })
   }
 
   // update the data from service file
   updateProduct() {
-      this.productService.updateProduct(this.data?.product.id, this.productCreate.value).subscribe({
+    if (this.productCreate.value.image === null) {
+      const request = {
+        "productname": this.productCreate.value.productname,
+        "image": this.data.product_image,
+        "description": this.productCreate.value.description,
+        "cat_id": this.productCreate.value.cat_id,
+        "price": this.productCreate.value.price,
+        "stock": this.productCreate.value.stock
+      }
+      this.productService.updateProduct(this.data?.product_id, request).subscribe({
         next: (res: any) => {
+          this.orderService.updateCartProduct(this.data?.product_id, request).subscribe({
+            next: (res: any) => {
+
+            }
+          })
+
+          this.saveforlaterService.updateSaveForLaterProduct(this.data?.product_id, request).subscribe({
+            next: (res: any) => {
+
+            }
+          })
+
+          this.wishlistService.updateWishListProduct(this.data?.product_id, request).subscribe({
+            next: (res: any) => {
+
+            }
+          })
+          //-------
+
           this.snackBar.open('Product Detail Updated', 'Success', {
             horizontalPosition: 'center',
             verticalPosition: 'top',
@@ -109,6 +166,69 @@ export class CreateProductComponent {
           }
         }
       })
+    } else {
+      this.formData = new FormData()
+      this.formData.append('product-image', this.image!);
+      // console.log(this.image);
+
+      this.authService.ProductImageUpload(this.formData).subscribe({
+        next: (data: any) => {
+          const request = {
+            "productname": this.productCreate.value.productname,
+            "image": data.image,
+            "description": this.productCreate.value.description,
+            "cat_id": this.productCreate.value.cat_id,
+            "price": this.productCreate.value.price,
+            "stock": this.productCreate.value.stock
+          }
+          this.productService.updateProduct(this.data?.product_id, request).subscribe({
+            next: (res: any) => {
+              this.orderService.updateCartProduct(this.data?.product_id, request).subscribe({
+                next: (res: any) => {
+
+                }
+              })
+
+              this.saveforlaterService.updateSaveForLaterProduct(this.data?.product_id, request).subscribe({
+                next: (res: any) => {
+
+                }
+              })
+
+              this.wishlistService.updateWishListProduct(this.data?.product_id, request).subscribe({
+                next: (res: any) => {
+
+                }
+              })
+              //-------
+
+              this.snackBar.open('Product Detail Updated', 'Success', {
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+                duration: 3000,
+              });
+              this.dialogRef.close(true)
+            },
+            error: (error: any) => {
+              if (this.productCreate.value.email === this.productCreate.value.email || this.productCreate.value.username === this.productCreate.value.username) {
+                this.snackBar.open('Product Name already exists', 'Error', {
+                  horizontalPosition: 'center',
+                  verticalPosition: 'top',
+                  duration: 3000,
+                });
+              } else {
+                this.snackBar.open('Failed', 'Error', {
+                  horizontalPosition: 'center',
+                  verticalPosition: 'top',
+                  duration: 3000,
+                });
+              }
+            }
+          })
+        }
+      })
+    }
+
   }
 
   isSubmitted: boolean = false
@@ -123,6 +243,7 @@ export class CreateProductComponent {
       this.updateProduct()
     } else {
       this.CreateProduct()
+      // this.CreateProductss()
       this.isSubmit()
     }
   }
@@ -130,7 +251,7 @@ export class CreateProductComponent {
   ngAfterViewInit() {
     if (this.data !== null) {
       this.isEdit = true
-      this.productCreate.patchValue(this.data?.product)
+      this.productCreate.patchValue(this.data)
       this.cdr.detectChanges()
     }
   }
@@ -144,4 +265,69 @@ export class CreateProductComponent {
       }
     })
   }
+
+
+  //!mutiple image upload
+
+  // multipleimage?: File[] = [];
+
+  // MultipleFileSelected(event: any) {
+  //   this.multipleimage = event.target.files;
+  // }
+
+  // !create product for multiplae image upload
+  // CreateProductss(): void {
+  //   this.formData = new FormData()
+  //   for (let image of this.multipleimage!) {
+  //     this.formData.append('product-images', image);
+  //   }
+  //   this.authService.ProductMultipleImageUpload(this.formData).subscribe({
+  //     next: (data: any) => {
+  //       // console.log(data.ids);
+  //       let currentDate = new Date().toJSON().slice(0, 10)
+  //       let currenttime = new Date().toLocaleTimeString()
+  //       const request = {
+  //         "productname": this.productCreate.value.productname,
+  //         "description": this.productCreate.value.description,
+  //         "image":data.ids,
+  //         "price": this.productCreate.value.price,
+  //         "cat_id": this.productCreate.value.cat_id,
+  //         "stock": this.productCreate.value.stock,
+  //         "user_id": this.userid,
+  //         "quantity": 1,
+  //         "created_date": currentDate,
+  //         "created_time": currenttime
+  //       }
+  //       // { data: this.authService.encryptData(request) }
+  //       this.productService.CreateProduct(request).subscribe({
+  //         next: (data: any) => {
+  //           console.log(data);
+
+  //           this.snackBar.open('Product Created ', 'Success', {
+  //             horizontalPosition: 'center',
+  //             verticalPosition: 'top',
+  //             duration: 3000
+  //           })
+  //           this.dialogRef.close(true)
+  //         },
+  //         error: (error: any) => {
+  //           if (this.productCreate.value.email === this.productCreate.value.email || this.productCreate.value.username === this.productCreate.value.username) {
+  //             this.snackBar.open('Product Name already exists', 'Error', {
+  //               horizontalPosition: 'center',
+  //               verticalPosition: 'top',
+  //               duration: 3000,
+  //             });
+  //           } else {
+  //             this.snackBar.open('Failed', 'Error', {
+  //               horizontalPosition: 'center',
+  //               verticalPosition: 'top',
+  //               duration: 3000,
+  //             });
+  //           }
+  //         }
+  //       })
+  //     }
+  //   })
+  // }
+
 }

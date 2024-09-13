@@ -1,3 +1,29 @@
+input {
+  outline: none;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.upload {
+  display: inline-block;
+  background-color: #1e1345;
+  color: white;
+  user-select: none;
+  cursor: pointer;
+  padding-inline: 10px;
+  padding-block: 2px;
+  border-radius: 8px;
+  border: 2px solid #1e1345;
+  font-size: 14px;
+}
+
+.upload:hover {
+  background-color: white;
+  color: #1e1345;
+}
+
 @media (max-width: 540px) {
     .cancel{
       padding-inline: 20px;

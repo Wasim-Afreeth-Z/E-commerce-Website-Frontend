@@ -1,0 +1,260 @@
+th {
+    padding-block: 10px;
+    color: white;
+    font-weight: 500;
+}
+
+td {
+    padding-block: 13px;
+}
+
+@media (min-width: 2000px) {
+    .header-left{
+        padding-right: 500px !important;
+    }
+}
+@media (min-width: 1900px) {
+    .header-left{
+        padding-right: 400px !important;
+    }
+}
+
+@media (min-width: 1800px) {
+    .header-left{
+        padding-right: 350px;
+    }
+}
+
+@media (max-width: 1200px) {
+    section {
+        padding-inline: 100px;
+    }
+}
+
+@media (max-width: 1150px) {
+    .header {
+        .header-left {
+            padding-right: 170px;
+        }
+    }
+}
+
+@media (max-width: 1050px) {
+    .header {
+        .header-left {
+            padding-right: 130px;
+
+            img {
+                width: 25px;
+                height: 25px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+        }
+
+        h1 {
+            padding-block: 12px;
+            font-size: 30px;
+        }
+    }
+    .product-list{
+        margin-inline:40px;
+    }
+    .detail{
+        margin-left:40px;
+    }
+    .amount{
+        padding-inline: 40px;
+    }
+    .thank-left{
+        padding-left: 40px;
+    }
+    .thank-right{
+        padding-right: 40px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .thank{
+        flex-direction: column;
+        margin-top: 50px;
+    }
+    .thank-left{
+        width: 100% !important;
+        border-radius: 0;
+        justify-content: center;
+        padding-right: 40px;
+    }
+    .thank-right{
+        padding-block: 15px;
+        padding-inline: 0 !important;
+    }
+
+    .detail{
+        flex-direction: column-reverse;
+        margin-inline:40px;
+    }
+    .invoive-detail{
+        margin-bottom: 20px;
+        justify-content: space-between;
+        padding-inline: 20px;
+    }
+}
+@media (max-width: 850px) {
+    .header {
+        .header-left {
+            padding-right: 70px;
+            padding-left: 40px;
+
+        }
+
+        h1 {
+            padding-right: 40px;
+        }
+    }
+}
+
+@media (max-width: 780px) {
+    section {
+        padding-inline: 40px;
+    }
+}
+
+@media (max-width: 650px) {
+    .header {
+        .header-left {
+            padding-right: 30px;
+
+        }
+    }
+    .product-list{
+        margin-inline:30px;
+    }
+    .detail{
+        margin-inline:30px;
+    }
+    .amount{
+        padding-inline: 30px;
+    }
+    .thank-left{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    .thank-right{
+        padding-right: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header {
+        .header-left {
+            img {
+                width: 20px;
+                height: 20px;
+            }
+
+            h1 {
+                font-size: 15px;
+            }
+        }
+
+        h1 {
+            font-size: 25px;
+        }
+    }
+}
+
+@media (max-width: 590px) {
+    .thank{
+        margin-top: 40px;
+    }
+    .thank-left{
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+@media (max-width: 570px) {
+    .invoive-detail{
+       flex-direction: column;
+       height: 75px;
+       align-items: center;
+    }
+    .invoive-date{
+        margin: 0;
+    }
+}
+
+@media (max-width: 520px) {
+    .header {
+        .header-left {
+            padding-left: 20px;
+
+        }
+
+        h1 {
+            padding-right: 20px;
+        }
+    }
+
+    section {
+        padding-inline: 30px;
+        padding-block: 30px;
+    }
+
+    .product-list{
+        margin-inline:20px;
+    }
+    .detail{
+        margin-left:20px;
+    }
+    .amount{
+        padding-inline: 20px !important;
+    }
+    .thank-left{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .thank-right{
+        padding-right: 20px;
+    }
+}
+
+@media (max-width: 450px) {
+    .header {
+        .header-left {
+            // padding-right: 10px !important;
+            padding-left: 12px;
+
+            h1 {
+                font-size: 13px !important;
+                font-weight: 500;
+            }
+        }
+     h1{
+        font-size: 20px;
+        padding-right: 12px;
+     }
+    }
+}
+
+@media (max-width: 450px) {
+    .header-left {
+        padding-right: 10px !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .invoice-date span,
+    .invoice-no span{
+        font-size: 15px;
+    }
+    .invoice-date,
+    .invoice-no{
+        font-size: 14px;
+    }
+}
+

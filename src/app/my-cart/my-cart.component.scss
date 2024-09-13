@@ -1,10 +1,10 @@
-th{
+th {
     padding-top: 32px;
     padding-bottom: 20px;
-    
+
 }
 
-td{
+td {
     padding-block: 20px;
     // padding-inline: 16px;
 }
@@ -25,8 +25,23 @@ td{
     .cart-box-2 {
         flex-direction: column;
     }
+
     .cart-total {
         width: 100%;
+    }
+
+    .cartsOutofStock {
+        padding-top: 40px;
+    }
+
+    .saveforlater {
+        padding-top: 40px;
+    }
+}
+
+@media (max-width: 700px) {
+    .cart-box {
+        margin-top: 85px;
     }
 }
 

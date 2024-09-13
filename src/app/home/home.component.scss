@@ -1,3 +1,65 @@
+//slider img
+.slider_container {
+    @apply flex items-center overflow-hidden w-full;
+}
+
+.slider {
+    @apply relative flex flex-row items-center justify-between;
+    animation: 15s cubic-bezier(1, 0.95, 0.565, 1) sliding infinite;
+}
+
+.slide {
+    // position: relative;
+    min-width: 100%;
+
+    img {
+        @apply w-full;
+    }
+}
+
+@keyframes sliding {
+    0% {
+        transform: translateX(0%);
+    }
+
+    20% {
+        transform: translateX(0%);
+    }
+
+    30% {
+        transform: translateX(-100%);
+    }
+
+    40% {
+        transform: translateX(-100%);
+    }
+
+    50% {
+        transform: translateX(-200%);
+    }
+
+    60% {
+        transform: translateX(-200%);
+    }
+
+    70% {
+        transform: translateX(-300%);
+    }
+
+    80% {
+        transform: translateX(-300%);
+    }
+
+    90% {
+        transform: translateX(-400%);
+    }
+
+    100% {
+        transform: translateX(-400%);
+    }
+}
+
+
 @media (max-width: 980px) {
     .product-list {
         padding-inline: 50px;
@@ -5,16 +67,22 @@
 }
 
 
-@media (max-width: 950px) {
-    .category {
-        overflow-x: scroll;
-        max-width: 500px;
-    }
-}
+// @media (max-width: 950px) {
+    // .category {
+        // overflow-x: scroll;
+        // max-width: 500px;
+    // }
+// }
 
 @media (max-width: 840px) {
     .product-list {
         padding-inline: 40px;
+    }
+}
+
+@media (max-width: 700px) {
+    .slider_container{
+        margin-top: 85px;
     }
 }
 
@@ -24,8 +92,102 @@
     }
 }
 
+// @media (max-width: 583px) {
+//     .product-boxes {
+//         justify-content: center;
+//     }
+// }
+
 @media (max-width: 370px) {
     .product-list {
         padding-inline: 18px;
     }
+}
+
+
+//pagination design change
+::ng-deep {
+    .ngx-pagination .current {
+        background: #DE0530 !important;
+    }
+    .ngx-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .ngx-pagination li {
+        width: 35px;
+        height: 35px;
+        border-radius: 50% !important;
+        background-color: #f8f8f8;
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        &.small-screen {
+            display: none !important;
+        }
+
+        &.pagination-previous,
+        &.pagination-next {
+
+            a,
+            span {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                overflow: hidden;
+                color: #f8f8f8;
+            }
+        }
+    }
+
+    .ngx-pagination .pagination-previous a:before,
+    .ngx-pagination .pagination-previous.disabled:before,
+    .ngx-pagination .pagination-next::before {
+        margin-right: 0px !important;
+        font-size: 26px;
+        margin-top: -8px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        display: flex !important;
+        justify-content: center;
+        // align-items: center;
+        color: #DE0530;
+        left: 0;
+        pointer-events: none;
+    }
+
+    .ngx-pagination .pagination-next::before {
+        content: '\bb';
+    }
+
+    .ngx-pagination .pagination-next::after {
+        display: none !important;
+    }
+
+    .ngx-pagination .pagination-previous.disabled:before,
+    .ngx-pagination .pagination-next.disabled:before {
+        opacity: 0.4;
+    }
+
+    .ngx-pagination .pagination-previous.disabled:hover {
+        background-color: #f8f8f8 !important;
+    }
+
+    .ngx-pagination a:hover,
+    .ngx-pagination button:hover {
+        background: initial !important;
+    }
+}
+
+.added{
+    color: white;
+    background-color: #16a34a ;
+    border: 2px #16a34a solid;
 }

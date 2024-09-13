@@ -1,0 +1,115 @@
+<section class="bg-slate-100 min-h-[100%] flex flex-col justify-between">
+    <div>
+        <button (click)="back()"
+            class="text-red-500 text-[16px] font-medium border-2 border-red-500 px-3  mx-5 mt-4 mb-3 rounded-full hover:text-red-600 hover:bg-red-200 hover:border-red-200"><span><i
+                    class="fa-regular fa-arrow-left mr-1"></i></span>
+            Back to Dashboard</button>
+            <!-- <h1 class="text-[25px] font-medium px-5 pb-4 "><span class="mr-2"><i class="fa-solid fa-user"></i></span>User list</h1> -->
+        <div class="bg-white mx-5 px-5 py-5 rounded-lg">
+            <div class="header-box flex items-center justify-between text-nowrap font-medium mb-6">
+                <h1 class="text-[30px] font-medium "><span class="mr-2"><i class="fa-solid fa-user"></i></span>User
+                    list</h1>
+                <!-- <button (click)="openAdminCreateDailog()"
+                    class="create text-[#1A98F5] border-2 border-[#1A98F5] hover:bg-[#1A98F5] hover:text-white px-4 rounded-xl ml-6 py-2">Add
+                    Admin <span class="ml-1 "><i class="fa-solid fa-plus"></i></span></button> -->
+            </div>
+
+
+            <div class=" overflow-x-scroll max-h-[100%]">
+
+                <!--! angular material table-->
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <!-- id -->
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <p class="text-nowrap">Id</p>
+                        </th>
+                        <td mat-cell *matCellDef="let element"> #{{element.id}} </td>
+                    </ng-container>
+
+                    <!-- First Name -->
+                    <ng-container matColumnDef="firstname">
+                        <th mat-header-cell *matHeaderCellDef> First Name </th>
+                        <td mat-cell *matCellDef="let element">{{element.firstname}}</td>
+                    </ng-container>
+
+                    <!-- last Name -->
+                    <ng-container matColumnDef="lastname">
+                        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+                        <td mat-cell *matCellDef="let element">{{element.lastname}}</td>
+                    </ng-container>
+
+                    <!-- Email -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef> Email </th>
+                        <td mat-cell *matCellDef="let element">
+                            <p class="font-medium">{{element.email}}</p>
+                        </td>
+                    </ng-container>
+                    
+                    <!-- Password -->
+                    <ng-container matColumnDef="password">
+                        <th mat-header-cell *matHeaderCellDef> Password </th>
+                        <td mat-cell *matCellDef="let element">
+                            <p class="font-medium">********</p>
+                        </td>
+                    </ng-container>
+
+                    <!-- Action -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="text-nowrap flex">
+                                <!-- <button (click)=" openAdminUpdateDialog(element)"
+                                    class="text-[20px] text-slate-500 rounded-full hover:text-green-600 hover:bg-green-200 px-2.5 py-2.5 "><i
+                                        class="fa-solid fa-pen"></i></button> -->
+                                <button (click)="openUserDeleteDailog(element.id)"
+                                    class="text-[20px] text-slate-500 rounded-full hover:text-red-600 hover:bg-red-200 px-2.5 py-2.5"><i
+                                        class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <!-- ! -->
+
+                <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+                    aria-label="Select page">
+                </mat-paginator>
+
+            </div>
+        </div>
+    </div>
+
+    <div class=" w-full">
+        <div class="w-full h-[1px] bg-[#e5e7eb] mt-5"></div>
+        <div class="flex justify-between footer">
+            <p class="para-1 text-slate-400 pl-5 py-4 text-sm font-normal ">2024 © Wasim</p>
+            <p class="para-2 text-slate-400 pr-5 py-4 text-sm font-normal ">Design & Develop by Wasim Afreeth</p>
+        </div>
+    </div>
+</section>
+
+@if(!isLoading){
+    <div class="main-loader">
+        <div class="loader">
+            <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    }

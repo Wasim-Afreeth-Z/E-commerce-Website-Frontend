@@ -5,10 +5,18 @@
 
 body {
     font-family: "Inter", sans-serif;
+    scroll-behavior: smooth;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 
 /* Custom scrollbar */
@@ -26,20 +34,171 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-radius: 10px;
 }
 
-//angular meterial
+//mat selector
 .mat-mdc-form-field-subscript-wrapper {
-    display: none !important;  
+    display: none !important;
 }
 
-.mat-mdc-text-field-wrapper{
+.mat-mdc-text-field-wrapper {
     height: 48px !important;
     // width: 160px !important;
 }
+
 .mat-mdc-select-placeholder {
     font-size: 13px !important;
     font-weight: 500 !important;
 }
 
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// dashboard table
+.mat-column-productname {
+    min-width: 330px !important;
+}
+
+.mat-column-description {
+    min-width: 440px !important;
+}
+
+.mat-mdc-table .mat-mdc-header-cell {
+    // background: rgb(228, 235, 241) !important;
+    // text-wrap: nowrap;
+    // border:none !important;
+    // font-size: 17px !important;
+}
+
+.mat-mdc-table tfoot,
+.mat-mdc-cell,
+.mat-mdc-footer-cell,
+.mat-mdc-row,
+.mat-mdc-footer-row {
+    background: white !important;
+}
+
+
+//pagination
+.mat-mdc-paginator-container {
+    background: white !important;
+}
+
+// loader
+.main-loader{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 50;
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.lds-spinner{
+    
+}
+
+.lds-spinner,
+.lds-spinner div,
+.lds-spinner div:after {
+    box-sizing: border-box;
+}
+
+.lds-spinner {
+    color: #DE0530;
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-spinner div {
+    transform-origin: 40px 40px;
+    animation: lds-spinner 1.2s linear infinite;
+}
+
+.lds-spinner div:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 3.2px;
+    left: 36.8px;
+    width: 6.4px;
+    height: 17.6px;
+    border-radius: 20%;
+    background: currentColor;
+}
+
+.lds-spinner div:nth-child(1) {
+    transform: rotate(0deg);
+    animation-delay: -1.1s;
+}
+
+.lds-spinner div:nth-child(2) {
+    transform: rotate(30deg);
+    animation-delay: -1s;
+}
+
+.lds-spinner div:nth-child(3) {
+    transform: rotate(60deg);
+    animation-delay: -0.9s;
+}
+
+.lds-spinner div:nth-child(4) {
+    transform: rotate(90deg);
+    animation-delay: -0.8s;
+}
+
+.lds-spinner div:nth-child(5) {
+    transform: rotate(120deg);
+    animation-delay: -0.7s;
+}
+
+.lds-spinner div:nth-child(6) {
+    transform: rotate(150deg);
+    animation-delay: -0.6s;
+}
+
+.lds-spinner div:nth-child(7) {
+    transform: rotate(180deg);
+    animation-delay: -0.5s;
+}
+
+.lds-spinner div:nth-child(8) {
+    transform: rotate(210deg);
+    animation-delay: -0.4s;
+}
+
+.lds-spinner div:nth-child(9) {
+    transform: rotate(240deg);
+    animation-delay: -0.3s;
+}
+
+.lds-spinner div:nth-child(10) {
+    transform: rotate(270deg);
+    animation-delay: -0.2s;
+}
+
+.lds-spinner div:nth-child(11) {
+    transform: rotate(300deg);
+    animation-delay: -0.1s;
+}
+
+.lds-spinner div:nth-child(12) {
+    transform: rotate(330deg);
+    animation-delay: 0s;
+}
+
+@keyframes lds-spinner {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

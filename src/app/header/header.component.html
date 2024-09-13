@@ -13,10 +13,11 @@
             </div>
         </div>
         @if (token?.length>0) {
-        <div class="group">
+        <div class="myaccount group cursor-pointer">
             <p (click)="openMyAccountDialog() " class="text-white px-1 rounded-md text-xs group-hover:bg-[#DE0530]">
                 <span class="text-sm text-[#DE0530] group-hover:text-white"><i class="fa-regular fa-user"></i></span> My
-                Account </p>
+                Account
+            </p>
         </div>
         }
     </div>
@@ -26,28 +27,56 @@
         <h1 routerLink="/home" class="topic-2 text-white text-5xl font-semibold hidden">e<span
                 class="text-[#DE0530]">.</span></h1>
 
-        <div class="search-box relative flex w-full px-20">
-            <input class="rounded-s-full w-full py-2 pl-3 pr-1 outline-none" type="search" placeholder="Search here...">
-            <button class="bg-[#DE0530] text-white rounded-e-full py-2 px-3 font-semibold">Search</button>
+        <div class="search-box flex w-full px-20">
+            <input class="rounded-s-full w-full py-2 pl-3 pr-4 outline-none" type="search" placeholder="Search here..."
+                [(ngModel)]="search" (input)="searchFilterbuttonEvent($event)">
+            <div class="relative">
+                <button (click)="searchFilterbutton()"
+                    class=" bg-[#DE0530] text-white rounded-e-full py-2 px-3 font-semibold">Search</button>
+                @if (search!=null) {
+                <div (click)="clearSearchFilterbutton()"
+                    class="ml-1.5 text-[27px] text-gray-400 hover:text-red-600 absolute left-[-44px] top-[2.5px] "><i
+                        class="fa-duotone fa-circle-xmark"></i></div>
+                }
+            </div>
         </div>
         @if (token?.length>0) {
         <div class="flex gap-5 text-nowrap">
-            <div class="dashboard group text-white text-center" routerLink="/dashboard" routerLinkActive="active">
+            @if(role === "admin"){
+            <div class="dashboard cursor-pointer group text-white text-center" routerLink="/dashboard"
+                routerLinkActive="active">
                 <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-solid fa-desktop"></i></p>
                 <p class="group-hover:text-[#DE0530] text-xs">Dashboard</p>
             </div>
-            <div class="favourites group text-white text-center" >
-                <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-regular fa-heart"></i></p>
-                <p class="group-hover:text-[#DE0530] text-xs">My Favourites</p>
+            }
+            @if(role === "super_admin"){
+            <div class="dashboard cursor-pointer group text-white text-center" routerLink="/dashboard-super-admin"
+                routerLinkActive="active">
+                <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-solid fa-desktop"></i></p>
+                <p class="group-hover:text-[#DE0530] text-xs">Dashboard</p>
             </div>
-            <div class="myorder group text-white text-center">
+            }
+            @if(role === "user"){
+            <div class="wishlist cursor-pointer group text-white text-center" routerLink="/wishlist"
+                routerLinkActive="active">
+                <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-regular fa-heart"></i></p>
+                <p class="group-hover:text-[#DE0530] text-xs">My Wishlist</p>
+            </div>
+            <div class="myorder cursor-pointer group text-white text-center" routerLink="/myorder"
+                routerLinkActive="active">
                 <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-solid fa-bag-shopping"></i></p>
                 <p class="group-hover:text-[#DE0530] text-xs">My Orders</p>
             </div>
-            <div class="mycart group text-white text-center" routerLink="/mycart" routerLinkActive="active">
-                <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-solid fa-cart-shopping"></i></p>
-                <p class="group-hover:text-[#DE0530] text-xs">My Cart</p>
+            <div class="mycart cursor-pointer relative group text-white text-center" routerLink="/mycart">
+                <p class="group-hover:text-[#DE0530] text-lg" routerLinkActive="active"><i
+                        class="fa-solid fa-cart-shopping"></i></p>
+                <p class="group-hover:text-[#DE0530] text-xs" routerLinkActive="active">My Cart</p>
+                <!-- @if (carts.length>=1) { -->
+                <div class="bg-[#DE0530] rounded-full px-[5px] py-[1px] text-[10px] absolute top-[-4px] right-[-2px]">
+                    {{count}}</div>
+                <!-- } -->
             </div>
+            }
             <div class="threebar hidden  text-white text-center">
                 <button (click)="openSidebar()" class=" text-3xl"><i class={{menuIcon}}></i></button>
             </div>
@@ -55,7 +84,7 @@
         }
         @if (token?.length<=0) { <div>
             <button routerLink="/login"
-                class="bg-[#DE0530] text-white border-[#DE0530] border-2 px-4 py-2 font-medium rounded-full text-nowrap hover:bg-transparent ">Login
+                class="bg-[#DE0530] cursor-pointer text-white border-[#DE0530] border-2 px-4 py-2 font-medium rounded-full text-nowrap hover:bg-transparent ">Login
                 / SignUp</button>
     </div>
     }
@@ -64,21 +93,44 @@
     <!-- dropdown -->
     <div [ngStyle]="{'display':menuValue?'none':'block'}"
         class="dropdown bg-[#0c1a2c] py-2 absolute right-0 left-0 border-t-4 border-[#DE0530]">
-        <div class="dashboard-mobile group text-white flex items-center gap-2 pb-2" routerLink="/dashboard" routerLinkActive="active">
+        <div (click)="openMyAccountDialog()"
+            class="myaccount-mobile cursor-pointer group text-white flex items-center gap-2 pb-2">
+            <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-regular fa-user"></i></p>
+            <p class="group-hover:text-[#DE0530] text-xs">My Account</p>
+        </div>
+        @if(role === "admin"){
+        <div class="dashboard-mobile cursor-pointer group text-white flex items-center gap-2 pb-2"
+            routerLink="/dashboard" routerLinkActive="active">
             <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-solid fa-desktop"></i></p>
             <p class="group-hover:text-[#DE0530] text-xs">Dashboard</p>
         </div>
-        <div class="favourites-mobile group text-white flex items-center gap-2 pb-2">
-            <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-regular fa-heart"></i></p>
-            <p class="group-hover:text-[#DE0530] text-xs">My Favourites</p>
+        }
+        @if(role === "super_admin"){
+        <div class="dashboard-mobile cursor-pointer group text-white flex items-center gap-2 pb-2"
+            routerLink="/dashboard-super-admin" routerLinkActive="active">
+            <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-solid fa-desktop"></i></p>
+            <p class="group-hover:text-[#DE0530] text-xs">Dashboard</p>
         </div>
-        <div class="myorder-mobile group text-white flex items-center gap-2  pb-2">
+        }
+        @if(role === "user"){
+        <div class="wishlist-mobile cursor-pointer group text-white flex items-center gap-2 pb-2" routerLink="/wishlist"
+            routerLinkActive="active">
+            <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-regular fa-heart"></i></p>
+            <p class="group-hover:text-[#DE0530] text-xs">My Wishlist</p>
+        </div>
+        <div class="myorder-mobile cursor-pointer group text-white flex items-center gap-2  pb-2" routerLink="/myorder"
+            routerLinkActive="active">
             <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-solid fa-bag-shopping"></i></p>
             <p class="group-hover:text-[#DE0530] text-xs">My Orders</p>
         </div>
-        <div class="mycart-mobile group text-white flex items-center gap-2" routerLink="/mycart" routerLinkActive="active">
-            <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-solid fa-cart-shopping"></i></p>
-            <p class="group-hover:text-[#DE0530] text-xs">My Cart</p>
+        <div class="mycart-mobile cursor-pointer relative group text-white flex items-center gap-2"
+            routerLink="/mycart">
+            <p routerLinkActive="active" class="group-hover:text-[#DE0530] text-lg"><i
+                    class="fa-solid fa-cart-shopping"></i></p>
+            <p routerLinkActive="active" class="group-hover:text-[#DE0530] text-xs">My Cart</p>
+            <div class="bg-[#DE0530] rounded-full px-[5px] py-[1px] text-[8px] absolute top-[-4px] left-[12px]">
+                {{count}}</div>
         </div>
+        }
     </div>
 </header>

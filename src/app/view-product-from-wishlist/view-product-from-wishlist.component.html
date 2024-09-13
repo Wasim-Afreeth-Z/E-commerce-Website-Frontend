@@ -1,0 +1,82 @@
+<app-header #header></app-header>
+<section class="view-product flex justify-center gap-x-10 px-20 py-10 w-full mt-[110px]">
+    <div>
+        <img class="min-w-[550px] h-[450px]" src="{{baseUrl}}{{viewProduct?.image}}" alt="">
+    </div>
+    <div class="flex flex-col gap-y-2">
+        <h1 class="font-semibold text-2xl">{{viewProduct?.productname|uppercase}}</h1>
+        <div class="flex text-[16px]">
+            <p class="text-[#DE0530]"><i class="fa-solid fa-star"></i></p>
+            <p class="text-[#DE0530]"><i class="fa-solid fa-star"></i></p>
+            <p class="text-[#DE0530]"><i class="fa-solid fa-star"></i></p>
+            <p class="text-[#DE0530]"><i class="fa-solid fa-star"></i></p>
+            <p class="text-gray-400"><i class="fa-regular fa-star"></i></p>
+        </div>
+        <div class="flex items-end gap-x-7">
+            <h3 class="text-[#DE0530] font-semibold text-2xl">₹ {{viewProduct?.price}}</h3>
+            @if (viewProduct?.stock==='In Stock') {
+            <h3 class="text-green-600 font-semibold">{{viewProduct?.stock|uppercase}}</h3>
+            }
+            @if (viewProduct?.stock==='Out of Stock') {
+            <h3 class="text-[#DE0530] font-semibold">{{viewProduct?.stock|uppercase}}</h3>
+            }
+        </div>
+        <p class="max-w-[600px]">{{viewProduct?.description}}</p>
+
+        <div class="flex items-center gap-x-5 mt-2">
+            <div class="flex items-center  rounded-full shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+                <button [disabled]="viewProduct?.quantity <=1" (click)="minus(viewProduct?.id)"
+                    class="disabled:bg-gray-300 disabled:text-black rounded-l-full  text-[15px] px-3 h-9 rounded-[4px] hover:bg-[#DE0530] hover:text-white"><i
+                        class="fa-solid fa-minus"></i></button>
+                <p class="px-4 text-xl">{{viewProduct?.quantity}}</p>
+                <button [disabled]="viewProduct?.quantity >=10" (click)=" plus(viewProduct?.id)"
+                    class="disabled:bg-gray-300 disabled:text-black rounded-r-full  text-[15px]  px-3 h-9 rounded-[4px] hover:bg-[#DE0530] hover:text-white"><i
+                        class="fa-solid fa-plus"></i></button>
+            </div>
+            @if (viewProduct?.isAdded===0) {
+            <button (click)="addtoCart(viewProduct)" [disabled]="viewProduct?.stock==='Out of Stock'"
+                class="cart disabled:bg-[#de053186] disabled:text-[#ffffffe0] disabled:border-[#de053111] text-white bg-[#DE0530] px-9 py-1.5 rounded-full font-medium border-[#DE0530] border-2 hover:bg-white hover:text-[#DE0530]">Add
+                To Cart</button>
+            }@else {
+            <button type="button" (click)="addtoCart(viewProduct)" [disabled]="viewProduct?.stock==='Out of Stock'"
+                class="cart disabled:bg-[#de053186] disabled:text-[#ffffffe0] disabled:border-[#de053111] text-white bg-green-600 px-9 py-1.5 rounded-full font-medium border-green-600 border-2">
+                Added
+            </button>
+            }
+        </div>
+
+        <h3 class="mt-5 font-medium font-sans">CATEGORY: {{viewProduct?.category|uppercase}}</h3>
+
+        <div class="flex mt-3 font-medium font-sans item center">
+            <h3 class="pr-2">SHARE: </h3>
+            <div class="flex text-[18px] gap-x-3 text-gray-600">
+                <a href="https://www.facebook.com/"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://web.whatsapp.com/"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://x.com/?lang=en"><i class="fa-brands fa-square-x-twitter"></i></a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@if(!isLoading){
+<div class="main-loader">
+    <div class="loader">
+        <div class="lds-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+}

@@ -1,0 +1,247 @@
+<section class="bg-slate-100 min-h-[100%] flex flex-col justify-between">
+    <div>
+        <button (click)="back()"
+            class="text-red-500 text-[16px] font-medium border-2 border-red-500 px-3  mx-5 mt-4 mb-3 rounded-full hover:text-red-600 hover:bg-red-200 hover:border-red-200"><span><i
+                    class="fa-regular fa-arrow-left mr-1"></i></span>
+            Back to Dashboard</button>
+        <h1 class="text-[25px] font-medium px-5 pb-4 ">Order List</h1>
+        <div class="bg-white mx-5 px-5 py-5 rounded-lg">
+
+            <div class=" overflow-y-scroll max-h-[100%]">
+                <!-- <table class="w-full min-w-[1200px]">
+                    <thead class="w-full sticky top-0 border-b-[1px] ml-2">
+                        <th class="px-4 text-nowrap">Order no.</th>
+                        <th class="px-4 text-nowrap">Product Details</th>
+                        <th class="px-4">Qty.</th>
+                        <th class="px-4">Order Date</th>
+                        <th class="px-4">Delivery Date</th>
+                        <th class="px-4">Invoice Bill</th>
+                        <th class="px-4">Status</th>
+                        <th class="px-4">Action</th>
+                    </thead>
+                    <tbody>
+                        @if (orders.length>0) {
+                        @for (order of orders; track $index) {
+                        <tr class=" border-b-[1px] border-[#e5e7eb]">
+                            <td class="px-4 font-medium text-xl">#{{order.orderid}}</td>
+                            <td class="px-4 text-wrap w-[400px]">
+                                <div class="flex items-center gap-2">
+                                    <img class="w-[60px] border rounded-lg" src="/images/no-image-2.webp" alt="">
+                                    <div>
+                                        <h1 class="font-medium text-xl ">{{order.productname|titlecase}}</h1>
+                                        <p class="text-xs text-gray-400">{{order.description.slice(0,100)}}...</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 font-medium text-xl">{{order.quantity}}</td>
+                            <td class="px-4 font-medium text-xl">{{order.ordereddate|date:'longDate'}}</td>
+                            <td class="px-4 font-medium text-xl">{{order.deliverydate|date:'longDate'}}</td>
+                            <td class="px-4 font-medium text-nowrap">
+                                <button (click)="invoice(order)"
+                                    class="font-medium text-sm px-3 py-1.5 border-2 bg-[#F99B3A]  border-[#F99B3A] text-white rounded-full hover:bg-white hover:text-black shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]"><span
+                                        class="mr-1"><i class="fa-light fa-file-invoice-dollar"></i></span>
+                                    Invoice</button>
+                            </td>
+                            <td class="px-4 text-nowrap">
+                                @if (order.orderstatus==='Pending') {
+                                <p
+                                    class="text-teal-600 bg-teal-200 font-medium text-nowrap inline px-2 py-1.5 rounded-md text-sm">
+                                    {{order.orderstatus}}</p>
+                                }
+                                @if (order.orderstatus==='Cancelled') {
+                                <p
+                                    class="text-red-600 bg-red-200 font-medium text-nowrap inline px-2 py-1.5 rounded-md text-sm">
+                                    {{order.orderstatus}}</p>
+                                }
+                                @if (order.orderstatus==='In Process') {
+                                <p
+                                    class="text-yellow-600 bg-yellow-200 font-medium text-nowrap inline px-2 py-1.5 rounded-md text-sm">
+                                    {{order.orderstatus}}</p>
+                                }
+                                @if (order.orderstatus==='Confirmed') {
+                                <p
+                                    class="text-orange-600 bg-orange-200 font-medium text-nowrap inline px-2 py-1.5 rounded-md text-sm">
+                                    {{order.orderstatus}}</p>
+                                }
+                                @if (order.orderstatus==='Shipped') {
+                                <p
+                                    class="text-sky-600 bg-sky-200 font-medium text-nowrap inline px-2 py-1.5 rounded-md text-sm">
+                                    {{order.orderstatus}}</p>
+                                }
+                                @if (order.orderstatus==='Delivered') {
+                                <p
+                                    class="text-green-600 bg-green-200 font-medium text-nowrap inline px-2 py-1.5 rounded-md text-sm">
+                                    {{order.orderstatus}}</p>
+                                }
+                            </td>
+                            <td class="px-4 text-nowrap">
+                                <div class="relative group">
+                                    <button (click)="openOrderDetailsDialog(order)"
+                                        class="text-[20px] text-slate-500 rounded-full hover:text-green-600 hover:bg-green-200 px-2.5 py-1 "><i
+                                            class="fa-solid fa-pen"></i></button>
+                                    <p
+                                        class="text-green-600 hidden bg-green-200 px-1 rounded-full text-[10px] absolute bottom-[-20px] left-[-10px] group-hover:block">
+                                        Update Status</p>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                        }@else {
+                        <p class="text-2xl p-5 font-medium italic">Order are Not Placed.....</p>
+                        }
+                    </tbody>
+                </table> -->
+
+                <!--! angular material table-->
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                    <!-- orderid -->
+                    <ng-container matColumnDef="orderid">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <p class="text-nowrap">Order no.</p>
+                        </th>
+                        <td mat-cell *matCellDef="let element"> #{{element.orderid}} </td>
+                    </ng-container>
+
+                    <!-- Product Details  -->
+                    <ng-container matColumnDef="productdetail">
+                        <th mat-header-cell *matHeaderCellDef> Product Details </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="flex items-center gap-2 w-[400px]">
+                                <img class="w-[100px] h-[100px] border rounded-lg" src="{{baseUrl}}{{element.image}}" alt="">
+                                <div>
+                                    <h1 class="font-medium text-xl ">{{element.productname|titlecase}}</h1>
+                                    <p class="text-xs text-gray-400">{{element.description.slice(0,100)}}...</p>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+
+                    <!-- quantity -->
+                    <ng-container matColumnDef="quantity">
+                        <th mat-header-cell *matHeaderCellDef> QTY. </th>
+                        <td mat-cell *matCellDef="let element">
+                            <p class="font-medium">{{element.quantity}}</p>
+                        </td>
+                    </ng-container>
+
+                    <!-- ordered date -->
+                    <ng-container matColumnDef="ordereddate">
+                        <th mat-header-cell *matHeaderCellDef> Order Date </th>
+                        <td mat-cell *matCellDef="let element">
+                            <p class="font-medium text-nowrap">{{element.ordereddate|date:'longDate'}}</p>
+                        </td>
+                    </ng-container>
+
+                    <!-- delivery date -->
+                    <ng-container matColumnDef="deliverydate">
+                        <th mat-header-cell *matHeaderCellDef> Delivery Date </th>
+                        <td mat-cell *matCellDef="let element">
+                            <p class="font-medium text-nowrap">{{element.deliverydate|date:'longDate'}}</p>
+                        </td>
+                    </ng-container>
+
+                    <!-- invoive bill -->
+                    <ng-container matColumnDef="invoicebill">
+                        <th mat-header-cell *matHeaderCellDef> Invoice Bill </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button (click)="invoice(element)"
+                                class="text-nowrap font-medium text-sm px-3 py-1.5 border-2 bg-[#F99B3A]  border-[#F99B3A] text-white rounded-full hover:bg-white hover:text-black shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]"><span
+                                    class="mr-1"><i class="fa-light fa-file-invoice-dollar"></i></span>
+                                Invoice</button>
+                        </td>
+                    </ng-container>
+
+                    <!-- status -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef> Status </th>
+                        <td mat-cell *matCellDef="let element">
+                            @if (element.orderstatus==='Pending') {
+                            <p
+                                class="text-teal-600 bg-teal-200 font-medium text-nowrap inline px-2 py-1.5 rounded-md text-sm">
+                                {{element.orderstatus}}</p>
+                            }
+                            @if (element.orderstatus==='Cancelled') {
+                            <p
+                                class="text-red-600 bg-red-200 font-medium text-nowrap inline px-2 py-1.5 rounded-md text-sm">
+                                {{element.orderstatus}}</p>
+                            }
+                            @if (element.orderstatus==='In Process') {
+                            <p
+                                class="text-yellow-600 bg-yellow-200 font-medium text-nowrap inline px-2 py-1.5 rounded-md text-sm">
+                                {{element.orderstatus}}</p>
+                            }
+                            @if (element.orderstatus==='Confirmed') {
+                            <p
+                                class="text-orange-600 bg-orange-200 font-medium text-nowrap inline px-2 py-1.5 rounded-md text-sm">
+                                {{element.orderstatus}}</p>
+                            }
+                            @if (element.orderstatus==='Shipped') {
+                            <p
+                                class="text-sky-600 bg-sky-200 font-medium text-nowrap inline px-2 py-1.5 rounded-md text-sm">
+                                {{element.orderstatus}}</p>
+                            }
+                            @if (element.orderstatus==='Delivered') {
+                            <p
+                                class="text-green-600 bg-green-200 font-medium text-nowrap inline px-2 py-1.5 rounded-md text-sm">
+                                {{element.orderstatus}}</p>
+                            }
+                        </td>
+                    </ng-container>
+
+                    <!-- Action -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="relative group">
+                                <button (click)="openOrderDetailsDialog(element)"
+                                    class="text-[20px] text-slate-500 rounded-full hover:text-green-600 hover:bg-green-200 px-2.5 py-2.5 "><i
+                                        class="fa-solid fa-pen"></i></button>
+                                <p
+                                    class="hidden text-green-600 text-nowrap bg-green-200 px-1 rounded-full text-[10px] absolute bottom-[-25px] left-[-15px] group-hover:block">
+                                    Update Status</p>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+                    aria-label="Select page">
+                </mat-paginator>
+
+            </div>
+        </div>
+    </div>
+    <div class=" w-full">
+        <div class="w-full h-[1px] bg-[#e5e7eb] mt-5"></div>
+        <div class="flex justify-between footer">
+            <p class="para-1 text-slate-400 pl-5 py-4 text-sm font-normal ">2024 © Wasim</p>
+            <p class="para-2 text-slate-400 pr-5 py-4 text-sm font-normal ">Design & Develop by Wasim Afreeth</p>
+        </div>
+    </div>
+</section>
+
+@if(!isLoading){
+    <div class="main-loader">
+        <div class="loader">
+            <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    }

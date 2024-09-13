@@ -1,0 +1,90 @@
+<main class="h-full bg-[#f6f6f6]">
+    <section class="py-10 px-36 bg-[#f6f6f6]">
+        <button (click)="back()" class="text-[#DE0530] text-xl mb-2"><span><i
+                    class="fa-regular fa-arrow-left mr-2"></i></span> Back</button>
+        <div class="bg-white shadow-[0px_0px_30px_20px_#00000024]">
+            <div class="relative header">
+                <div
+                    class="header-left flex items-center pl-14 pr-52 rounded-r-full bg-slate-900 text-white absolute top-0 bottom-0">
+                    <!-- <h1 class="text-[50px] font-bold">e<span>.</span></h1> -->
+                    <!-- <h1 class="text-[25px] font-semibold"><span class="text-[50px] font-bold">e</span><span
+                            class="text-[#DE0530]">.</span> Ecommerce</h1> -->
+                    <h1 class="text-[25px] font-semibold">Ecommerce</h1>
+                </div>
+                <h1 class="text-[60px] py-3 text-right w-full pr-14 bg-[#DE0530] text-white font-semibold">INVOICE</h1>
+            </div>
+            <div class="detail ml-14 pt-10 flex justify-between">
+                <div>
+                    <h1 class="font-medium text-xl text-[#DE0530]">INVOICE TO:</h1>
+                    <p class="font-semibold text-2xl">{{invoice.CustomerName|titlecase}},</p>
+                    <p><span class="font-medium">Address:</span> {{invoice.address}}, {{invoice.city}} ,{{invoice.state}}.</p>
+                    <p><span class="font-medium">Pincode:</span> {{invoice.pincode}}</p>
+                    <p><span class="font-medium">Email:</span> {{invoice.email}}</p>
+                    <p><span class="font-medium">Phone no:</span> {{invoice.telephone}}</p>
+                </div>
+                <div
+                    class="invoive-detail flex gap-x-8 h-[45px] bg-[#DE0530] text-white py-2 px-3 rounded-l-full max-[1024px]:rounded-full">
+                    <p class="invoice-no"><span class="font-semibold text-xl">Invoice No:</span> #{{invoice.orderid}}
+                    </p>
+                    <p class="invoice-date"><span class=" font-semibold text-xl">Invoice Date:</span>
+                        {{invoice.ordereddate|date:'shortDate'}}</p>
+                </div>
+            </div>
+
+            <div class="product-list overflow-y-scroll max-h-[400px] mx-14 pt-10">
+                <table class="w-full min-w-[550px]">
+                    <thead class="w-full sticky top-0 bg-slate-100 ml-2">
+                        <th class="bg-[#DE0530] text-start pl-5 rounded-l-full">Product</th>
+                        <th class="bg-slate-900">Price</th>
+                        <th class="bg-slate-900">QTY.</th>
+                        <th class="bg-slate-900 text-end pr-5 rounded-r-full">Total</th>
+                    </thead>
+                    <tbody>
+
+                        <tr class=" border-b-2 border-[#e5e7eb]">
+                            <td class="pl-5">{{invoice.productname}}</td>
+                            <td class="text-center">₹ {{invoice.price}}</td>
+                            <td class="text-center">{{invoice.quantity}}</td>
+                            <td class="text-end pr-5">₹ {{subTotal(invoice)|number:'0.0-0'}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="amount px-14 ">
+                <!-- <div class="flex justify-end">
+                    <div class="w-[400px] flex justify-between font-medium  py-[13px] border-b-2">
+                        <p class="pl-4">Subtotal:</p>
+                        <p class="pr-5">₹ 09834</p>
+                    </div>
+                </div> -->
+                <div class="flex justify-end">
+                    <div class="w-[400px] flex justify-between font-medium  py-[13px] ">
+                        <p class="pl-4">Tax(18%):</p>
+                        <p class="pr-5">₹ {{tax(invoice)|number:'0.0-0'}}</p>
+                    </div>
+                </div>
+                <div class="flex justify-end ">
+                    <div
+                        class="w-[400px] bg-[#DE0530] text-white flex justify-between font-medium  py-[13px] rounded-full">
+                        <p class="pl-4">Total:</p>
+                        <p class="pr-5">₹ {{total(invoice)|number:'0.0-0'}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="thank flex justify-between items-center w-full mt-16">
+                <div
+                    class="thank-left text-nowrap text-white bg-slate-900 rounded-tr-full pl-14 py-6 w-[600px] flex gap-x-6">
+                    <p class="flex items-center text-[14px]"><span class="text-[25px]  text-[#DE0530] mr-2"><i
+                                class="fa-light fa-circle-phone"></i></span> +91-9345830287</p>
+                    <p class="flex items-center text-[14px]"><span class="text-[25px]  text-[#DE0530] mr-2"><i
+                                class="fa-light fa-circle-envelope"></i></span> ecommerce&commat;gmail.com</p>
+                    <p class="flex items-center text-[14px]"><span class="text-[25px]  text-[#DE0530] mr-2"><i
+                                class="fa-light fa-location-dot"></i></span> Karaikal</p>
+                </div>
+                <p class="thank-right pr-14 mx-5 text-nowrap font-semibold">Thank You For Your Purchase</p>
+            </div>
+        </div>
+    </section>
+</main>

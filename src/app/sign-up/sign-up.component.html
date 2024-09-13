@@ -33,19 +33,6 @@
                 </div>
             </div>
 
-            <!-- username -->
-            <div class="flex items-center">
-                <div class="usericon text-white px-3.5 py-2.5 border-r-[1px] rounded-l-md"><i
-                        class="fa-solid fa-user"></i></div>
-                <input
-                    class="text-white outline-none px-5 py-2.5 rounded-r-md w-full placeholder:text-sm placeholder:text-gray-500"
-                    type="text" placeholder="Username" id="username" name="username" formControlName="username">
-            </div>
-            @if ((isSubmitted && signUpForm.get('username')?.invalid)|| signUpForm.get('username')?.touched) {
-            @if(signUpForm.get('username')?.hasError('required')){
-            <p class="text-red-900 text-sm ml-1">Enter the Username !</p>
-            }
-            }
             <!-- email -->
             <div class="flex items-center">
                 <div class="usericon text-white px-3.5 py-2.5 border-r-[1px] rounded-l-md"><i
@@ -59,7 +46,7 @@
             <p class="text-red-900 text-sm ml-1">Enter the Email !</p>
             }
             @if(signUpForm.get('email')?.hasError('email')){
-            <p class="text-blue-500 text-sm ml-1">Enter correct Format Email !</p>
+            <p class="text-red-900 text-sm ml-1">Enter correct Format Email !</p>
             }
             }
 
@@ -83,6 +70,20 @@
             }
             }
 
+              <!-- role -->
+              <mat-form-field class="!h-[45px]">
+                <mat-label for="role">Role</mat-label>
+                <mat-select id="role" formControlName="role">
+                    <mat-option value="user">User</mat-option>
+                    <mat-option value="admin">Seller</mat-option>
+                </mat-select>
+            </mat-form-field>
+            @if ((isSubmitted && signUpForm.get('role')?.invalid)|| signUpForm.get('role')?.touched) {
+            @if(signUpForm.get('role')?.hasError('required')){
+            <p class="text-red-900 text-sm ml-1">Select Role !</p>
+            }
+            }
+
             <button
                 class=" bg-red-900 text-white font-medium border-red-900 border-2 outline-none rounded-md text-base py-3 mt-4 hover:bg-transparent ">
                 Sign Up</button>
@@ -95,3 +96,4 @@
 
     </div>
 </section>
+

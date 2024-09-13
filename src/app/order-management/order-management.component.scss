@@ -1,0 +1,46 @@
+th {
+    text-align: start;
+    padding-block: 10px;
+    font-weight: 500;
+    color: rgba(128, 128, 128, 0.76);
+    background-color: white !important;
+    border-color: rgba(128, 128, 128, 0.26);
+    font-size: 17px !important;
+}
+
+td {
+    padding-block: 18px;
+    padding-right: 15px;
+    font-size: 15px;
+}
+
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(224, 224, 224);
+    border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+    .footer {
+        justify-content: center;
+
+        .para-1 {
+            padding: 0;
+            padding-block: 15px;
+        }
+
+        .para-2 {
+            display: none;
+        }
+    }
+}

@@ -1,17 +1,20 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, PlatformLocation } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderService } from '../../services/order.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { WishlistService } from '../../services/wishlist.service';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { environment } from '../environment/environment';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, CommonModule, FormsModule],
+  imports: [HeaderComponent, FooterComponent, CommonModule, FormsModule, NgxPaginationModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -19,35 +22,52 @@ export class HomeComponent {
 
   productService = inject(ProductService)
   orderService = inject(OrderService)
+  wishlistService = inject(WishlistService)
   route = inject(Router)
   snackBar = inject(MatSnackBar)
+  platformLocation = inject(PlatformLocation)
 
-  // carts: any | null = null
+  cartProductCheck: any[] = []
   products: any[] = []
   categorylist: any[] = []
   categoryId: any = null
+  isLoading: boolean = false
 
+  p: number = 1;
+
+  token: any = localStorage.getItem('token');
   userid: any = localStorage.getItem('userId')
+  role: any = localStorage.getItem('role')
+
+  baseUrl = environment.BASEURL;
+
+  @ViewChild("header") headerdata!: HeaderComponent
+  @ViewChild("footer") footerdata!: FooterComponent
 
   ngOnInit() {
     this.displayProducts()
     this.categoryList()
-    // this.getcart()
+
+    history.pushState(null, '', location.href);
+    this.platformLocation.onPopState(() => {
+      history.pushState(null, '', location.href)
+    })
   }
 
   // show data from database
   displayProducts() {
-    this.productService.getProduct().subscribe({
+    this.productService.getProduct(this.userid).subscribe({
       next: (data: any) => {
         // console.log(data);
-        this.products = data.data
+        this.products = data.data    
+        this.isLoading = true
       }
     })
   }
 
   // View Product
-  viewProduct(product: any): void {
-    this.route.navigate(['view'], { state: { products: product } });
+  viewProduct(product_id: any): void {
+    this.route.navigate(['view'], { state: { product_id } });
   }
 
   // list the category
@@ -56,6 +76,7 @@ export class HomeComponent {
       next: (data: any) => {
         // console.log(data);
         this.categorylist = data.data
+        this.isLoading = true
 
       }
     })
@@ -68,6 +89,7 @@ export class HomeComponent {
         // console.log(data);
         this.categoryId = id
         this.products = data.data
+        this.isLoading = true
       }
     })
   }
@@ -76,11 +98,12 @@ export class HomeComponent {
   clearCategoryFilter(): void {
     this.categoryId = null;
     this.displayProducts()
+    this.isLoading = true
   }
 
   // !add to cart
-  addtoCart(product_id: string, stock: any): void {
-    if (stock==="Out of Stock") {
+  addtoCart(index: number, product: any): void {
+    if (product.stock === "Out of Stock") {
       this.snackBar.open('Product not Available', 'Out of Stock', {
         horizontalPosition: 'center',
         verticalPosition: 'top',
@@ -88,12 +111,21 @@ export class HomeComponent {
       });
     } else {
       const request = {
-        "product_id": product_id,
+        "product_id": product.product_id,
+        "productname": product.productname,
+        "image": product.image,
+        "description": product.description,
+        "price": product.price,
+        "stock": product.stock,
+        "productcreater": product.productcreater,
         "user_id": this.userid,
-        "quantity": 1
+        "quantity": product.quantity,
+        "cat_id": product.cat_id
       }
       this.orderService.mycart(request).subscribe({
         next: (data: any) => {
+          this.headerdata.count++
+          this.displayProducts()
           this.snackBar.open('Product Add to Cart', 'MyCart', {
             horizontalPosition: 'center',
             verticalPosition: 'top',
@@ -101,7 +133,27 @@ export class HomeComponent {
           });
         },
         error: (error: any) => {
-          if (product_id == product_id) {
+          // if ( product.quantity < 10) {
+          //   product.quantity++
+          // }else{
+          //   this.snackBar.open('Quantity is Full', 'MyCart', {
+          //     horizontalPosition: 'center',
+          //     verticalPosition: 'top',
+          //     duration: 3000,
+          //   });
+          // }
+          // const request = {
+          //   "product_id": product.product_id,
+          //   "user_id": this.userid,
+          //   "quantity": product.quantity,
+          // }
+          // this.orderService.updateQuantityinhome(request).subscribe({
+          //   next: (data: any) => {
+
+          //   }
+          // })
+
+          if (product.product_id == product.product_id) {
             this.snackBar.open('Already product in the Cart', 'MyCart', {
               horizontalPosition: 'center',
               verticalPosition: 'top',
@@ -113,20 +165,71 @@ export class HomeComponent {
     }
   }
 
-  // getcart(): void {
-  //   this.orderService.getcart().subscribe({
-  //     next: (data: any) => {
-  //       // console.log(data);
-  //       this.carts = data.data
-       
-  //       // console.log(this.carts);
+  // !add to Wishlist
+  addToWishlist(product: any): void {
+    const request = {
+      "product_id": product.product_id,
+      "productname": product.productname,
+      "image": product.image,
+      "description": product.description,
+      "price": product.price,
+      "stock": product.stock,
+      "productcreater": product.productcreater,
+      "user_id": this.userid,
+      "cat_id": product.cat_id,
+      "quantity": product.quantity
+    }
+    this.wishlistService.myWishlist(request).subscribe({
+      next: (data: any) => {
+        this.displayProducts()
+        this.snackBar.open('Product Add to Wishlist', 'My Wishlist', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 3000,
+        });
+      },
+      error: (error: any) => {
+        if (product.product_id == product.product_id) {
+          this.snackBar.open('Already product in the Wishlist', 'My Wishlist', {
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            duration: 3000,
+          });
+        }
+      }
+    })
+  }
 
-  //     },
+  // from header 
+  searchFilter(): void {
+    this.productService.searchFilter(this.headerdata.search!).subscribe({
+      next: (data: any) => {
+        this.products = data.data
+        this.isLoading = true
+      }
+    })
+  }
 
-  //   })
-  // }
+  clearSearchFilter(): void {
+    this.headerdata.search = null;
+    this.displayProducts()
+    this.isLoading = true
+  }
 
+  //from footer
+  filterCategoryFooter() {
+    this.productService.categoryFilter(this.footerdata.categoryId!).subscribe({
+      next: (data: any) => {
+        this.products = data.data
+        this.isLoading = true
+      }
+    })
+  }
 
-
+  clearCategoryFilterFooter(): void {
+    this.footerdata.categoryId = null;
+    this.displayProducts()
+    this.isLoading = true
+  }
 
 }

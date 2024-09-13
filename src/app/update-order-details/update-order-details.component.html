@@ -1,0 +1,29 @@
+<section class="flex flex-col justify-center items-center py-7">
+    <h1 class="text-center font-bold text-2xl mb-5">Order Status</h1>
+    <form class="flex flex-col px-8 gap-3 max-[360px]:px-3.5 " [formGroup]="OrderDetails"
+        (ngSubmit)="updatestatus()">
+        <!-- status -->
+        <mat-form-field>
+            <mat-label for="orderstatus">Orderstatus</mat-label>
+            <mat-select id="orderstatus" formControlName="orderstatus">
+                <mat-option value="Pending">Pending</mat-option>
+                <mat-option value="Cancelled">Cancelled</mat-option>
+                <mat-option value="In Process">In Process</mat-option>
+                <mat-option value="Confirmed">Confirmed</mat-option>
+                <mat-option value="Shipped">Shipped</mat-option>
+                <mat-option value="Delivered">Delivered</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- @if ((isSubmitted && productCreate.get('orderstatus')?.invalid)|| productCreate.get('orderstatus')?.touched) {
+        @if(productCreate.get('orderstatus')?.hasError('required')){
+        <p class="text-red-600 mt-0.5">Select the Orderstatus/Out of Orderstatus</p>
+        }
+        } -->
+        <br>
+        <div class="flex justify-center items-center ">
+            <button (click)="close()" type="button"
+                class="cancel bg-slate-600 text-white px-12 py-2 text-xl rounded-full mr-7">Cancel</button>
+            <button class="create bg-red-600 text-white px-14 py-2 text-xl rounded-full">Update</button>
+        </div>
+    </form>
+</section>

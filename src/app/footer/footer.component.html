@@ -11,25 +11,36 @@
             <p class=" rounded-md font-extralight text-sm"><span class="text-sm text-[#DE0530] mr-2"><i
                         class="fa-regular fa-envelope"></i></span>ecommerce&commat;gmail.com </p>
             <p class=" rounded-md font-extralight text-sm"><span class="text-sm text-[#DE0530] mr-2"><i
-                        class="fa-regular fa-location-dot"></i></span>karaikal, puducherry</p>
+                        class="fa-regular fa-location-dot"></i></span>Karaikal, Puducherry</p>
         </div>
     </div>
 
-    <div class="">
-        <h1 class="font-semibold text-lg pb-3">CATAGORIES</h1>
+    <div>
+        <div class="flex gap-x-3">
+            <h1 class="font-semibold text-lg pb-3">CATAGORIES</h1>
+            @if (categoryId!=null) {
+            <div (click)="clearCategoryFilter()" class="mr-3 text-xl text-gray-400 hover:text-red-600"><i
+                    class="fa-sharp fa-solid fa-circle-xmark"></i></div>
+            }
+        </div>
         <div class="flex flex-col gap-y-2">
-            <p class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">Electronics</p>
-            <p class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">Shoes</p>
-            <p class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">Colthes</p>
+            @for (category of categorylist; track $index) {
+            <p (click)="filterCategory(category.id)"
+                class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">
+                {{category.category|titlecase}}</p>
+            }
         </div>
     </div>
 
     <div class="text-nowrap">
         <h1 class="font-semibold text-lg pb-3">CONNECT WITH US</h1>
         <div class="flex flex-col gap-y-2">
-            <p class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">Facebook</p>
-            <p class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">Instragram</p>
-            <p class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">Twitter</p>
+            <a href="https://www.facebook.com/"
+                class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">Facebook</a>
+            <a href="https://www.instagram.com/"
+                class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">Instragram</a>
+            <a href="https://x.com/?lang=en"
+                class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">Twitter</a>
         </div>
     </div>
 
@@ -37,12 +48,21 @@
     <div class="text-nowrap">
         <h1 class="font-semibold text-lg pb-3">SERVICE</h1>
         <div class="flex flex-col gap-y-2">
-            <p class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">My Account</p>
-            <p class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">Dashboard</p>
-            <p class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">My Cart</p>
-            <p class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">My Orders</p>
-            <p class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">My Favourite</p>
+            <p (click)="openMyAccountDialog()"
+                class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">My Account</p>
+            @if(role === "admin"){
+            <p routerLink="/dashboard" routerLinkActive="active"
+                class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">Dashboard</p>
+            }
+            @if(role === "user"){
+            <p routerLink="/mycart" routerLinkActive="active"
+                class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">My Cart</p>
+            <p routerLink="/myorder" routerLinkActive="active"
+                class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">My Orders</p>
+            <p routerLink="/wishlist" routerLinkActive="active"
+                class=" rounded-md font-extralight text-sm hover:underline hover:cursor-pointer">My Wishlist</p>
+            }
         </div>
     </div>
-}
+    }
 </footer>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent {
   loginForm!: FormGroup
   formBuilder = inject(FormBuilder)
   userService = inject(UserService)
+  authService = inject(AuthService)
   snackBar = inject(MatSnackBar)
   route = inject(Router)
 
@@ -54,28 +56,33 @@ export class LoginComponent {
         // console.log(res);
         localStorage.setItem('token', res.token);
         localStorage.setItem('userId', res.userId)
+        localStorage.setItem('role', res.role)
+        this.authService.login()
         this.snackBar.open('Login successfully', 'success', {
           horizontalPosition: 'center',
           verticalPosition: 'top',
           duration: 3000,
         });
+
+        const request2 = {
+          "token": res.token,
+          "id": res.userId
+        }
+        this.userService.Token(request2).subscribe({
+          next: (res: any) => {
+
+          }
+        })
+
         this.route.navigateByUrl('home');
       },
       error: (error: any) => {
-        console.error('Login error:', error);
-        if (this.loginForm.value.email == this.loginForm.value.email || this.loginForm.value.password == this.loginForm.value.password ) {
-          this.snackBar.open('Invalid email or password', 'Error', {
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
-            duration: 3000,
-          });
-        } else {
-          this.snackBar.open('Login error', 'Error', {
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
-            duration: 3000,
-          });
-        }
+        // console.log(error);
+        this.snackBar.open(error.error.message, 'Error', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 3000,
+        });
       },
     });
   }
