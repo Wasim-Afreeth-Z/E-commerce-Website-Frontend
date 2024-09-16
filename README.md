@@ -27,5 +27,29 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 "# E-commerce-Website-Frontend" 
 
-![ECommerce-Website (22)](https://github.com/user-attachments/assets/c44edfa8-50bf-44de-a8d7-8ce1e73014cc)
+HOME PAGE BEFORE LOGIN
+![ECommerce-Website](https://github.com/user-attachments/assets/17fd6afb-6368-4b54-9304-09a46538bafd)
+
+LOGIN
+![ECommerce-Website (1)](https://github.com/user-attachments/assets/d308046b-0bef-4b2a-b0c0-2f24ae16dd3d)
+
+SIGNUP
+![ECommerce-Website (2)](https://github.com/user-attachments/assets/c3fd4e27-3e53-42f7-abcb-b9612421c544)
+
+HOME PAGE AFTER LOGIN
+![ECommerce-Website (3)](https://github.com/user-attachments/assets/3e948ed1-753b-48ac-bcfa-63cfbaac31ed)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
