@@ -1,3 +1,15 @@
+.input.ng-invalid.ng-touched {
+  border: 2px red solid;
+}
+
+.input.ng-valid {
+  border: 2px green solid;
+}
+
+.error {
+  border: 2px red solid;
+}
+
 input {
   outline: none;
 }

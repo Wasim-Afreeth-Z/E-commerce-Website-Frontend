@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, ElementRef, Inject, inject, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -10,11 +10,12 @@ import { SaveForLaterService } from '../../services/save-for-later.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { AuthService } from '../../services/auth.service';
 import { environment } from '../environment/environment';
+import { Productcreateform } from './form.model';
 
 @Component({
   selector: 'app-create-product',
   standalone: true,
-  imports: [ReactiveFormsModule, MatSelectModule, MatDialogModule, MatSnackBarModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, MatSelectModule, MatDialogModule, MatSnackBarModule, CommonModule],
   templateUrl: './create-product.component.html',
   styleUrl: './create-product.component.scss'
 })
@@ -252,6 +253,16 @@ export class CreateProductComponent {
     if (this.data !== null) {
       this.isEdit = true
       this.productCreate.patchValue(this.data)
+      // setTimeout(() => {
+      //   this.form?.form.setValue({
+      //     productname: this.data.productname,
+      //     image: null,
+      //     description: this.data.description,
+      //     price: this.data.price,
+      //     cat_id: this.data.cat_id,
+      //     stock: this.data.stock
+      //   })
+      // }, 100);
       this.cdr.detectChanges()
     }
   }
@@ -324,6 +335,63 @@ export class CreateProductComponent {
   //               duration: 3000,
   //             });
   //           }
+  //         }
+  //       })
+  //     }
+  //   })
+  // }
+
+  //! Template driven forms
+
+  //! import the formsModule
+  // !import Ngform
+
+  // productcreateform: Productcreateform = new Productcreateform()
+
+  // @ViewChild("form") form: NgForm | undefined;
+
+  // CreateProductssss(): void {
+  //   console.log(this.form);
+  //   // console.log(this.form?.controls['city'].untouched);
+  //   // this.form?.reset()
+
+  //   this.formData = new FormData()
+  //   this.formData.append('product-image', this.image!);
+  //   // console.log(this.image);
+
+  //   this.authService.ProductImageUpload(this.formData).subscribe({
+  //     next: (data: any) => {
+  //       let currentDate = new Date().toJSON().slice(0, 10)
+  //       let currenttime = new Date().toLocaleTimeString()
+  //       const request = {
+  //         "productname": this.form?.value.productname,
+  //         "image": data.image,
+  //         "description": this.form?.value.description,
+  //         "price": this.form?.value.price,
+  //         "cat_id": this.form?.value.cat_id,
+  //         "stock": this.form?.value.stock,
+  //         "user_id": this.userid,
+  //         "quantity": 1,
+  //         "created_date": currentDate,
+  //         "created_time": currenttime
+  //       }
+  //       // { data: this.authService.encryptData(request) }
+  //       this.productService.CreateProduct(request).subscribe({
+  //         next: (data: any) => {
+  //           this.snackBar.open('Product Created ', 'Success', {
+  //             horizontalPosition: 'center',
+  //             verticalPosition: 'top',
+  //             duration: 3000
+  //           })
+  //           this.dialogRef.close(true)
+  //           this.productcreateform = new Productcreateform
+  //         },
+  //         error: (error: any) => {
+  //           this.snackBar.open('Product Name already exists', 'Error', {
+  //             horizontalPosition: 'center',
+  //             verticalPosition: 'top',
+  //             duration: 3000,
+  //           });
   //         }
   //       })
   //     }

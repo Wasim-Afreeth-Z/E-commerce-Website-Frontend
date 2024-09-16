@@ -40,8 +40,9 @@
                 }
             </div>
         </div>
-        @if (token?.length>0) {
+
         <div class="flex gap-5 text-nowrap">
+            @if (token?.length>0) {
             @if(role === "admin"){
             <div class="dashboard cursor-pointer group text-white text-center" routerLink="/dashboard"
                 routerLinkActive="active">
@@ -76,13 +77,13 @@
                     {{count}}</div>
                 <!-- } -->
             </div>
-            }
+            }}
             <div class="threebar hidden  text-white text-center">
                 <button (click)="openSidebar()" class=" text-3xl"><i class={{menuIcon}}></i></button>
             </div>
         </div>
-        }
-        @if (token?.length<=0) { <div>
+
+        @if (token?.length<=0) { <div class="login">
             <button routerLink="/login"
                 class="bg-[#DE0530] cursor-pointer text-white border-[#DE0530] border-2 px-4 py-2 font-medium rounded-full text-nowrap hover:bg-transparent ">Login
                 / SignUp</button>
@@ -93,11 +94,13 @@
     <!-- dropdown -->
     <div [ngStyle]="{'display':menuValue?'none':'block'}"
         class="dropdown bg-[#0c1a2c] py-2 absolute right-0 left-0 border-t-4 border-[#DE0530]">
+        @if (token?.length>0) {
         <div (click)="openMyAccountDialog()"
             class="myaccount-mobile cursor-pointer group text-white flex items-center gap-2 pb-2">
             <p class="group-hover:text-[#DE0530] text-lg"><i class="fa-regular fa-user"></i></p>
             <p class="group-hover:text-[#DE0530] text-xs">My Account</p>
         </div>
+        }
         @if(role === "admin"){
         <div class="dashboard-mobile cursor-pointer group text-white flex items-center gap-2 pb-2"
             routerLink="/dashboard" routerLinkActive="active">
@@ -132,5 +135,11 @@
                 {{count}}</div>
         </div>
         }
+        @if (token?.length<=0) { <div class="login-mobile">
+            <button routerLink="/login"
+                class="bg-[#DE0530] cursor-pointer text-white border-[#DE0530] text-[14px] border-2 px-2.5 py-1 my-3 font-medium rounded-full text-nowrap hover:bg-transparent ">Login
+                / SignUp</button>
+    </div>
+    }
     </div>
 </header>
