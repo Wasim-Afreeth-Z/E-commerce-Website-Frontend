@@ -33,7 +33,7 @@ MY ORDERS
 USER & SELLER PROFILE
 ![ECommerce-Website (13)](https://github.com/user-attachments/assets/806dcb17-0f7c-4c82-be3d-c83d84345bbe)
 
-SELLER DASHBOARD SELLERS PRODUCT ONLY
+SELLER DASHBOARD DISPLAY SELLER CREATED PRODUCT ONLY
 ![ECommerce-Website (14)](https://github.com/user-attachments/assets/07fe5c51-7cdb-403c-93f9-e7a7dce9a8d2)
 
 CREATE PRODUCT
@@ -54,4 +54,4 @@ USER LIST SUPER ADMIN MANAGE USERS
 ![ECommerce-Website (21)](https://github.com/user-attachments/assets/203036da-a1a3-4156-aafd-a910f6ab9e3e)
 
 
-                                                                                           ###### Thank You ######
+                                       ###### Thank You ######
