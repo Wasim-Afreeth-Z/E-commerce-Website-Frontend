@@ -57,9 +57,20 @@ export class HomeComponent {
   // show data from database
   displayProducts() {
     this.productService.getProduct(this.userid).subscribe({
-      next: (data: any) => {
-        // console.log(data);
-        this.products = data.data    
+      next: (res: any) => {
+        //!added button feature in Angular
+        // const products =res.data 
+        // this.orderService.displaycart(this.userid).subscribe({
+        //   next: (data: any) => {
+        //     for (let cart of data.data) {
+        //       let index = products.findIndex((product: { product_id: any; }) => cart.product_id == product.product_id)
+        //       if (index != -1) {
+        //         products[index].isAdded = 1
+        //       }
+        //     }
+        //   },
+        // })
+        this.products = res.data
         this.isLoading = true
       }
     })
