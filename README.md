@@ -32,6 +32,9 @@ ORDER PLACED MESSAGE
 MY ORDERS
 ![ECommerce-Website (12)](https://github.com/user-attachments/assets/6ac1e4a3-e3ef-42fb-8eec-3ae4e6467bef)
 
+INVOICE
+![ECommerce-Website](https://github.com/user-attachments/assets/8fbd4a02-672f-4908-a8f4-15e2d87a1f41)
+
 USER & SELLER PROFILE
 ![ECommerce-Website (13)](https://github.com/user-attachments/assets/806dcb17-0f7c-4c82-be3d-c83d84345bbe)
 
