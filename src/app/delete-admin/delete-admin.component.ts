@@ -36,22 +36,23 @@ export class DeleteAdminComponent {
 
     // update stocks only
     const request = {
+      "id": this.data.id,
       "stock": "Out of Stock"
     }
 
-    this.orderService.updateCartStockDeleteAccount(this.data.id, request).subscribe({
+    this.orderService.updateCartStockDeleteAccount(request).subscribe({
       next: (res: any) => {
 
       }
     })
 
-    this.saveforlaterService.updateSaveForLaterStockDeleteAccount(this.data.id, request).subscribe({
+    this.saveforlaterService.updateSaveForLaterStockDeleteAccount(request).subscribe({
       next: (res: any) => {
 
       }
     })
 
-    this.wishlistService.updateWishlistStockDeleteAccount(this.data.id, request).subscribe({
+    this.wishlistService.updateWishlistStockDeleteAccount(request).subscribe({
       next: (res: any) => {
 
       }
@@ -60,19 +61,26 @@ export class DeleteAdminComponent {
 
     //update orderstatus CANCELLED in My Orders
     const request2 = {
+      "id": this.data.id,
       "orderstatus": "Cancelled"
     }
-    this.orderService.updatestatusDeleteAccount(this.data.id, request2).subscribe({
+    this.orderService.updatestatusDeleteAccount(request2).subscribe({
       next: (res) => {
 
       }
     })
 
     //Delete All Product
-    this.productService.DeleteAllProduct(this.data.id).subscribe({
+    const request3 = {
+      "id":this.userid,
+    }
+    this.productService.DeleteAllProduct(request3).subscribe({
       next: (res) => {
         //Delete Account
-        this.authService.deleteAdmin(this.data.id).subscribe({
+        const request = {
+          "id": this.data.id
+        }
+        this.authService.deleteAdmin(request).subscribe({
           next: (res) => {
             this.snackBar.open('Admin Deleted', 'Success', {
               horizontalPosition: 'center',

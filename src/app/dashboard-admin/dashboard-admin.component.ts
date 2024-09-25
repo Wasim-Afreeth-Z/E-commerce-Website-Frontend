@@ -50,7 +50,10 @@ export class DashboardAdminComponent {
 
   // show data from database
   displayProducts() {
-    this.productService.getProductById(this.userid).subscribe({
+    const request = {
+      "id": this.userid
+    }
+    this.productService.getProductById(request).subscribe({
       next: (data: any) => {
         // console.log(data);
         const response = this.authService.decryptData({ data: data })

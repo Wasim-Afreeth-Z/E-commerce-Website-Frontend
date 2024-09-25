@@ -47,10 +47,13 @@ export class MyCartComponent {
 
   //display the cart
   getcart(): void {
-    this.orderService.displaycart(this.userid).subscribe({
+    const request = {
+      "id": this.userid
+    }
+    this.orderService.displaycart(request).subscribe({
       next: (data: any) => {
         // console.log(data);
-        
+
         this.carts = data.data
         this.cartCount = this.carts.length
         // console.log(this.carts);
@@ -61,7 +64,10 @@ export class MyCartComponent {
 
   //display the cart Out of Stock
   getcartOutofStock(): void {
-    this.orderService.displaycartOutofStock(this.userid).subscribe({
+    const request = {
+      "id": this.userid
+    }
+    this.orderService.displaycartOutofStock(request).subscribe({
       next: (data: any) => {
         this.cartsOutofStock = data.data
         // console.log(this.cartsOutofStock);
@@ -72,7 +78,10 @@ export class MyCartComponent {
 
   //display the SaveForLater
   getSaveForLater(): void {
-    this.saveforlaterService.displaySaveForLater(this.userid).subscribe({
+    const request = {
+      "id":this.userid,
+    }
+    this.saveforlaterService.displaySaveForLater(request).subscribe({
       next: (data: any) => {
         this.SaveForLater = data.data
         this.SaveForLaterCount = this.SaveForLater.length
@@ -86,9 +95,10 @@ export class MyCartComponent {
   plus(index: number, id: string): void {
     this.carts[index].quantity++
     const request = {
+      "id": id,
       "quantity": this.carts[index].quantity
     }
-    this.orderService.updateQuantityCart(id, request).subscribe({
+    this.orderService.updateQuantityCart(request).subscribe({
       next: (res: any) => {
 
       }
@@ -98,9 +108,10 @@ export class MyCartComponent {
   minus(index: number, id: string): void {
     this.carts[index].quantity--
     const request = {
+      "id": id,
       "quantity": this.carts[index].quantity
     }
-    this.orderService.updateQuantityCart(id, request).subscribe({
+    this.orderService.updateQuantityCart(request).subscribe({
       next: (res: any) => {
 
       }
@@ -109,7 +120,10 @@ export class MyCartComponent {
 
   // delete the cart
   deleteCart(index: number, id: string) {
-    this.orderService.deleteCart(id).subscribe({
+    const request = {
+      "id": id
+    }
+    this.orderService.deleteCart(request).subscribe({
       next: (res) => {
         this.getcart()
         this.getcartOutofStock()
@@ -124,7 +138,10 @@ export class MyCartComponent {
 
   // Clear Cart
   ClearCart(): void {
-    this.orderService.ClearCart(this.userid).subscribe({
+    const request = {
+      "id": this.userid
+    }
+    this.orderService.ClearCart(request).subscribe({
       next: (res) => {
         this.getcart()
         this.getSaveForLater()
@@ -151,7 +168,7 @@ export class MyCartComponent {
   // !add to saveforlater
   addToSaveForLater(cart: any, index: number): void {
     console.log(cart);
-    
+
     const request = {
       "product_id": cart.product_id,
       "productname": cart.productname,
@@ -167,7 +184,10 @@ export class MyCartComponent {
     this.saveforlaterService.SaveForLater(request).subscribe({
       next: (data: any) => {
         //delete cart after add save for later
-        this.orderService.deleteCart(cart.id).subscribe({
+        const request = {
+          "id": cart.id
+        }
+        this.orderService.deleteCart(request).subscribe({
           next: (res) => {
             this.carts.splice(index, 1)
             this.cartCount--
@@ -212,7 +232,10 @@ export class MyCartComponent {
     this.orderService.mycart(request).subscribe({
       next: (data: any) => {
         //delete save for later after add cart
-        this.saveforlaterService.deleteSaveForLater(product.id).subscribe({
+        const request = {
+          "id":product.id,
+        }
+        this.saveforlaterService.deleteSaveForLater(request).subscribe({
           next: (res) => {
             this.SaveForLater.splice(index, 1)
             this.SaveForLaterCount--
@@ -241,7 +264,10 @@ export class MyCartComponent {
 
   // delete the Save For Later
   deleteSaveForLater(index: number, id: string) {
-    this.saveforlaterService.deleteSaveForLater(id).subscribe({
+    const request = {
+      "id":id,
+    }
+    this.saveforlaterService.deleteSaveForLater(request).subscribe({
       next: (res) => {
         this.SaveForLater.splice(index, 1)
         this.SaveForLaterCount--

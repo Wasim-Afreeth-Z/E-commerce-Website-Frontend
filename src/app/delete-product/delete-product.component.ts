@@ -29,29 +29,32 @@ export class DeleteProductComponent {
   deleteProduct() {
     // update stocks only
     const request = {
+      "id":this.data?.id,
       "stock": "Out of Stock"
     }
 
-    this.orderService.updateCartStock(this.data?.id, request).subscribe({
+    this.orderService.updateCartStock( request).subscribe({
       next: (res: any) => {
 
       }
     })
 
-    this.saveforlaterService.updateSaveForLaterStock(this.data?.id, request).subscribe({
+    this.saveforlaterService.updateSaveForLaterStock(request).subscribe({
       next: (res: any) => {
 
       }
     })
 
-    this.wishlistService.updateWishlistStock(this.data?.id, request).subscribe({
+    this.wishlistService.updateWishlistStock(request).subscribe({
       next: (res: any) => {
 
       }
     })
     //-------
-
-    this.productService.deleteProduct(this.data.id).subscribe({
+    const request2 = {
+      "id":this.data.id,
+    }
+    this.productService.deleteProduct(request2).subscribe({
       next: (res) => {
         this.snackBar.open(`${res.message}`, `${res.smallmessage}`, {
           horizontalPosition: 'center',

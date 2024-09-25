@@ -19,35 +19,35 @@ export class OrderService {
     return this.http.post(`${this.baseUrl}/order/mycart`, request, { headers: header })
   }
 
-   // update Quantity in home
-   updateQuantityinhome(request: any): Observable<any> {
+  // update Quantity in home
+  updateQuantityinhome(request: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/order/updateQuantityinhome/`, request)
   }
 
   // get the data from display the cart
-  displaycart(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/order/displaycart/${id}`)
+  displaycart(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order/displaycart/`, request)
   }
 
   // get the data from display the cart Out of Stock
-  displaycartOutofStock(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/order/displaycartOutofStock/${id}`)
+  displaycartOutofStock(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order/displaycartOutofStock/`, request)
   }
 
   // view product for mcart
-  ViewProductFormCart(request:any): Observable<any> {
+  ViewProductFormCart(request: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/order/viewproductformcart`, request)
   }
 
   // update the quantiy cart
-  updateQuantityCart(id: string, quantity: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/order/updateQuantity/${id}`, quantity)
+  updateQuantityCart(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order/updateQuantity/`, request)
   }
 
 
   // delete the cart
-  deleteCart(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/order/deletecart/${id}`)
+  deleteCart(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order/deletecart/`, request)
   }
 
   // send the address to database
@@ -67,23 +67,23 @@ export class OrderService {
   }
 
   // clear cart
-  ClearCart(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/order/clearcart/${id}`)
+  ClearCart(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order/clearcart`,request)
   }
 
   // Delete All Cart Product
-  DeleteAllCartProduct(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/order/deleteallcartproduct/${id}`)
+  DeleteAllCartProduct(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order/deleteallcartproduct`, request)
   }
 
   // get the data from display my Orders
-  displayMyOrders(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/order/displaymyorders/${id}`)
+  displayMyOrders(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order/displaymyorders`, request)
   }
 
   // get the data from display my Orders in dashboard
-  displayMyOrdersdashboard(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/order/displaymyordersdashboard/${id}`)
+  displayMyOrdersdashboard(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order/displaymyordersdashboard`, request)
   }
 
   // get the data from display Address
@@ -92,28 +92,28 @@ export class OrderService {
   // }
 
   // update the status
-  updatestatus(id: string, status: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/order/updatestatus/${id}`, status)
+  updatestatus(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order/updatestatus`, request)
   }
 
   // update the status When Delete Account 
-  updatestatusDeleteAccount(id: string, status: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/order/updatestatusdeleteaccount/${id}`, status)
+  updatestatusDeleteAccount(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order/updatestatusdeleteaccount`, request)
   }
 
   // update the cart stock
-  updateCartStock(id: string, stock: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/order/updatestock/${id}`, stock)
+  updateCartStock(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order/updatestock`, request)
   }
 
   // update the cart products
-  updateCartProduct(id: string, data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/order/updatecartproduct/${id}`, data)
+  updateCartProduct(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order/updatecartproduct`, request)
   }
 
   // update the cart stock When deleteaccount
-  updateCartStockDeleteAccount(id: string, stock: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/order/updatestockdeleteaccount/${id}`, stock)
+  updateCartStockDeleteAccount(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order/updatestockdeleteaccount`, request)
   }
 
 }

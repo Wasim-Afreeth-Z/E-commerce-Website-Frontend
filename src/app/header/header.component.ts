@@ -48,7 +48,10 @@ export class HeaderComponent {
 
   // open my account
   openMyAccountDialog() {
-    this.userService.getuser(this.userid).subscribe({
+    const request = {
+      "id": this.userid
+    }
+    this.userService.getuser(request).subscribe({
       next: (data: any) => {
         const userDetail = data
         const dialog = this.dialog.open(MyAccountComponent, {
@@ -62,11 +65,14 @@ export class HeaderComponent {
 
   //display the cart
   getcart(): void {
-    this.orderService.displaycart(this.userid).subscribe({
+    const request = {
+      "id": this.userid
+    }
+    this.orderService.displaycart(request).subscribe({
       next: (data: any) => {
         this.carts = data.data
         this.count = this.carts.length
-        // console.log(this.carts);
+        console.log(this.carts);
       },
     })
   }

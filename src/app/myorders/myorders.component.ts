@@ -34,7 +34,10 @@ export class MyordersComponent {
 
   //display my orders
   getMyOrders(): void {
-    this.orderService.displayMyOrders(this.userid).subscribe({
+    const request = {
+      "id": this.userid
+    }
+    this.orderService.displayMyOrders(request).subscribe({
       next: (data: any) => {
         // console.log(data);
         this.myorders = data.data

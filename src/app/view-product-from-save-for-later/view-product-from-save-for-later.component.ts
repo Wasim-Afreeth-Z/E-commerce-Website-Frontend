@@ -76,7 +76,10 @@ export class ViewProductFromSaveForLaterComponent {
           this.headerdata.count++
 
           //delete save for later after add cart
-        this.saveforlaterService.deleteSaveForLater(viewProduct.id).subscribe({
+          const request = {
+            "id":viewProduct.id,
+          }
+        this.saveforlaterService.deleteSaveForLater(request).subscribe({
           next: (res) => {
           }
         })
@@ -103,9 +106,10 @@ export class ViewProductFromSaveForLaterComponent {
   plus(id: string): void {
     this.viewProduct.quantity++
     const request = {
+      "id":id,
       "quantity": this.viewProduct.quantity
     }
-    this.saveforlaterService.updateQuantitySaveForLater(id, request).subscribe({
+    this.saveforlaterService.updateQuantitySaveForLater(request).subscribe({
       next: (res: any) => {
 
       }
@@ -115,9 +119,10 @@ export class ViewProductFromSaveForLaterComponent {
   minus(id: string): void {
     this.viewProduct.quantity--
     const request = {
+      "id":id,
       "quantity": this.viewProduct.quantity
     }
-    this.saveforlaterService.updateQuantitySaveForLater(id, request).subscribe({
+    this.saveforlaterService.updateQuantitySaveForLater(request).subscribe({
       next: (res: any) => {
 
       }

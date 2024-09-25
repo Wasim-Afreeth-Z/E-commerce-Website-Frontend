@@ -46,9 +46,10 @@ export class ViewProductFromCartComponent {
    plus(id: string): void {
     this.viewProduct.quantity++
     const request = {
+      "id":id,
       "quantity": this.viewProduct.quantity
     }
-    this.orderService.updateQuantityCart(id, request).subscribe({
+    this.orderService.updateQuantityCart( request).subscribe({
       next: (res: any) => {
 
       }
@@ -58,9 +59,10 @@ export class ViewProductFromCartComponent {
   minus(id: string): void {
     this.viewProduct.quantity--
     const request = {
+      "id":id,
       "quantity": this.viewProduct.quantity
     }
-    this.orderService.updateQuantityCart(id, request).subscribe({
+    this.orderService.updateQuantityCart( request).subscribe({
       next: (res: any) => {
 
       }

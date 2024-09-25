@@ -40,7 +40,10 @@ export class MyWishlistComponent {
 
   //display the Wishlist
   getWishlist(): void {
-    this.wishlistService.displaywishlist(this.userid).subscribe({
+    const request={
+      "id":this.userid
+    }
+    this.wishlistService.displaywishlist(request).subscribe({
       next: (data: any) => {
         this.wishlists = data.data
         this.wishlistCount = this.wishlists.length
@@ -98,7 +101,10 @@ export class MyWishlistComponent {
   deleteWishlist(index: number, id: string) {
     this.wishlists.splice(index, 1)
     this.wishlistCount--
-    this.wishlistService.deleteWishlist(id).subscribe({
+    const request={
+      "id":id
+    }
+    this.wishlistService.deleteWishlist(request).subscribe({
       next: (res) => {
         // if (this.wishlists.length=8) {
         //   // this.route.navigateByUrl('wishlist')

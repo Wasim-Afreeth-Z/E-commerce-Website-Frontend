@@ -116,6 +116,7 @@ export class CreateProductComponent {
   updateProduct() {
     if (this.productCreate.value.image === null) {
       const request = {
+        "id":this.data?.product_id,
         "productname": this.productCreate.value.productname,
         "image": this.data.product_image,
         "description": this.productCreate.value.description,
@@ -123,21 +124,21 @@ export class CreateProductComponent {
         "price": this.productCreate.value.price,
         "stock": this.productCreate.value.stock
       }
-      this.productService.updateProduct(this.data?.product_id, request).subscribe({
+      this.productService.updateProduct(request).subscribe({
         next: (res: any) => {
-          this.orderService.updateCartProduct(this.data?.product_id, request).subscribe({
+          this.orderService.updateCartProduct( request).subscribe({
             next: (res: any) => {
 
             }
           })
 
-          this.saveforlaterService.updateSaveForLaterProduct(this.data?.product_id, request).subscribe({
+          this.saveforlaterService.updateSaveForLaterProduct(request).subscribe({
             next: (res: any) => {
 
             }
           })
 
-          this.wishlistService.updateWishListProduct(this.data?.product_id, request).subscribe({
+          this.wishlistService.updateWishListProduct(request).subscribe({
             next: (res: any) => {
 
             }
@@ -175,6 +176,7 @@ export class CreateProductComponent {
       this.authService.ProductImageUpload(this.formData).subscribe({
         next: (data: any) => {
           const request = {
+            "id":this.data?.product_id,
             "productname": this.productCreate.value.productname,
             "image": data.image,
             "description": this.productCreate.value.description,
@@ -182,21 +184,21 @@ export class CreateProductComponent {
             "price": this.productCreate.value.price,
             "stock": this.productCreate.value.stock
           }
-          this.productService.updateProduct(this.data?.product_id, request).subscribe({
+          this.productService.updateProduct(request).subscribe({
             next: (res: any) => {
-              this.orderService.updateCartProduct(this.data?.product_id, request).subscribe({
+              this.orderService.updateCartProduct(request).subscribe({
                 next: (res: any) => {
 
                 }
               })
 
-              this.saveforlaterService.updateSaveForLaterProduct(this.data?.product_id, request).subscribe({
+              this.saveforlaterService.updateSaveForLaterProduct(request).subscribe({
                 next: (res: any) => {
 
                 }
               })
 
-              this.wishlistService.updateWishListProduct(this.data?.product_id, request).subscribe({
+              this.wishlistService.updateWishListProduct(request).subscribe({
                 next: (res: any) => {
 
                 }

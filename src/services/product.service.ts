@@ -15,17 +15,17 @@ export class ProductService {
   CreateProduct(request: any): Observable<any> {
     const header = new HttpHeaders({
       'content-type': 'Application/json'
-    })   
+    })
     return this.http.post(`${this.baseUrl}/products/create/`, request, { headers: header })
   }
 
   // get the data from database
-  getProduct(id:any): Observable<any> {
-    return this.http.get(`${this.baseUrl}/products/display/${id}`)
+  getProduct(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/products/display`, request)
   }
 
   // get the data By UserId
-  getProductById(id: string): Observable<any> {
+  getProductById(request: any): Observable<any> {
     // const token = localStorage.getItem('token')!
     // const userid = localStorage.getItem('userId')!
     const header = new HttpHeaders({
@@ -33,25 +33,25 @@ export class ProductService {
       'token': localStorage.getItem('token')!,
       'id': localStorage.getItem('userId')!
     })
-    return this.http.get(`${this.baseUrl}/products/displaybyid/${id}`, { headers: header })
+    return this.http.post(`${this.baseUrl}/products/displaybyid`, request, { headers: header })
   }
 
   // update the data to database
-  updateProduct(id: string, data: any): Observable<any> {
+  updateProduct(request: any): Observable<any> {
     const headers = new HttpHeaders({
       'content-type': 'Application/json'
     })
-    return this.http.put(`${this.baseUrl}/products/update/${id}`, data)
+    return this.http.post(`${this.baseUrl}/products/update`, request)
   }
 
   // update the quantiy product
-  updateQuantityProduct(id: string, quantity: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/products/updateQuantity/${id}`, quantity)
+  updateQuantityProduct(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/products/updateQuantity`, request)
   }
 
   // delete the data from database
-  deleteProduct(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/products/delete/${id}`)
+  deleteProduct(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/products/delete`, request)
   }
 
   // category List from database
@@ -60,8 +60,8 @@ export class ProductService {
   }
 
   // category Filter from database
-  categoryFilter(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/products/category/${id}`)
+  categoryFilter(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/products/category`, request)
   }
 
   // category Filter Admin from database
@@ -70,8 +70,8 @@ export class ProductService {
   }
 
   // search Filter from database
-  searchFilter(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/products/search/${id}`)
+  searchFilter(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/products/search/`, request)
   }
 
   // search Filter Admin from database
@@ -80,12 +80,12 @@ export class ProductService {
   }
 
   // Delete All Product
-  DeleteAllProduct(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/products/deleteallproduct/${id}`)
+  DeleteAllProduct(request: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/products/deleteallproduct`, request)
   }
 
-   // get the data from database
-  ViewProduct(request:any): Observable<any> {
+  // get the data from database
+  ViewProduct(request: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/products/viewproduct`, request)
   }
 

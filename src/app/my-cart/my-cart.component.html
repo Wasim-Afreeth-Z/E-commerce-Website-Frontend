@@ -164,7 +164,7 @@
             @for (item of SaveForLater; track $index) {
             <div class="bg-white p-3 rounded-lg relative w-[250px] border-2">
                 <div>
-                    <img class="w-full h-[180px] rounded-md border object-cover" src="{{baseUrl}}{{item.image}}" alt="">
+                    <img class="w-full h-[180px] rounded-md border" src="{{baseUrl}}{{item.image}}" alt="">
                     <button (click)="deleteSaveForLater($index,item.id)"
                         class="absolute top-3 right-3 text-2xl text-gray-400 hover:text-[#DE0530]  px-2 pt-1.5 pb-0.5 rounded-md">
                         <i class="fa-solid fa-circle-xmark"></i>

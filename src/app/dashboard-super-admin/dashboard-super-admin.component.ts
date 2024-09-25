@@ -69,8 +69,11 @@ export class DashboardSuperAdminComponent {
   // !search file from backend
   searchFilter(event: Event): void {
     this.search = (event.target as HTMLInputElement).value
-    this.SuperAdminService.searchFilterForProducts(this.search).subscribe({
-      next: (data: any) => {  
+    const request = {
+      "input": this.search
+    }
+    this.SuperAdminService.searchFilterForProducts(request).subscribe({
+      next: (data: any) => {
         this.products = data.data
         this.displayProducts
         this.dataSource = data.data
@@ -100,7 +103,10 @@ export class DashboardSuperAdminComponent {
 
   // filter by category
   filterCategory(id: string) {
-    this.SuperAdminService.categoryFilter(id).subscribe({
+    const request = {
+      "id": id
+    }
+    this.SuperAdminService.categoryFilter(request).subscribe({
       next: (data: any) => {
         // console.log(data);
         this.categoryId = id

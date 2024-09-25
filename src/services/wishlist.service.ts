@@ -20,38 +20,38 @@ export class WishlistService {
   }
 
   // get the data from display the wishlist
-  displaywishlist(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/wishlist/displaywishlist/${id}`)
+  displaywishlist(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/wishlist/displaywishlist`,request)
   }
 
   // delete the wishlist product
-  deleteWishlist(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/wishlist/deletewishlist/${id}`)
+  deleteWishlist(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/wishlist/deletewishlist`,request)
   }
 
   // update the Wishlist stock
-  updateWishlistStock(id: string, stock: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/wishlist/updatestock/${id}`, stock)
+  updateWishlistStock(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/wishlist/updatestock`, request)
   }
 
   // update the WishList products
-  updateWishListProduct(id: string, data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/wishlist/updatewishlistproduct/${id}`, data)
+  updateWishListProduct(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/wishlist/updatewishlistproduct`, request)
   }
 
    // update the quantiy wishlist
-   updateQuantityWishlist(id: string, quantity: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/wishlist/updateQuantity/${id}`, quantity)
+   updateQuantityWishlist(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/wishlist/updateQuantity`, request)
   }
 
   // update the Wishlist stock when Delete Account
-  updateWishlistStockDeleteAccount(id: string, stock: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/wishlist/updatestockdeleteaccount/${id}`, stock)
+  updateWishlistStockDeleteAccount(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/wishlist/updatestockdeleteaccount`, request)
   }
 
   // Delete All the Wishlist Product
-  DeleteAllWishlistProduct(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/wishlist/deleteallwishlistproduct/${id}`)
+  DeleteAllWishlistProduct(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/wishlist/deleteallwishlistproduct`, request)
   }
   
   //ViewProductFormWishlist

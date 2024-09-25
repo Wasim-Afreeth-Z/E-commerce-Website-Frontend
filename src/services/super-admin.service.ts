@@ -17,13 +17,13 @@ export class SuperAdminService {
   }
 
   // search Filter for products from database
-  searchFilterForProducts(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/super_admin/search-product/${id}`)
+  searchFilterForProducts(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/super_admin/search-product`, request)
   }
 
   // category Filter from database
-  categoryFilter(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/super_admin/category/${id}`)
+  categoryFilter(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/super_admin/category`,request)
   }
 
   // get the data from database
@@ -32,8 +32,8 @@ export class SuperAdminService {
   }
 
   // delete the User
-  deleteUser(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/super_admin/delete-user/${id}`)
+  deleteUser(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/super_admin/delete-user`,request)
   }
 
 }

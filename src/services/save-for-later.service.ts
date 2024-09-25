@@ -20,38 +20,38 @@ export class SaveForLaterService {
   }
 
   // get the data from display the Save For Later
-  displaySaveForLater(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/saveforlater/displaysaveforlater/${id}`)
+  displaySaveForLater(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/saveforlater/displaysaveforlater`, request)
   }
 
    // delete the Save For Later product
-   deleteSaveForLater(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/saveforlater/deletesaveforlater/${id}`)
+   deleteSaveForLater(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/saveforlater/deletesaveforlater`,request)
   }
 
   // update the quantiy save for later
-  updateQuantitySaveForLater(id: string, quantity: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/saveforlater/updateQuantity/${id}`, quantity)
+  updateQuantitySaveForLater(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/saveforlater/updateQuantity`, request)
   }
 
    // update the saveforlater stock
-   updateSaveForLaterStock(id: string, stock: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/saveforlater/updatestock/${id}`, stock)
+   updateSaveForLaterStock(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/saveforlater/updatestock`, request)
   }
 
    // update the WishList products
-   updateSaveForLaterProduct(id: string, data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/saveforlater/updatesaveforlaterproduct/${id}`, data)
+   updateSaveForLaterProduct(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/saveforlater/updatesaveforlaterproduct`, request)
   }
 
    // update the saveforlater stock when Delete Account
-   updateSaveForLaterStockDeleteAccount(id: string, stock: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/saveforlater/updatestockdeleteaccount/${id}`, stock)
+   updateSaveForLaterStockDeleteAccount(request: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/saveforlater/updatestockdeleteaccount`, request)
   }
 
   // Delete All the Save For Later Product
-  DeleteAllSaveForLaterProduct(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/saveforlater/deleteallsaveforlater/${id}`)
+  DeleteAllSaveForLaterProduct(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/saveforlater/deleteallsaveforlater`, request)
   }
 
   //View Product Form SaveForLater

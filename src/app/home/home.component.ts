@@ -56,11 +56,17 @@ export class HomeComponent {
 
   // show data from database
   displayProducts() {
-    this.productService.getProduct(this.userid).subscribe({
+    const request = {
+      "id": this.userid
+    }
+    this.productService.getProduct(request).subscribe({
       next: (res: any) => {
         //!added button feature in Angular
         // const products =res.data 
-        // this.orderService.displaycart(this.userid).subscribe({
+        // const request = {
+        //   "id": this.userid
+        // }
+        // this.orderService.displaycart(request).subscribe({
         //   next: (data: any) => {
         //     for (let cart of data.data) {
         //       let index = products.findIndex((product: { product_id: any; }) => cart.product_id == product.product_id)
@@ -95,7 +101,10 @@ export class HomeComponent {
 
   // filter by category
   filterCategory(id: string) {
-    this.productService.categoryFilter(id).subscribe({
+    const request = {
+      "id": id
+    }
+    this.productService.categoryFilter(request).subscribe({
       next: (data: any) => {
         // console.log(data);
         this.categoryId = id
@@ -213,7 +222,10 @@ export class HomeComponent {
 
   // from header 
   searchFilter(): void {
-    this.productService.searchFilter(this.headerdata.search!).subscribe({
+    const request = {
+      "input": this.headerdata.search!
+    }
+    this.productService.searchFilter(request).subscribe({
       next: (data: any) => {
         this.products = data.data
         this.isLoading = true
@@ -229,7 +241,10 @@ export class HomeComponent {
 
   //from footer
   filterCategoryFooter() {
-    this.productService.categoryFilter(this.footerdata.categoryId!).subscribe({
+    const request = {
+      "id": this.footerdata.categoryId!
+    }
+    this.productService.categoryFilter(request).subscribe({
       next: (data: any) => {
         this.products = data.data
         this.isLoading = true

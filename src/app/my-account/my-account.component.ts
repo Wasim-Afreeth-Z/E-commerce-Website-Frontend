@@ -59,7 +59,14 @@ export class MyAccountComponent {
 
   // update the data from service file
   updateUserDetail() {
-    this.userService.UpdateUser(this.data?.userDetail.userId, this.myAccountForm.value).subscribe({
+    const request = {
+      "id": this.data?.userDetail.userId,
+      "firstname":this.myAccountForm.value.firstname, 
+      "lastname":this.myAccountForm.value.lastname, 
+      "email":this.myAccountForm.value.email, 
+      "password":this.myAccountForm.value.password
+    }
+    this.userService.UpdateUser(request).subscribe({
       next: (res: any) => {
         this.snackBar.open('User Detail Updated', 'Success', {
           horizontalPosition: 'center',

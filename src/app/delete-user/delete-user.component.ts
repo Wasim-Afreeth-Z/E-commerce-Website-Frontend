@@ -34,23 +34,25 @@ export class DeleteUserComponent {
 
   // !delete the user account 
   deleteUser() {
-
+    const request = {
+      "id": this.data.id
+    }
     //Delete All Cart Product
-    this.orderService.DeleteAllCartProduct(this.data.id).subscribe({
+    this.orderService.DeleteAllCartProduct(request).subscribe({
       next: (res) => {
 
       }
     })
 
     //Delete All the Save For Later Product
-    this.saveforlaterService.DeleteAllSaveForLaterProduct(this.data.id).subscribe({
+    this.saveforlaterService.DeleteAllSaveForLaterProduct(request).subscribe({
       next: (res) => {
 
       }
     })
 
     //Delete All the Wishlist Product
-    this.wishlistService.DeleteAllWishlistProduct(this.data.id).subscribe({
+    this.wishlistService.DeleteAllWishlistProduct(request).subscribe({
       next: (res) => {
 
       }
@@ -58,7 +60,7 @@ export class DeleteUserComponent {
 
 
     //Delete user
-    this.SuperAdminService.deleteUser(this.data.id).subscribe({
+    this.SuperAdminService.deleteUser(request).subscribe({
       next: (res) => {
         this.snackBar.open('User Deleted', 'Success', {
           horizontalPosition: 'center',

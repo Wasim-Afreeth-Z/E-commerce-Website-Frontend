@@ -8,7 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-update-order-details',
   standalone: true,
-  imports: [ReactiveFormsModule,MatSelectModule],
+  imports: [ReactiveFormsModule, MatSelectModule],
   templateUrl: './update-order-details.component.html',
   styleUrl: './update-order-details.component.scss'
 })
@@ -36,9 +36,10 @@ export class UpdateOrderDetailsComponent {
   // update the data from service file
   updatestatus() {
     const request = {
+      "id": this.data?.order.orderid,
       "orderstatus": this.OrderDetails.value.orderstatus
     }
-    this.orderService.updatestatus(this.data?.order.orderid, request).subscribe({
+    this.orderService.updatestatus(request).subscribe({
       next: (res: any) => {
         this.snackBar.open('Status Updated', 'Success', {
           horizontalPosition: 'center',
@@ -51,13 +52,13 @@ export class UpdateOrderDetailsComponent {
   }
 
   ngAfterViewInit() {
-      this.OrderDetails.patchValue(this.data?.order)
-      this.cdr.detectChanges()
+    this.OrderDetails.patchValue(this.data?.order)
+    this.cdr.detectChanges()
   }
 
-  close(){
+  close() {
     this.dialogRef.close(true);
- }
+  }
 
 
 }

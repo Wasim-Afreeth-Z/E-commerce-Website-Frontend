@@ -35,7 +35,10 @@ export class FooterComponent {
 
   // open my account
   openMyAccountDialog() {
-    this.userService.getuser(this.userid).subscribe({
+    const request = {
+      "id": this.userid
+    }
+    this.userService.getuser(request).subscribe({
       next: (data: any) => {
         const userDetail = data
         const dialog = this.dialog.open(MyAccountComponent, {

@@ -32,23 +32,25 @@ export class DeleteAccountComponent {
 
   // !delete the user account 
   deleteAccount() {
-
+    const request1 = {
+      "id": this.userid
+    }
     //Delete All Cart Product
-    this.orderService.DeleteAllCartProduct(this.userid).subscribe({
+    this.orderService.DeleteAllCartProduct(request1).subscribe({
       next: (res) => {
 
       }
     })
 
     //Delete All the Save For Later Product
-    this.saveforlaterService.DeleteAllSaveForLaterProduct(this.userid).subscribe({
+    this.saveforlaterService.DeleteAllSaveForLaterProduct(request1).subscribe({
       next: (res) => {
 
       }
     })
 
     //Delete All the Wishlist Product
-    this.wishlistService.DeleteAllWishlistProduct(this.userid).subscribe({
+    this.wishlistService.DeleteAllWishlistProduct(request1).subscribe({
       next: (res) => {
 
       }
@@ -56,22 +58,23 @@ export class DeleteAccountComponent {
 
     // update stocks only
     const request = {
+      "id":this.userid,
       "stock": "Out of Stock"
     }
 
-    this.orderService.updateCartStockDeleteAccount(this.userid, request).subscribe({
+    this.orderService.updateCartStockDeleteAccount(request).subscribe({
       next: (res: any) => {
 
       }
     })
 
-    this.saveforlaterService.updateSaveForLaterStockDeleteAccount(this.userid, request).subscribe({
+    this.saveforlaterService.updateSaveForLaterStockDeleteAccount(request).subscribe({
       next: (res: any) => {
 
       }
     })
 
-    this.wishlistService.updateWishlistStockDeleteAccount(this.userid, request).subscribe({
+    this.wishlistService.updateWishlistStockDeleteAccount(request).subscribe({
       next: (res: any) => {
 
       }
@@ -80,19 +83,26 @@ export class DeleteAccountComponent {
 
     //update orderstatus CANCELLED in My Orders
     const request2 = {
+      "id":this.userid,
       "orderstatus": "Cancelled"
     }
-    this.orderService.updatestatusDeleteAccount(this.userid, request2).subscribe({
+    this.orderService.updatestatusDeleteAccount(request2).subscribe({
       next: (res) => {
 
       }
     })
 
     //Delete All Product
-    this.productService.DeleteAllProduct(this.userid).subscribe({
+    const request3 = {
+      "id":this.userid,
+    }
+    this.productService.DeleteAllProduct(request3).subscribe({
       next: (res) => {
         //Delete Account
-        this.userService.deleteAccount(this.data.id).subscribe({
+        const request = {
+          "id": this.data.id
+        }
+        this.userService.deleteAccount(request).subscribe({
           next: (res) => {
             this.snackBar.open('Account Deleted', 'Success', {
               horizontalPosition: 'center',

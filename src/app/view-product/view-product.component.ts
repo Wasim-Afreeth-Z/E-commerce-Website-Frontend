@@ -77,9 +77,10 @@ export class ViewProductComponent {
           this.ViewProduct()
           this.headerdata.count++
           const request = {
+            "id":viewProduct.product_id,
             "quantity": 1
           }
-          this. productService.updateQuantityProduct(viewProduct.product_id, request).subscribe({
+          this. productService.updateQuantityProduct(request).subscribe({
             next: (res: any) => {
       
             }
@@ -107,9 +108,10 @@ export class ViewProductComponent {
   plus(id: string): void {
     this.viewProduct.quantity++
     const request = {
+      "id":id,
       "quantity": this.viewProduct.quantity
     }
-    this. productService.updateQuantityProduct(id, request).subscribe({
+    this. productService.updateQuantityProduct(request).subscribe({
       next: (res: any) => {
 
       }
@@ -119,9 +121,10 @@ export class ViewProductComponent {
   minus(id: string): void {
     this.viewProduct.quantity--
     const request = {
+      "id":id,
       "quantity": this.viewProduct.quantity
     }
-    this. productService.updateQuantityProduct(id, request).subscribe({
+    this. productService.updateQuantityProduct(request).subscribe({
       next: (res: any) => {
 
       }

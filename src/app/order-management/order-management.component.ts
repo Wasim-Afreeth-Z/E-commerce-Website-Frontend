@@ -40,7 +40,10 @@ export class OrderManagementComponent {
 
   //display the cart
   getMyOrdersInDashboard(): void {
-    this.orderService.displayMyOrdersdashboard(this.userid).subscribe({
+    const request = {
+      "id": this.userid
+    }
+    this.orderService.displayMyOrdersdashboard(request).subscribe({
       next: (data: any) => {
         this.orders = data.data
         // console.log(this.orders);

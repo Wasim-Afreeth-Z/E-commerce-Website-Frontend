@@ -58,8 +58,8 @@ export class AuthService {
   }
 
   // delete the Admin
-  deleteAdmin(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/Admin/delete/${id}`)
+  deleteAdmin(request:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/admin/delete`,request)
   }
 
    //product Image Upload

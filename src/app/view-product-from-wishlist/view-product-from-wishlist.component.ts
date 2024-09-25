@@ -95,9 +95,10 @@ export class ViewProductFromWishlistComponent {
   plus(id: string): void {
     this.viewProduct.quantity++
     const request = {
+      "id":id,
       "quantity": this.viewProduct.quantity
     }
-    this.WishlistService.updateQuantityWishlist(id, request).subscribe({
+    this.WishlistService.updateQuantityWishlist(request).subscribe({
       next: (res: any) => {
 
       }
@@ -107,9 +108,10 @@ export class ViewProductFromWishlistComponent {
   minus(id: string): void {
     this.viewProduct.quantity--
     const request = {
+      "id":id,
       "quantity": this.viewProduct.quantity
     }
-    this.WishlistService.updateQuantityWishlist(id, request).subscribe({
+    this.WishlistService.updateQuantityWishlist(request).subscribe({
       next: (res: any) => {
 
       }

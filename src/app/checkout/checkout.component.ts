@@ -50,7 +50,10 @@ export class CheckoutComponent {
 
   //display the cart
   getcart(): void {
-    this.orderService.displaycart(this.userid).subscribe({
+    const request = {
+      "id": this.userid
+    }
+    this.orderService.displaycart(request).subscribe({
       next: (data: any) => {
         this.carts = data.data
         // console.log(this.carts);
@@ -107,7 +110,10 @@ export class CheckoutComponent {
         this.orderService.myOrder(request).subscribe({
           next: (data: any) => {
             // Clear Cart
-            this.orderService.ClearCart(this.userid).subscribe({
+            const request = {
+              "id": this.userid
+            }
+            this.orderService.ClearCart(request).subscribe({
               next: (res) => {
               }
             })
