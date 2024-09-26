@@ -1,6 +1,7 @@
 <app-header></app-header>
-<section class="checkout flex w-full gap-x-5 pt-[140px] px-20 py-5 h-full bg-[#f6f6f6]  ">
-    <!-- <div class="address-order flex gap-x-5 w-full"> -->
+<div class="main-div bg-[#f6f6f6]  pt-[140px] h-full flex flex-col justify-between">
+    <section class="checkout flex w-full gap-x-5 px-20 py-5 bg-[#f6f6f6]  ">
+        <!-- <div class="address-order flex gap-x-5 w-full"> -->
         <div class="form w-full overflow-y-scroll basis-[50%]">
             <div class="sticky top-0 left-0 right-0 bg-[#f6f6f6] pb-4">
                 <h1 class="text-3xl font-medium">CheckOut</h1>
@@ -92,7 +93,8 @@
                     <!-- Telephone -->
                     <div class=" w-full">
                         <input class="bg-[#f6f6f6] p-2 pl-5 w-full rounded-full outline-none mb-2" type="text"
-                            placeholder="Telephone" id="telephone" name="telephone" formControlName="telephone" minlength="10" maxlength="10">
+                            placeholder="Telephone" id="telephone" name="telephone" formControlName="telephone"
+                            minlength="10" maxlength="10">
                         @if ((isSubmitted && addressForm.get('telephone')?.invalid)||
                         addressForm.get('telephone')?.touched)
                         {
@@ -118,7 +120,7 @@
                 <!-- mb-[200px] -->
                 @for (cart of carts; track $index) {
                 <div class=" bg-white flex gap-x-3 rounded-2xl px-1 py-1 h-[100px]">
-                    <img class="w-[80px] h-[90px] border rounded-2xl" src="{{baseUrl}}{{cart.image}}" alt="">
+                    <img class="w-[80px] h-[90px] border rounded-2xl" src="{{cart.image}}" alt="">
                     <div class="flex flex-col justify-between py-1">
                         <div>
                             <h1 class="font-medium text-base">{{cart.productname|titlecase}}</h1>
@@ -134,68 +136,69 @@
             </div>
         </div>
 
-    <div class="payment-bill min-w-[345px] overflow-y-scroll mt-[76px] basis-[25%]">
-        <!-- payment -->
-        <div class=" flex flex-col gap-y-1 bg-white p-5 rounded-2xl mb-3">
-            <h1 class="font-medium text-xl pb-1">Payment</h1>
-            <div class="flex gap-3 items-center">
-                <input type="radio" checked class="w-5 h-5 outline-none accent-green-600" id="payment" name="payment">
-                <label class="">Cash On Delivery</label>
+        <div class="payment-bill min-w-[345px] overflow-y-scroll mt-[76px] basis-[25%]">
+            <!-- payment -->
+            <div class=" flex flex-col gap-y-1 bg-white p-5 rounded-2xl mb-3">
+                <h1 class="font-medium text-xl pb-1">Payment</h1>
+                <div class="flex gap-3 items-center">
+                    <input type="radio" checked class="w-5 h-5 outline-none accent-green-600" id="payment"
+                        name="payment">
+                    <label class="">Cash On Delivery</label>
+                </div>
+            </div>
+            <!-- bill total -->
+            <div class=" flex flex-col gap-y-1 bg-white p-5 rounded-2xl ">
+                <!-- <h1 class="font-medium text-xl pb-1">Cart Total</h1>  fixed bottom-0  -->
+                <div class="flex justify-between text-sm">
+                    <p class="text-gray-400">Subtotal</p>
+                    <p class="font-medium">₹ {{subTotal()|number:'0.0-0'}}</p>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <p class="text-gray-400">Tax(10%)</p>
+                    <p class="font-medium">₹ {{tax()|number:'0.0-0'}}</p>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <p class="text-gray-400">Delivery Charges</p>
+                    <p class="font-medium text-green-600">FREE</p>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <p class="font-medium">Total</p>
+                    <p class="font-medium text-xl">₹ {{total()|number:'0.0-0'}}</p>
+                </div>
+                <div class="button-box w-full mt-3 flex gap-x-2">
+                    <button (click)="cancelYourOrder()"
+                        class="bg-[#DE0530] text-white w-full py-2 transition-all ease-in duration-300 font-medium rounded-full border-2 border-[#DE0530] hover:bg-white hover:text-black ">Cancel
+                        the Order</button>
+                    <button (click)="placeYourOrderAndSubmit()"
+                        class="bg-green-600 text-white w-full py-2 transition-all ease-in duration-300 font-medium rounded-full border-2 border-green-600 hover:bg-white hover:text-black ">Place
+                        Your Order</button>
+                </div>
             </div>
         </div>
-        <!-- bill total -->
-        <div class=" flex flex-col gap-y-1 bg-white p-5 rounded-2xl ">
-            <!-- <h1 class="font-medium text-xl pb-1">Cart Total</h1>  fixed bottom-0  -->
-            <div class="flex justify-between text-sm">
-                <p class="text-gray-400">Subtotal</p>
-                <p class="font-medium">₹ {{subTotal()|number:'0.0-0'}}</p>
-            </div>
-            <div class="flex justify-between text-sm">
-                <p class="text-gray-400">Tax(10%)</p>
-                <p class="font-medium">₹ {{tax()|number:'0.0-0'}}</p>
-            </div>
-            <div class="flex justify-between text-sm">
-                <p class="text-gray-400">Delivery Charges</p>
-                <p class="font-medium text-green-600">FREE</p>
-            </div>
-            <div class="flex justify-between text-sm">
-                <p class="font-medium">Total</p>
-                <p class="font-medium text-xl">₹ {{total()|number:'0.0-0'}}</p>
-            </div>
-            <div class="button-box w-full mt-3 flex gap-x-2">
-                <button (click)="cancelYourOrder()"
-                    class="bg-[#DE0530] text-white w-full py-2 transition-all ease-in duration-300 font-medium rounded-full border-2 border-[#DE0530] hover:bg-white hover:text-black ">Cancel
-                    the Order</button>
-                <button (click)="placeYourOrderAndSubmit()"
-                    class="bg-green-600 text-white w-full py-2 transition-all ease-in duration-300 font-medium rounded-full border-2 border-green-600 hover:bg-white hover:text-black ">Place
-                    Your Order</button>
-            </div>
-        </div>
-    </div>
-<!-- </div> -->
-</section>
-<app-footer></app-footer>
-
+        <!-- </div> -->
+    </section>
+    <app-footer></app-footer>
+</div>
 @if(!isLoading){
-    <div class="main-loader">
-        <div class="loader">
-            <div class="lds-spinner">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
+<div class="main-loader">
+    <div class="loader">
+        <div class="lds-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
     </div>
-    }
+</div>
+}
 
 <!-- !mobile -->
 <!-- <div class="mobile-product h-full w-full hidden">

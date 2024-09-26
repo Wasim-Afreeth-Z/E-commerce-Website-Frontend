@@ -1,5 +1,14 @@
 export const environment = {
     SECRETKEY : 'ecommerce-website-secretkey',
-    BASEURL:'https://e-commerce-website-backend-wq0o.onrender.com'
+
+    //!Vercel Host
+    // BASEURL:'https://e-commerce-website-backend-ten.vercel.app'
+    // BASEURL:'https://e-commerce-website-backend-wasims-projects-1421b462.vercel.app'
+    // BASEURL:'https://e-commerce-website-backend-git-main-wasims-projects-1421b462.vercel.app'
+
+    //!Render Host
+    BASEURL:'https://e-commerce-website-backend-pri1.onrender.com'
+
+    //!localhost
     // BASEURL:'http://localhost:5000'
 }

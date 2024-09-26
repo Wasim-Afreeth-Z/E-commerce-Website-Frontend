@@ -22,8 +22,7 @@
             <label class=" text-base text-gray-500 font-medium">Image :</label>
             <div class="mt-2 mb-1">
                 @if (data!==null) {
-                <img class="w-[200px] h-[200px] rounded-md mb-5 border-2" src="{{this.baseUrl}}{{data.product_image}}"
-                    alt="">
+                <img class="w-[200px] h-[200px] rounded-md mb-5 border-2" src="{{data.product_image}}" alt="">
                 }
                 <label class="upload" for="image"><i class="fa-solid fa-upload"></i>
                     Upload-Image</label>
@@ -97,12 +96,20 @@
         <br>
         <div class="flex justify-center items-center ">
             <button matDialogClose="true" type="button"
-                class="cancel bg-slate-600 text-white px-12 py-2 text-xl rounded-full mr-7">Cancel</button>
-            <button class="create bg-red-600 text-white px-14 py-2 text-xl rounded-full">{{isEdit ? 'Update' :
-                'Create'}}</button>
+                class="cancel bg-slate-600 text-white w-[150px] py-2 text-xl rounded-full mr-7">Cancel</button>
+            <button
+                class="create w-[150px]  bg-red-600 text-white py-2 text-xl rounded-full">
+                <div class="flex items-center justify-center gap-x-5">
+                    @if(isLoading==true){
+                    <div class="spinner"></div>
+                    }
+                    <div>{{isEdit ? 'Update' : 'Create'}}</div>
+                </div>
+            </button>
         </div>
     </form>
 </section>
+
 
 <!--! Template driven form -->
 
@@ -128,7 +135,7 @@
             <label class=" text-base text-gray-500 font-medium">Image :</label>
             <div class="mt-2 mb-1">
                 @if (data!==null) {
-                <img class="w-[200px] h-[200px] rounded-md mb-5 border-2" src="{{this.baseUrl}}{{data.product_image}}"
+                <img class="w-[200px] h-[200px] rounded-md mb-5 border-2" src="{{data.product_image}}"
                     alt="">
                 }
                 <label class="upload" for="image"><i class="fa-solid fa-upload"></i>

@@ -27,9 +27,9 @@ export class MyAccountComponent {
   dialog = inject(MatDialog)
   route = inject(Router)
 
-  token: any = localStorage.getItem('token');
-  userid: any = localStorage.getItem('userId');
-  role: any = localStorage.getItem('role')
+  token = localStorage.getItem('token');
+  userid = localStorage.getItem('userId');
+  role = localStorage.getItem('role')
 
   // if put this code only dialog box will add, delete, update data for database
   // !import MatDialogReg , Inject ,MAT_DIALOG_DATA
@@ -37,7 +37,7 @@ export class MyAccountComponent {
 
   ngOnInit() {
     this.myAccountForm = this.formBuilder.group({
-      firstname: [null,Validators.required ],
+      firstname: [null, Validators.required],
       lastname: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, , Validators.minLength(8)]],
@@ -61,10 +61,10 @@ export class MyAccountComponent {
   updateUserDetail() {
     const request = {
       "id": this.data?.userDetail.userId,
-      "firstname":this.myAccountForm.value.firstname, 
-      "lastname":this.myAccountForm.value.lastname, 
-      "email":this.myAccountForm.value.email, 
-      "password":this.myAccountForm.value.password
+      "firstname": this.myAccountForm.value.firstname,
+      "lastname": this.myAccountForm.value.lastname,
+      "email": this.myAccountForm.value.email,
+      "password": this.myAccountForm.value.password
     }
     this.userService.UpdateUser(request).subscribe({
       next: (res: any) => {
@@ -120,6 +120,11 @@ export class MyAccountComponent {
     this.dialogRef.close(true);
   }
 
+  // This will trigger the header function through the shared service
+  triggerHeaderFunction() {
+  
+  }
+
   logOut() {
     const request2 = {
       "token": this.token,
@@ -142,6 +147,7 @@ export class MyAccountComponent {
     this.authService.logOut()
     this.dialogRef.close(true);
     this.route.navigateByUrl('/home')
-    window.location.reload();
+    this.userService.triggerHeaderFunction();
+    // window.location.reload();
   }
 }

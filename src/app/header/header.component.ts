@@ -11,7 +11,7 @@ import { ProductService } from '../../services/product.service';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink,FormsModule, RouterLinkActive],
+  imports: [CommonModule, RouterLink, FormsModule, RouterLinkActive],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -19,10 +19,10 @@ export class HeaderComponent {
 
   dialog = inject(MatDialog)
   userService = inject(UserService)
-  orderService= inject(OrderService)
+  orderService = inject(OrderService)
   productService = inject(ProductService)
-  route=inject(Router)
-  
+  route = inject(Router)
+
   carts: any[] = []
   @Input() count: any | null = null
 
@@ -30,20 +30,31 @@ export class HeaderComponent {
   @Output() searchFilter: EventEmitter<any> = new EventEmitter<any>();
   @Output() clearSearchFilter: EventEmitter<any> = new EventEmitter<any>();
 
-  token: any = localStorage.getItem('token');
-  userid: any = localStorage.getItem('userId')
-  role: any = localStorage.getItem('role')
+  token = localStorage.getItem('token');
+  userid = localStorage.getItem('userId');
+  role = localStorage.getItem('role')
 
-  ngOnInit():void{
+  ngOnInit(): void {
     this.getcart()
+    // Subscribe to the observable and call the function when the signal is triggered
+    this.userService.headerFunction$.subscribe(() => {
+      this.Cleartoken();
+    });
+
   }
 
   menuIcon: string = "fa fa-bars"
   menuValue: boolean = true;
-  
+
   openSidebar() {
     this.menuValue = !this.menuValue
     this.menuIcon = !this.menuValue ? "fa fa-close" : "fa fa-bars";
+  }
+
+  Cleartoken() {
+    this.token = null;
+    this.userid = null;
+    this.role = null;
   }
 
   // open my account
@@ -72,7 +83,7 @@ export class HeaderComponent {
       next: (data: any) => {
         this.carts = data.data
         this.count = this.carts.length
-        console.log(this.carts);
+        // console.log(data);
       },
     })
   }

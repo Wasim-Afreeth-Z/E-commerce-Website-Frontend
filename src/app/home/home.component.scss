@@ -81,8 +81,8 @@
 }
 
 @media (max-width: 700px) {
-    .slider_container{
-        margin-top: 85px;
+    .main-div{
+        padding-top: 85px;
     }
 }
 
@@ -92,11 +92,11 @@
     }
 }
 
-// @media (max-width: 583px) {
-//     .product-boxes {
-//         justify-content: center;
-//     }
-// }
+@media (max-width: 583px) {
+    .product-boxes {
+        justify-content: center;
+    }
+}
 
 @media (max-width: 370px) {
     .product-list {

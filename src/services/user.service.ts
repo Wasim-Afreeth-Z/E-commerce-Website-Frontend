@@ -1,12 +1,23 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from '../app/environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+
+ // Subject to trigger the function
+ private headerFunctionSubject = new Subject<void>();
+
+ // Observable for myaccount to trigger the Header function
+ headerFunction$ = this.headerFunctionSubject.asObservable();
+
+ // Method for myaccount to call
+ triggerHeaderFunction() {
+   this.headerFunctionSubject.next();
+ }
 
   http: HttpClient = inject(HttpClient)
   private baseUrl = environment.BASEURL;
@@ -35,7 +46,7 @@ export class UserService {
   }
 
   //get user detail
-  getuser(request:any): Observable<any> {
+  getuser(request: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/user/getuser`, request);
   }
 
@@ -45,8 +56,7 @@ export class UserService {
   }
 
   // delete the User Account
-  deleteAccount(request:any): Observable<any> {
+  deleteAccount(request: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/user/delete`, request)
   }
-
 }

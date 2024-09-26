@@ -12,13 +12,19 @@
 
 @media (max-width: 700px) {
     .wishlist-main{
-        margin-top: 85px;
+        padding-top: 85px;
     }
 }
 
 @media (max-width: 620px) {
     .product-list {
         padding-inline: 25px;
+    }
+}
+
+@media (max-width: 583px) {
+    .product-boxes {
+        justify-content: center;
     }
 }
 

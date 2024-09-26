@@ -108,7 +108,7 @@
                         <th mat-header-cell *matHeaderCellDef> Product Details </th>
                         <td mat-cell *matCellDef="let element">
                             <div class="flex items-center gap-2 w-[400px]">
-                                <img class="w-[100px] h-[100px] border rounded-lg" src="{{baseUrl}}{{element.image}}" alt="">
+                                <img class="w-[100px] h-[100px] border rounded-lg" src="{{element.image}}" alt="">
                                 <div>
                                     <h1 class="font-medium text-xl ">{{element.productname|titlecase}}</h1>
                                     <p class="text-xs text-gray-400">{{element.description.slice(0,100)}}...</p>

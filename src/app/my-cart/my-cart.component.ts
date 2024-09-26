@@ -53,7 +53,6 @@ export class MyCartComponent {
     this.orderService.displaycart(request).subscribe({
       next: (data: any) => {
         // console.log(data);
-
         this.carts = data.data
         this.cartCount = this.carts.length
         // console.log(this.carts);

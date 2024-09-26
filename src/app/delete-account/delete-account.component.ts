@@ -110,12 +110,12 @@ export class DeleteAccountComponent {
               duration: 3000
             })
             this.dialogRef.close(true)
-            window.location.reload();
             localStorage.removeItem('token')
             localStorage.removeItem('role')
             localStorage.removeItem('userId')
             this.route.navigateByUrl('/home')
-            window.location.reload();
+            this.userService.triggerHeaderFunction();
+            // window.location.reload();
           }
         })
       }

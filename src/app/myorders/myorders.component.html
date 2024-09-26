@@ -1,103 +1,105 @@
 <app-header></app-header>
-<section class="myorder flex flex-col gap-y-7 mt-[110px] min-h-[100%] px-20 py-8 bg-[#f6f6f6]">
-    <h1 class="text-3xl font-medium ">My Orders</h1>
-    <!-- <p class="mb-6"><span class="font-medium">2 items </span>in your Cart.</p> -->
-    @if (myorders.length>0) {
-    @for (order of myorders| paginate: { itemsPerPage: 5, currentPage: p }; track $index) {
-    <div
-        class="bg-white w-full rounded-lg shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
-        <div class="px-8 pt-8">
-            <div class="order-header flex items-center justify-between border-b-[1px] pb-8">
-                <div class="order-id-date flex items-center gap-x-4">
-                    <p class="px-4 py-2 rounded-full bg-[#f6f6f6] font-medium">Order ID<span
-                            class="ml-2 text-blue-400">#{{order.orderid}}</span></p>
-                    <p class="text-gray-400 font-medium">Order Placed: {{order.ordereddate|date:'mediumDate'}}</p>
-                </div>
-                <div>
-                    <button (click)="invoice(order)"
-                        class="font-medium px-5 py-1.5 border-2 bg-[#F99B3A]  border-[#F99B3A] text-white rounded-full hover:bg-white hover:text-black shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]"><span
-                            class="mr-1"><i class="fa-light fa-file-invoice-dollar"></i></span> Invoice</button>
-                </div>
-            </div>
-
-            <div class="py-6 pl-6 pr-14 flex items-center justify-between overflow-x-scroll ">
-                <div class="flex gap-x-4 w-[400px] min-w-[400px] ">
-                    <img class="w-[200px] h-[200px] rounded-lg" src="{{baseUrl}}{{order.image}}" alt="">
-                    <div class=" flex flex-col justify-between py-1">
-                        <h1 class="text-xl">{{order.productname|titlecase}}</h1>
-                        <div class="flex flex-col gap-y-3">
-                            <p class="text-gray-400">Qty: {{order.quantity}}</p>
-                            <p class="font-semibold">₹ {{eachProductPrice(order)|number:'0.0-0'}}</p>
-                        </div>
+<div class="main-div pt-[110px] h-[100%] flex flex-col justify-between">
+    <section class="myorder flex flex-col gap-y-7 px-20 py-8 bg-[#f6f6f6]">
+        <h1 class="text-3xl font-medium ">My Orders</h1>
+        <!-- <p class="mb-6"><span class="font-medium">2 items </span>in your Cart.</p> -->
+        @if (myorders.length>0) {
+        @for (order of myorders| paginate: { itemsPerPage: 5, currentPage: p }; track $index) {
+        <div
+            class="bg-white w-full rounded-lg shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
+            <div class="px-8 pt-8">
+                <div class="order-header flex items-center justify-between border-b-[1px] pb-8">
+                    <div class="order-id-date flex items-center gap-x-4">
+                        <p class="px-4 py-2 rounded-full bg-[#f6f6f6] font-medium">Order ID<span
+                                class="ml-2 text-blue-400">#{{order.orderid}}</span></p>
+                        <p class="text-gray-400 font-medium">Order Placed: {{order.ordereddate|date:'mediumDate'}}</p>
+                    </div>
+                    <div>
+                        <button (click)="invoice(order)"
+                            class="font-medium px-5 py-1.5 border-2 bg-[#F99B3A]  border-[#F99B3A] text-white rounded-full hover:bg-white hover:text-black shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]"><span
+                                class="mr-1"><i class="fa-light fa-file-invoice-dollar"></i></span> Invoice</button>
                     </div>
                 </div>
-                <div class="px-4 text-nowrap">
-                    <p class="text-gray-400 text-sm">Status</p>
-                    @if (order.orderstatus==='Pending') {
-                    <p class="text-teal-600 font-semibold text-xl">
-                        {{order.orderstatus}}</p>
-                    }
-                    @if (order.orderstatus==='Cancelled') {
-                    <p class="text-red-600 font-semibold text-xl">
-                        {{order.orderstatus}}</p>
-                    }
-                    @if (order.orderstatus==='In Process') {
-                    <p class="text-yellow-600 font-semibold text-xl">
-                        {{order.orderstatus}}</p>
-                    }
-                    @if (order.orderstatus==='Confirmed') {
-                    <p class="text-orange-600 font-semibold text-xl">
-                        {{order.orderstatus}}</p>
-                    }
-                    @if (order.orderstatus==='Shipped') {
-                    <p class="text-sky-600 font-semibold text-xl">
-                        {{order.orderstatus}}</p>
-                    }
-                    @if (order.orderstatus==='Delivered') {
-                    <p class="text-green-600 font-semibold text-xl">
-                        {{order.orderstatus}}</p>
-                    }
-                </div>
-                <div class="px-4 text-nowrap">
-                    <p class="text-gray-400 text-sm">Delivery Expected by</p>
-                    <p class="font-semibold text-xl">{{order.deliverydate|date:'longDate'}}</p>
+
+                <div class="py-6 pl-6 pr-14 flex items-center justify-between overflow-x-scroll ">
+                    <div class="flex gap-x-4 w-[400px] min-w-[400px] ">
+                        <img class="w-[200px] h-[200px] rounded-lg" src="{{order.image}}" alt="">
+                        <div class=" flex flex-col justify-between py-1">
+                            <h1 class="text-xl">{{order.productname|titlecase}}</h1>
+                            <div class="flex flex-col gap-y-3">
+                                <p class="text-gray-400">Qty: {{order.quantity}}</p>
+                                <p class="font-semibold">₹ {{eachProductPrice(order)|number:'0.0-0'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-4 text-nowrap">
+                        <p class="text-gray-400 text-sm">Status</p>
+                        @if (order.orderstatus==='Pending') {
+                        <p class="text-teal-600 font-semibold text-xl">
+                            {{order.orderstatus}}</p>
+                        }
+                        @if (order.orderstatus==='Cancelled') {
+                        <p class="text-red-600 font-semibold text-xl">
+                            {{order.orderstatus}}</p>
+                        }
+                        @if (order.orderstatus==='In Process') {
+                        <p class="text-yellow-600 font-semibold text-xl">
+                            {{order.orderstatus}}</p>
+                        }
+                        @if (order.orderstatus==='Confirmed') {
+                        <p class="text-orange-600 font-semibold text-xl">
+                            {{order.orderstatus}}</p>
+                        }
+                        @if (order.orderstatus==='Shipped') {
+                        <p class="text-sky-600 font-semibold text-xl">
+                            {{order.orderstatus}}</p>
+                        }
+                        @if (order.orderstatus==='Delivered') {
+                        <p class="text-green-600 font-semibold text-xl">
+                            {{order.orderstatus}}</p>
+                        }
+                    </div>
+                    <div class="px-4 text-nowrap">
+                        <p class="text-gray-400 text-sm">Delivery Expected by</p>
+                        <p class="font-semibold text-xl">{{order.deliverydate|date:'longDate'}}</p>
+                    </div>
                 </div>
             </div>
+            <div class="py-5 px-8 border-t-[1px] text-end">
+                <p class="text-gray-400">Total (include tax): <span class="font-semibold text-black">₹
+                        {{total(order)|number:'0.0-0'}}</span></p>
+            </div>
         </div>
-        <div class="py-5 px-8 border-t-[1px] text-end">
-            <p class="text-gray-400">Total (include tax): <span class="font-semibold text-black">₹
-                    {{total(order)|number:'0.0-0'}}</span></p>
+        }
+        @if (myorders.length>5) {
+        <div class="mt-8 px-5 flex justify-center items-center">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
-    </div>
-    }
-    @if (myorders.length>5) {
-    <div class="mt-8 px-5 flex justify-center items-center">
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-    </div>
-    }
-    }@else {
-    <p class="text-2xl font-medium italic">Order are not Placed.....</p>
-    }
-</section>
-<app-footer></app-footer>
+        }
+        }@else {
+        <p class="text-2xl font-medium italic">Order are not Placed.....</p>
+        }
+    </section>
+    <app-footer></app-footer>
+</div>
 
 @if(!isLoading){
-    <div class="main-loader">
-        <div class="loader">
-            <div class="lds-spinner">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
+<div class="main-loader">
+    <div class="loader">
+        <div class="lds-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
     </div>
-    }
+</div>
+}

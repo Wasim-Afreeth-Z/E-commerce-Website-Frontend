@@ -40,14 +40,20 @@ td {
 }
 
 @media (max-width: 700px) {
-    .cart-box {
-        margin-top: 85px;
+    .main-div {
+        padding-top: 85px;
     }
 }
 
 @media (max-width: 620px) {
     .cart-box {
         padding-inline: 25px;
+    }
+}
+
+@media (max-width: 583px) {
+    .boxes {
+        justify-content: center;
     }
 }
 

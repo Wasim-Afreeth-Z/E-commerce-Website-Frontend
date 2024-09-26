@@ -1,5 +1,6 @@
 <app-header [count]="cartCount"></app-header>
-<section class="cart-box mt-[110px] min-h-[100%] px-20 py-8 bg-[#f6f6f6]">
+<div class="main-div pt-[110px] h-[100%] bg-[#f6f6f6] flex flex-col justify-between">
+<section class="cart-box px-20 py-8">
     <h1 class="text-3xl font-medium">Shopping Cart</h1>
     <p class="mb-6"><span class="font-medium">{{cartCount}} items </span>in your Cart.</p>
     @if (carts.length>0) {
@@ -21,7 +22,7 @@
                         <td class="pr-4">
                             <!-- /images/no-image-2.webp -->
                             <div class="flex gap-2"><img class="w-[80px] h-[80px]  border rounded-lg object-cover"
-                                    src="{{baseUrl}}{{cart.image}}" alt="">
+                                    src="{{cart.image}}" alt="">
                                 <div>
                                     <p (click)="viewProductFromCart(cart.product_id)"
                                         class="font-medium text-xl mt-1 hover:underline cursor-pointer">
@@ -122,7 +123,7 @@
                 <tr class=" border-b-2 border-[#e5e7eb]">
                     <td class="pr-4">
                         <div class="flex gap-2"><img class="w-[80px] h-[80px] border rounded-lg"
-                                src="{{baseUrl}}{{cartOutofStock.image}}" alt="">
+                                src="{{cartOutofStock.image}}" alt="">
                             <div>
                                 <p (click)="viewProductFromCart(cartOutofStock.product_id)"
                                     class="font-medium text-xl mt-1 hover:underline cursor-pointer">
@@ -160,11 +161,11 @@
         <h1 class="text-3xl font-medium">Save For Later</h1>
         <p class="mb-6"><span class="font-medium">{{SaveForLaterCount}} items </span>in your Save For Later.</p>
         <!-- product list -->
-        <div class="flex flex-wrap gap-x-8 gap-y-8">
+        <div class="boxes flex flex-wrap gap-x-8 gap-y-8">
             @for (item of SaveForLater; track $index) {
             <div class="bg-white p-3 rounded-lg relative w-[250px] border-2">
                 <div>
-                    <img class="w-full h-[180px] rounded-md border" src="{{baseUrl}}{{item.image}}" alt="">
+                    <img class="w-full h-[180px] rounded-md border" src="{{item.image}}" alt="">
                     <button (click)="deleteSaveForLater($index,item.id)"
                         class="absolute top-3 right-3 text-2xl text-gray-400 hover:text-[#DE0530]  px-2 pt-1.5 pb-0.5 rounded-md">
                         <i class="fa-solid fa-circle-xmark"></i>
@@ -203,7 +204,7 @@
 </section>
 
 <app-footer></app-footer>
-
+</div>
 @if(!isLoading){
 <div class="main-loader">
     <div class="loader">

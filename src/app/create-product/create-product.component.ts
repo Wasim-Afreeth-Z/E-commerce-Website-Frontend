@@ -36,6 +36,8 @@ export class CreateProductComponent {
 
   userid: any = localStorage.getItem('userId')
   baseUrl = environment.BASEURL;
+  isLoading: boolean = false
+
 
   // if put this code only dialog box will add, delete, update data for database
   // !import MatDialogReg , Inject ,MAT_DIALOG_DATA
@@ -62,17 +64,21 @@ export class CreateProductComponent {
 
   // send the data to service file
   CreateProduct(): void {
+    this.isLoading = true
     this.formData = new FormData()
     this.formData.append('product-image', this.image!);
     // console.log(this.image);
 
     this.authService.ProductImageUpload(this.formData).subscribe({
-      next: (data: any) => {
+      next: (data: any) => {  
+        console.log(data);
+        
+        this.isLoading = false
         let currentDate = new Date().toJSON().slice(0, 10)
         let currenttime = new Date().toLocaleTimeString()
         const request = {
           "productname": this.productCreate.value.productname,
-          "image": data.image,
+          "image": data.data.url,
           "description": this.productCreate.value.description,
           "price": this.productCreate.value.price,
           "cat_id": this.productCreate.value.cat_id,
@@ -91,6 +97,7 @@ export class CreateProductComponent {
               duration: 3000
             })
             this.dialogRef.close(true)
+            this.isLoading = false
           },
           error: (error: any) => {
             if (this.productCreate.value.email === this.productCreate.value.email || this.productCreate.value.username === this.productCreate.value.username) {
@@ -114,6 +121,7 @@ export class CreateProductComponent {
 
   // update the data from service file
   updateProduct() {
+    this.isLoading = true
     if (this.productCreate.value.image === null) {
       const request = {
         "id":this.data?.product_id,
@@ -151,6 +159,7 @@ export class CreateProductComponent {
             duration: 3000,
           });
           this.dialogRef.close(true)
+          this.isLoading = false
         },
         error: (error: any) => {
           if (this.productCreate.value.email === this.productCreate.value.email || this.productCreate.value.username === this.productCreate.value.username) {
@@ -178,7 +187,7 @@ export class CreateProductComponent {
           const request = {
             "id":this.data?.product_id,
             "productname": this.productCreate.value.productname,
-            "image": data.image,
+            "image": data.data.url,
             "description": this.productCreate.value.description,
             "cat_id": this.productCreate.value.cat_id,
             "price": this.productCreate.value.price,
@@ -211,6 +220,7 @@ export class CreateProductComponent {
                 duration: 3000,
               });
               this.dialogRef.close(true)
+              this.isLoading = false
             },
             error: (error: any) => {
               if (this.productCreate.value.email === this.productCreate.value.email || this.productCreate.value.username === this.productCreate.value.username) {

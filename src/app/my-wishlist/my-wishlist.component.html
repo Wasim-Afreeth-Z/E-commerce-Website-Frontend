@@ -1,16 +1,16 @@
 <app-header #header></app-header>
 
-<div class="wishlist-main min-h-[100%] flex flex-col justify-between mt-[110px]">
+<div class="wishlist-main h-[100%] flex flex-col justify-between pt-[110px]">
     <section class="product-list px-20 py-8">
         <h1 class="text-3xl font-medium">My Wishlist</h1>
         <p class="mb-6"><span class="font-medium">{{wishlistCount}} items </span>in your Wishlist.</p>
         @if (wishlists.length>0) {
         <!-- product list -->
-        <div class="flex flex-wrap gap-x-8 gap-y-8">
+        <div class="boxes flex flex-wrap gap-x-8 gap-y-8">
             @for (wishlist of wishlists| paginate: { itemsPerPage: 8, currentPage: p }; track $index) {
             <div class="bg-white p-3 rounded-lg relative w-[250px] border-2">
                 <div>
-                    <img class="w-full h-[180px] rounded-md border" src="{{baseUrl}}{{wishlist.image}}"
+                    <img class="w-full h-[180px] rounded-md border" src="{{wishlist.image}}"
                         alt="">
                     <button (click)="deleteWishlist($index, wishlist.id)"
                         class="absolute top-3 right-3 text-2xl text-gray-400 hover:text-[#DE0530]  px-2 pt-1.5 pb-0.5 rounded-md">
