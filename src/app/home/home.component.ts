@@ -61,6 +61,7 @@ export class HomeComponent {
     }
     this.productService.getProduct(request).subscribe({
       next: (res: any) => {
+        
         //!added button feature in Angular
         // const products =res.data 
         // const request = {
