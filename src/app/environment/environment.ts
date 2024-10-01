@@ -9,6 +9,6 @@ export const environment = {
     //!Render Host
     BASEURL:'https://e-commerce-website-backend-yoou.onrender.com'
 
-    //!localhost
+    //!localhost url
     // BASEURL:'http://localhost:5000'
 }
