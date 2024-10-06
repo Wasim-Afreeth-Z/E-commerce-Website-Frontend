@@ -17,6 +17,11 @@
     }
 }
 
+.selected{
+    background-color: white;
+    color: #DE0530;
+}
+
 @keyframes sliding {
     0% {
         transform: translateX(0%);

@@ -34,8 +34,8 @@
                     class="fa-sharp fa-solid fa-circle-xmark"></i></div>
             } -->
                 @for (category of categorylist; track $index) {
-                <button type="button" (click)="filterCategory(category.id)"
-                    class="bg-[#DE0530] text-white border-2 border-[#DE0530] text-nowrap hover:bg-white hover:text-[#DE0530] focus:bg-white  focus:text-[#DE0530] font-normal px-4 py-1.5 rounded-md mr-5">
+                <button type="button" (click)="filterCategory(category.id,$index)" [ngClass]="{'selected': selectedButtonIndex === $index}"
+                    class="bg-[#DE0530] text-white border-2 border-[#DE0530] text-nowrap hover:bg-white hover:text-[#DE0530] font-normal px-4 py-1.5 rounded-md mr-5">
                     <i class="fa-regular fa-filter mr-2"></i>{{category.category|titlecase}}</button>
                 }
             </div>

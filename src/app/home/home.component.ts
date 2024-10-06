@@ -99,15 +99,17 @@ export class HomeComponent {
       }
     })
   }
-
+  selectedButtonIndex: number | null = null;
   // filter by category
-  filterCategory(id: string) {
+  filterCategory(id: string,index:number) {
     const request = {
-      "id": id
+      "id": id,
+      "user_id":this.userid
     }
     this.productService.categoryFilter(request).subscribe({
       next: (data: any) => {
         // console.log(data);
+        this.selectedButtonIndex = index;
         this.categoryId = id
         this.products = data.data
         this.isLoading = true
@@ -120,6 +122,7 @@ export class HomeComponent {
     this.categoryId = null;
     this.displayProducts()
     this.isLoading = true
+    this.selectedButtonIndex = null;
   }
 
   // !add to cart
@@ -224,6 +227,7 @@ export class HomeComponent {
   // from header 
   searchFilter(): void {
     const request = {
+      "id":this.userid,
       "input": this.headerdata.search!
     }
     this.productService.searchFilter(request).subscribe({
@@ -243,7 +247,8 @@ export class HomeComponent {
   //from footer
   filterCategoryFooter() {
     const request = {
-      "id": this.footerdata.categoryId!
+      "id": this.footerdata.categoryId!,
+      "user_id":this.userid
     }
     this.productService.categoryFilter(request).subscribe({
       next: (data: any) => {
